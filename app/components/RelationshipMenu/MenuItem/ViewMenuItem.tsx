@@ -73,31 +73,39 @@ export function ViewMenuItem({ item, people = [], showAllResponses = false, view
       </div>
       {showAllResponses && !isConversation && people.length > 0 && (
         <div
-          className={`mt-2 grid gap-x-4 gap-y-1.5 ${rowIndent}`}
-          style={{ gridTemplateColumns: `repeat(${people.length}, minmax(0, 1fr))` }}
+          className={`mt-2 grid grid-cols-1 sm:grid-cols-[repeat(var(--cols),minmax(0,1fr))] gap-x-4 gap-y-2 ${rowIndent}`}
+          style={{ '--cols': people.length } as React.CSSProperties}
         >
           {people.map((name, personIndex) => {
             const answer = item.responses?.[String(personIndex)] ?? null;
+            const note = item.response_notes?.[String(personIndex)] ?? null;
             return (
-              <span
+              <div
                 key={personIndex}
-                className="inline-flex items-center gap-1.5"
+                className="flex flex-col gap-1 items-start"
                 aria-label={`${name}: ${answer ? getIconLabel(answer, t) : tc.noAnswer}`}
               >
-                <span
-                  aria-hidden="true"
-                  title={name}
-                  className={`h-5 w-5 rounded-full ${personColor(personIndex)} text-white text-[10px] font-bold flex items-center justify-center flex-shrink-0`}
-                >
-                  {personInitial(name)}
+                <span className="inline-flex items-center gap-1.5">
+                  <span
+                    aria-hidden="true"
+                    title={name}
+                    className={`h-5 w-5 rounded-full ${personColor(personIndex)} text-white text-[10px] font-bold flex items-center justify-center flex-shrink-0`}
+                  >
+                    {personInitial(name)}
+                  </span>
+                  <LevelPill icon={answer} levels={t} />
                 </span>
-                <LevelPill icon={answer} levels={t} />
-              </span>
+                {!isRichTextEmpty(note) && (
+                  <div className="ml-[26px] text-[0.9em] font-normal text-gray-700 dark:text-gray-50 whitespace-pre-line break-words">
+                    {renderRichText(note)}
+                  </div>
+                )}
+              </div>
             );
           })}
         </div>
       )}
-      {showAllResponses && personNotes.length > 0 && (
+      {showAllResponses && isConversation && personNotes.length > 0 && (
         <div className={`mt-2 space-y-1.5 ${rowIndent}`}>
           {personNotes.map(({ name, personIndex, note }) => (
             <div key={personIndex} className="flex items-start gap-1.5 text-[0.9em] text-gray-700 dark:text-gray-50">
