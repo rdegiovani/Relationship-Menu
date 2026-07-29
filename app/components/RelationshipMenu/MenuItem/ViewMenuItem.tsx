@@ -53,6 +53,9 @@ export function ViewMenuItem({ item, people = [], showAllResponses = false, view
   // appears when there is an actual level to show.
   const individualView = showAllResponses || viewPerson !== null;
   const showLeadingIcon = !individualView || !!effectiveIcon;
+  // Inner rows align with the start of the item name: indented under the text
+  // when a leading icon exists, flush left when it doesn't (no orphan margin).
+  const rowIndent = showLeadingIcon ? 'ml-9 max-sm:ml-8' : '';
 
   return (
     <>
@@ -69,7 +72,7 @@ export function ViewMenuItem({ item, people = [], showAllResponses = false, view
         {showLeadingIcon && <span className="sr-only">, {iconLabel}</span>}
       </div>
       {showAllResponses && !isConversation && people.length > 0 && (
-        <div className="mt-2 ml-9 flex flex-wrap gap-x-4 gap-y-1.5 max-sm:ml-8">
+        <div className={`mt-2 flex flex-wrap gap-x-4 gap-y-1.5 ${rowIndent}`}>
           {people.map((name, personIndex) => {
             const answer = item.responses?.[String(personIndex)] ?? null;
             return (
@@ -92,7 +95,7 @@ export function ViewMenuItem({ item, people = [], showAllResponses = false, view
         </div>
       )}
       {showAllResponses && personNotes.length > 0 && (
-        <div className="mt-2 ml-9 space-y-1.5 max-sm:ml-8">
+        <div className={`mt-2 space-y-1.5 ${rowIndent}`}>
           {personNotes.map(({ name, personIndex, note }) => (
             <div key={personIndex} className="flex items-start gap-1.5 text-[0.9em] text-gray-700 dark:text-gray-50">
               <span
@@ -111,12 +114,12 @@ export function ViewMenuItem({ item, people = [], showAllResponses = false, view
         </div>
       )}
       {viewPerson !== null && !isRichTextEmpty(personNote) && (
-        <div className="mt-1.5 ml-9 text-gray-700 dark:text-gray-50 text-[0.9em] whitespace-pre-line break-words max-sm:mt-1 max-sm:ml-8">
+        <div className={`mt-1.5 text-gray-700 dark:text-gray-50 text-[0.9em] whitespace-pre-line break-words max-sm:mt-1 ${rowIndent}`}>
           {renderRichText(personNote)}
         </div>
       )}
       {!isRichTextEmpty(item.note) && (
-        <div className={`${hasIcon || showAllResponses ? 'mt-1.5' : 'mt-0.5'} ml-9 text-gray-700 dark:text-gray-50 text-[0.9em] whitespace-pre-line break-words max-sm:mt-1 max-sm:ml-8`} aria-label={`Note: ${richTextToPlainText(item.note)}`}>
+        <div className={`${hasIcon || showAllResponses ? 'mt-1.5' : 'mt-0.5'} text-gray-700 dark:text-gray-50 text-[0.9em] whitespace-pre-line break-words max-sm:mt-1 ${rowIndent}`} aria-label={`Note: ${richTextToPlainText(item.note)}`}>
           {renderRichText(item.note)}
         </div>
       )}
