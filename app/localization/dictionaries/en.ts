@@ -264,7 +264,7 @@ export const en = {
     waitingTitle: 'Answers are still hidden',
     waitingBody: 'This menu uses blind answers: the comparison opens once everyone marks themselves done.',
     noAnswer: 'No answer',
-    consensusLabel: 'Shared answer',
+    consensusLabel: 'Joint decision',
     tabCompare: 'Comparison',
     tabEvolution: 'Evolution',
     // Divergence bands: the five levels form a spectrum; the wider the gap
@@ -286,7 +286,7 @@ export const en = {
     noRoundsHint: 'Save a round to start tracking how your answers evolve.',
     changesTitle: 'What changed since the last round',
     noChanges: 'No changes since the last round.',
-    sharedAnswerChange: 'Shared answer',
+    sharedAnswerChange: 'Joint decision',
     moreChanges: (count: number) => `+${count} more changes`,
     evolutionTitle: 'Compatibility over time',
     roundLabel: (n: number) => `Round ${n}`,
@@ -295,6 +295,9 @@ export const en = {
     biggestMoves: 'Biggest moves since the last round',
     noMoves: 'No divergence changes since the last round.',
     divergenceChange: (before: number, after: number) => `divergence ${before} → ${after}`,
+    viewingTitle: 'Whose answers to show',
+    viewAll: 'Everyone (current)',
+    viewRound: (n: number, when: string) => `Round ${n} · ${when}`,
   },
 
   editorPage: {

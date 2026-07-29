@@ -7,10 +7,11 @@ import { MenuToolbar } from './MenuToolbar';
 import { MenuContent } from './MenuContent';
 import { PersonBar } from './PersonBar';
 import { CompareView } from './CompareView';
+import { ViewLensBar, ViewLens } from './ViewLensBar';
 import { FloatingModeSelector } from './MenuToolbar/FloatingModeSelector';
 import { useToast } from '../ui/Toast';
 import { useLanguage } from '../LanguageProvider';
-import { isPersonFinished } from '../../utils/responses';
+import { isPersonFinished, everyoneFinished } from '../../utils/responses';
 import {
   createDataHandlers,
   createItemHandlers,
@@ -31,6 +32,8 @@ export function RelationshipMenu({ menuData, onSave, initialMode = 'view' }: Rel
   const [activeIconPicker, setActiveIconPicker] = useState<{catIndex: number, itemIndex: number} | null>(null);
   // Individual answers (site fork): index of the person currently answering
   const [selectedPerson, setSelectedPerson] = useState<number | null>(null);
+  // View mode lens: everyone (current) · one person · a saved round
+  const [viewLens, setViewLens] = useState<ViewLens>({ type: 'current', person: null });
 
   // Get the toast utility from context
   const { showToast } = useToast();
@@ -46,6 +49,29 @@ export function RelationshipMenu({ menuData, onSave, initialMode = 'view' }: Rel
   const activePerson = selectedPerson !== null && selectedPerson < people.length ? selectedPerson : null;
   const personLocked = activePerson !== null &&
     !!currentData.blind_mode && isPersonFinished(currentData, activePerson);
+
+  // View lens (site fork): in blind mode nobody browses individual answers
+  // before everyone is done — the classic consensus view is shown instead.
+  const individualViewAllowed = individualMode &&
+    (!currentData.blind_mode || everyoneFinished(currentData));
+  const lens: ViewLens = individualViewAllowed ? viewLens : { type: 'current', person: null };
+  const lensRound = lens.type === 'round' ? currentData.rounds?.[lens.index] ?? null : null;
+  // With a round lens, the menu shown is the snapshot: that round's answers,
+  // shared answers and people (positions align — rounds mirror the menu shape).
+  const viewMenu = useMemo(() => {
+    if (mode !== 'view' || !lensRound) return menu;
+    return menu.map((category, catIndex) => ({
+      ...category,
+      items: category.items.map((item, itemIndex) => {
+        const snapshot = lensRound.items[catIndex]?.[itemIndex];
+        return snapshot ? { ...item, responses: snapshot.responses, icon: snapshot.icon ?? null } : item;
+      })
+    }));
+  }, [mode, lensRound, menu]);
+  const viewPeople = lensRound ? lensRound.people : people;
+  const viewPerson = mode === 'view' && individualViewAllowed && lens.type === 'current' ? lens.person : null;
+  const showAllResponses = mode === 'view' && individualViewAllowed &&
+    (lens.type === 'round' || (lens.type === 'current' && lens.person === null));
 
   // Auto-resize textarea utility function
   const autoResizeTextarea = (element: HTMLTextAreaElement) => {
@@ -163,6 +189,15 @@ export function RelationshipMenu({ menuData, onSave, initialMode = 'view' }: Rel
         </div>
       </div>
 
+      {/* View lens for individual answers (site fork) */}
+      {individualViewAllowed && mode === 'view' && (
+        <ViewLensBar
+          menuData={currentData}
+          lens={lens}
+          onSelectLens={setViewLens}
+        />
+      )}
+
       {/* Person selector for individual answers (site fork) */}
       {individualMode && mode === 'fill' && (
         <PersonBar
@@ -185,7 +220,7 @@ export function RelationshipMenu({ menuData, onSave, initialMode = 'view' }: Rel
         />
       ) : (
         <MenuContent
-          menu={menu}
+          menu={mode === 'view' ? viewMenu : menu}
           mode={mode}
           onIconChange={handleIconChange}
           onCategoryNameChange={handleCategoryNameChange}
@@ -204,6 +239,9 @@ export function RelationshipMenu({ menuData, onSave, initialMode = 'view' }: Rel
           individualMode={individualMode && mode === 'fill'}
           personLocked={personLocked}
           onResponseChange={handleResponseChange}
+          people={viewPeople}
+          showAllResponses={showAllResponses}
+          viewPerson={viewPerson}
         />
       )}
 

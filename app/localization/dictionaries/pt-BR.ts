@@ -268,7 +268,7 @@ export const ptBR: Dictionary = {
     waitingTitle: 'As respostas ainda estão ocultas',
     waitingBody: 'Este menu usa respostas às cegas: a comparação abre quando todo mundo marcar que terminou.',
     noAnswer: 'Sem resposta',
-    consensusLabel: 'Resposta em comum',
+    consensusLabel: 'Decisão em conjunto',
     tabCompare: 'Comparação',
     tabEvolution: 'Evolução',
     // Bandas de divergência: os cinco níveis formam um espectro; quanto maior a
@@ -290,7 +290,7 @@ export const ptBR: Dictionary = {
     noRoundsHint: 'Registre uma rodada para começar a acompanhar a evolução das respostas.',
     changesTitle: 'O que mudou desde a última rodada',
     noChanges: 'Nada mudou desde a última rodada.',
-    sharedAnswerChange: 'Resposta em comum',
+    sharedAnswerChange: 'Decisão em conjunto',
     moreChanges: (count: number) => `+${count} outras mudanças`,
     evolutionTitle: 'Compatibilidade ao longo do tempo',
     roundLabel: (n: number) => `Rodada ${n}`,
@@ -299,6 +299,9 @@ export const ptBR: Dictionary = {
     biggestMoves: 'Maiores movimentos desde a última rodada',
     noMoves: 'Nenhuma mudança de divergência desde a última rodada.',
     divergenceChange: (before: number, after: number) => `divergência ${before} → ${after}`,
+    viewingTitle: 'Ver respostas de',
+    viewAll: 'Todos (atual)',
+    viewRound: (n: number, when: string) => `Rodada ${n} · ${when}`,
   },
 
   editorPage: {

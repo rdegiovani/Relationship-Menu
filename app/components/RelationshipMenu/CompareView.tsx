@@ -4,6 +4,8 @@ import React, { useMemo, useRef, useState } from 'react';
 import { MenuData, MenuItem, MenuRound } from '../../types';
 import { useLanguage } from '../LanguageProvider';
 import { IconPicker, IconButton, getIconLabel } from '../ui/IconPicker';
+import { LevelPill } from '../ui/LevelPill';
+import { personColor, personInitial } from '../../utils/personColors';
 import { IconCheck } from '../icons';
 import { Dictionary } from '../../localization/dictionaries';
 import {
@@ -41,9 +43,6 @@ const BAND_STYLES: Record<string, { dot: string; text: string; connector: string
   'incomplete': { dot: 'bg-gray-400', text: 'text-gray-600 dark:text-gray-300', connector: 'bg-gray-300', headerBg: '' },
 };
 
-// Stable per-person marker colors (white initial stays readable on all of them).
-const PERSON_COLORS = ['bg-[rgba(63,115,123,1)]', 'bg-purple-700', 'bg-rose-700', 'bg-indigo-700', 'bg-emerald-700', 'bg-slate-700'];
-
 // Spectrum stop tints reuse the app's level tile variables.
 const STOP_TINTS = [
   'bg-[var(--icon-must-tile)]',
@@ -52,10 +51,6 @@ const STOP_TINTS = [
   'bg-[var(--icon-prefer-not-tile)]',
   'bg-[var(--icon-off-limit-tile)]',
 ];
-
-function personInitial(name: string): string {
-  return (name.trim()[0] ?? '?').toUpperCase();
-}
 
 /** The shared-answer picker for one item (edit-mode options, includes "talk"). */
 function ConsensusPicker({ selectedIcon, onSelect, label }: {
@@ -130,7 +125,7 @@ function SpectrumTrack({ item, people, divergence, summary }: {
         personIndexes.map((personIndex, stackIndex) => (
           <div
             key={personIndex}
-            className={`absolute -translate-x-1/2 h-6 w-6 rounded-full ${PERSON_COLORS[personIndex % PERSON_COLORS.length]} text-white text-xs font-bold flex items-center justify-center shadow-sm`}
+            className={`absolute -translate-x-1/2 h-6 w-6 rounded-full ${personColor(personIndex)} text-white text-xs font-bold flex items-center justify-center shadow-sm`}
             style={{
               left: `${(position / 4) * 100}%`,
               top: stackIndex === 0 ? '0' : 'auto',
@@ -147,7 +142,7 @@ function SpectrumTrack({ item, people, divergence, summary }: {
   );
 }
 
-/** GitHub-style change chip: old answer struck through in red, new one in green. */
+/** GitHub-style change: old answer struck through, arrow, new answer — each in its level's hue. */
 function DiffChip({ from, to, levels }: {
   from: string | null;
   to: string | null;
@@ -155,15 +150,9 @@ function DiffChip({ from, to, levels }: {
 }) {
   return (
     <span className="inline-flex items-center gap-1.5 flex-wrap">
-      {from !== null && (
-        <span className="px-1.5 py-0.5 rounded bg-red-50 dark:bg-red-900/30 text-red-700 dark:text-red-300 line-through text-xs font-medium">
-          {getIconLabel(from, levels)}
-        </span>
-      )}
+      {from !== null && <LevelPill icon={from} levels={levels} struck />}
       <span aria-hidden="true" className="text-gray-400 text-xs">→</span>
-      <span className="px-1.5 py-0.5 rounded bg-green-50 dark:bg-green-900/30 text-green-800 dark:text-green-300 text-xs font-medium">
-        {to !== null ? getIconLabel(to, levels) : '—'}
-      </span>
+      <LevelPill icon={to} levels={levels} />
     </span>
   );
 }
@@ -419,7 +408,9 @@ function EvolutionDashboard({ menuData, rounds, currentScore, formatDate }: {
   ];
   const plotted = series.filter((point): point is { label: string; score: number } => point.score !== null);
 
-  const categories = categoryCompatibility(menuData);
+  // Sections with no spectrum answers (e.g. open/discussion-only ones) have
+  // nothing measurable — leave them out instead of showing an empty score.
+  const categories = categoryCompatibility(menuData).filter(category => category.score !== null);
   const lastRound = rounds.length > 0 ? rounds[rounds.length - 1] : null;
 
   // Biggest divergence moves per item since the last round.

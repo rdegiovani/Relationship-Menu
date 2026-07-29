@@ -24,6 +24,10 @@ interface MenuItemProps {
   individualMode?: boolean;
   personLocked?: boolean;
   onResponseChange?: (catIndex: number, itemIndex: number, personIndex: number, newIcon: string | null) => void;
+  /** View lens (site fork, view mode) — see ViewMenuItem. */
+  people?: string[];
+  showAllResponses?: boolean;
+  viewPerson?: number | null;
 }
 
 export function MenuItem({
@@ -42,13 +46,19 @@ export function MenuItem({
   activePerson = null,
   individualMode = false,
   personLocked = false,
-  onResponseChange
+  onResponseChange,
+  people = [],
+  showAllResponses = false,
+  viewPerson = null
 }: MenuItemProps) {
   // Individual answers: in fill mode the row is tinted by the active person's
   // answer instead of the shared icon, so feedback follows what is being edited.
+  // In view mode with a person lens, it follows that person's answer.
   const displayIcon = individualMode && mode === 'fill'
     ? (activePerson !== null ? (item.responses?.[String(activePerson)] ?? null) : null)
-    : item.icon;
+    : mode === 'view' && viewPerson !== null
+      ? (item.responses?.[String(viewPerson)] ?? null)
+      : item.icon;
   // Common styling classes for all menu item types
   const commonClasses = `py-3 px-[25px] sm:py-3 sm:px-[25px] md:py-4 md:px-[30px] max-sm:py-[15px] max-sm:px-[15px] border-b border-gray-200/60 dark:border-gray-700/40 last:border-0 ${getItemClassName(displayIcon)}`;
   
@@ -56,7 +66,12 @@ export function MenuItem({
   if (mode === 'view') {
     return (
       <div className={commonClasses} role="listitem">
-        <ViewMenuItem item={item} />
+        <ViewMenuItem
+          item={item}
+          people={people}
+          showAllResponses={showAllResponses}
+          viewPerson={viewPerson}
+        />
       </div>
     );
   } else if (mode === 'edit') {

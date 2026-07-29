@@ -28,6 +28,10 @@ interface MenuContentProps {
   individualMode?: boolean;
   personLocked?: boolean;
   onResponseChange?: (catIndex: number, itemIndex: number, personIndex: number, newIcon: string | null) => void;
+  /** View lens (site fork, view mode) — see ViewMenuItem. */
+  people?: string[];
+  showAllResponses?: boolean;
+  viewPerson?: number | null;
 }
 
 export function MenuContent({
@@ -49,7 +53,10 @@ export function MenuContent({
   activePerson = null,
   individualMode = false,
   personLocked = false,
-  onResponseChange
+  onResponseChange,
+  people = [],
+  showAllResponses = false,
+  viewPerson = null
 }: MenuContentProps) {
   const t = useTranslations().editor;
   const isEditing = mode === 'edit';
@@ -102,6 +109,9 @@ export function MenuContent({
                   individualMode={individualMode}
                   personLocked={personLocked}
                   onResponseChange={onResponseChange}
+                  people={people}
+                  showAllResponses={showAllResponses}
+                  viewPerson={viewPerson}
                 />
               ))}
               
