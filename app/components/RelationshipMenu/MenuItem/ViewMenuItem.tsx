@@ -48,10 +48,16 @@ export function ViewMenuItem({ item, people = [], showAllResponses = false, view
 
   const personNote = viewPerson !== null ? (item.response_notes?.[String(viewPerson)] ?? null) : null;
 
+  // In the individual views the pills/avatars carry the information — the
+  // "not set" placeholder dot would be pure noise, so the leading icon only
+  // appears when there is an actual level to show.
+  const individualView = showAllResponses || viewPerson !== null;
+  const showLeadingIcon = !individualView || !!effectiveIcon;
+
   return (
     <>
       <div className="item-name font-bold flex items-center text-gray-900 dark:text-gray-50 max-sm:items-start flex-wrap gap-y-1">
-        {renderIcon(effectiveIcon)}
+        {showLeadingIcon && renderIcon(effectiveIcon)}
         <span className={getItemSpanClasses(effectiveIcon)}>
           {item.name}
         </span>
@@ -60,7 +66,7 @@ export function ViewMenuItem({ item, people = [], showAllResponses = false, view
             <LevelPill icon="talk" levels={t} />
           </span>
         )}
-        <span className="sr-only">, {iconLabel}</span>
+        {showLeadingIcon && <span className="sr-only">, {iconLabel}</span>}
       </div>
       {showAllResponses && !isConversation && people.length > 0 && (
         <div className="mt-2 ml-9 flex flex-wrap gap-x-4 gap-y-1.5 max-sm:ml-8">
