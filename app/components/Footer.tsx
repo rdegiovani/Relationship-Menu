@@ -24,7 +24,7 @@ export default function Footer() {
         <div className="flex gap-4 justify-center flex-wrap">
           <p><Link href="/support" className="hover:underline">{t.support}</Link></p>
           {!hideSourceOnPaths.some(path => pathname?.startsWith(path)) && (
-            <p><Link href="https://github.com/paviro/Relationship-Menu" className="hover:underline">{t.sourceCode}</Link></p>
+            <p><Link href="https://github.com/rdegiovani/Relationship-Menu" className="hover:underline">{t.sourceCode}</Link></p>
           )}
           <p><Link href="/privacy-policy" className="hover:underline">{t.privacyPolicy}</Link></p>
           <p><Link href="/legal-disclosure" className="hover:underline">{t.legalDisclosure}</Link></p>
