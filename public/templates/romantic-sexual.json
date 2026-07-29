@@ -3,15 +3,18 @@
   "sorting_order": 0,
   "languages": [
     "en",
-    "de"
+    "de",
+    "pt-BR"
   ],
   "title": {
     "en": "Romantic / Sexual",
-    "de": "Romantisch / Sexuell"
+    "de": "Romantisch / Sexuell",
+    "pt-BR": "Romântico / Sexual"
   },
   "description": {
     "en": "A comprehensive template for romantic and/or sexual relationships, with categories covering communication, physical intimacy, emotional attachment, practical matters and levels of commitment.",
-    "de": "Eine umfassende Vorlage für romantische und/oder sexuelle Beziehungen mit Kategorien zu Kommunikation, körperlicher Intimität, emotionaler Bindung, praktischen Belangen und Verbindlichkeitsstufen."
+    "de": "Eine umfassende Vorlage für romantische und/oder sexuelle Beziehungen mit Kategorien zu Kommunikation, körperlicher Intimität, emotionaler Bindung, praktischen Belangen und Verbindlichkeitsstufen.",
+    "pt-BR": "Um modelo abrangente para relações românticas e/ou sexuais, com seções sobre comunicação, intimidade física, vínculo emocional, questões práticas e níveis de compromisso."
   },
   "icon_svg": "M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z",
   "icon_sf_symbol": "heart.fill",
@@ -23,83 +26,95 @@
     {
       "title": {
         "en": "Communication",
-        "de": "Kommunikation"
+        "de": "Kommunikation",
+        "pt-BR": "Comunicação"
       },
       "items": [
         {
           "title": {
             "en": "Daily or frequent check ins",
-            "de": "Täglicher oder häufiger Austausch"
+            "de": "Täglicher oder häufiger Austausch",
+            "pt-BR": "Conversas diárias ou frequentes para saber como o outro está"
           },
           "icon_name": null
         },
         {
           "title": {
             "en": "Texting",
-            "de": "Texten"
+            "de": "Texten",
+            "pt-BR": "Trocar mensagens"
           },
           "icon_name": null
         },
         {
           "title": {
             "en": "Phone / video calls",
-            "de": "Telefon- oder Videoanrufe"
+            "de": "Telefon- oder Videoanrufe",
+            "pt-BR": "Ligações de voz ou vídeo"
           },
           "icon_name": null
         },
         {
           "title": {
             "en": "Discussing work and hobbies",
-            "de": "Gespräche über Arbeit und Hobbys"
+            "de": "Gespräche über Arbeit und Hobbys",
+            "pt-BR": "Falar sobre trabalho e hobbies"
           },
           "icon_name": null
         },
         {
           "title": {
             "en": "Discussing family, partners, relationships",
-            "de": "Gespräche über Familie, Partnerschaften, Beziehungen"
+            "de": "Gespräche über Familie, Partnerschaften, Beziehungen",
+            "pt-BR": "Falar sobre família, parceria(s) e relações"
           },
           "icon_name": null
         },
         {
           "title": {
             "en": "Discussing politics and current events",
-            "de": "Diskussionen über Politik und aktuelle Ereignisse"
+            "de": "Diskussionen über Politik und aktuelle Ereignisse",
+            "pt-BR": "Falar sobre política e atualidades"
           },
           "icon_name": null
         },
         {
           "title": {
             "en": "Ability to express disagreements or hurt feelings",
-            "de": "Fähigkeit, Meinungsverschiedenheiten oder verletzte Gefühle auszudrücken"
+            "de": "Fähigkeit, Meinungsverschiedenheiten oder verletzte Gefühle auszudrücken",
+            "pt-BR": "Poder expressar discordância ou mágoa"
           },
           "icon_name": null
         },
         {
           "title": {
             "en": "Ability to address and resolve conflict",
-            "de": "Fähigkeit, Konflikte anzusprechen und zu lösen"
+            "de": "Fähigkeit, Konflikte anzusprechen und zu lösen",
+            "pt-BR": "Poder encarar e resolver conflitos"
           },
           "icon_name": null
         },
         {
           "title": {
             "en": "Relationship meetings (e.g. R.A.D.A.R.)",
-            "de": "Beziehungs-Check-ins (z.B. R.A.D.A.R.)"
+            "de": "Beziehungs-Check-ins (z.B. R.A.D.A.R.)",
+            "pt-BR": "Reuniões sobre a relação (ex.: R.A.D.A.R.)"
           },
           "icon_name": null
         },
         {
           "title": {
             "en": "Nonviolent Communication",
-            "de": "Gewaltfreie Kommunikation"
+            "de": "Gewaltfreie Kommunikation",
+            "pt-BR": "Comunicação não violenta"
           },
           "icon_name": null
         },
         {
           "title": {
             "en": "Radical honesty",
-            "de": "Radikale Ehrlichkeit"
+            "de": "Radikale Ehrlichkeit",
+            "pt-BR": "Honestidade radical"
           },
           "icon_name": null
         }
@@ -108,34 +123,39 @@
     {
       "title": {
         "en": "Collaborative",
-        "de": "Zusammenarbeit"
+        "de": "Zusammenarbeit",
+        "pt-BR": "Colaboração"
       },
       "items": [
         {
           "title": {
             "en": "Teaching each other things",
-            "de": "Sich gegenseitig Dinge beibringen"
+            "de": "Sich gegenseitig Dinge beibringen",
+            "pt-BR": "Ensinar coisas um ao outro"
           },
           "icon_name": null
         },
         {
           "title": {
             "en": "Working on projects together",
-            "de": "Gemeinsam an Projekten arbeiten"
+            "de": "Gemeinsam an Projekten arbeiten",
+            "pt-BR": "Tocar projetos juntos"
           },
           "icon_name": null
         },
         {
           "title": {
             "en": "Being creative together",
-            "de": "Gemeinsam kreativ sein"
+            "de": "Gemeinsam kreativ sein",
+            "pt-BR": "Criar coisas juntos"
           },
           "icon_name": null
         },
         {
           "title": {
             "en": "Sharing a hobby or interest",
-            "de": "Gemeinsame Hobbys oder Interessen"
+            "de": "Gemeinsame Hobbys oder Interessen",
+            "pt-BR": "Ter um hobby ou interesse em comum"
           },
           "icon_name": null
         }
@@ -144,41 +164,47 @@
     {
       "title": {
         "en": "Religious / Spiritual",
-        "de": "Religiös / Spirituell"
+        "de": "Religiös / Spirituell",
+        "pt-BR": "Religião / Espiritualidade"
       },
       "items": [
         {
           "title": {
             "en": "Having shared beliefs",
-            "de": "Gemeinsame Überzeugungen"
+            "de": "Gemeinsame Überzeugungen",
+            "pt-BR": "Compartilhar crenças"
           },
           "icon_name": null
         },
         {
           "title": {
             "en": "Praying together",
-            "de": "Gemeinsames Beten"
+            "de": "Gemeinsames Beten",
+            "pt-BR": "Rezar ou orar juntos"
           },
           "icon_name": null
         },
         {
           "title": {
             "en": "Having shared rituals",
-            "de": "Gemeinsame Rituale"
+            "de": "Gemeinsame Rituale",
+            "pt-BR": "Ter rituais em comum"
           },
           "icon_name": null
         },
         {
           "title": {
             "en": "Ceremonies & traditions",
-            "de": "Zeremonien und Traditionen"
+            "de": "Zeremonien und Traditionen",
+            "pt-BR": "Cerimônias e tradições"
           },
           "icon_name": "talk"
         },
         {
           "title": {
             "en": "Religious & spiritual beliefs",
-            "de": "Religiöse und spirituelle Überzeugungen"
+            "de": "Religiöse und spirituelle Überzeugungen",
+            "pt-BR": "Crenças religiosas e espirituais"
           },
           "icon_name": "talk"
         }
@@ -187,34 +213,39 @@
     {
       "title": {
         "en": "Professional & Work",
-        "de": "Beruf & Arbeit"
+        "de": "Beruf & Arbeit",
+        "pt-BR": "Profissional e trabalho"
       },
       "items": [
         {
           "title": {
             "en": "Colleagues",
-            "de": "Kolleg:innen"
+            "de": "Kolleg:innen",
+            "pt-BR": "Ser colegas de trabalho"
           },
           "icon_name": null
         },
         {
           "title": {
             "en": "Business partners",
-            "de": "Geschäftspartner:innen"
+            "de": "Geschäftspartner:innen",
+            "pt-BR": "Ser sócios"
           },
           "icon_name": null
         },
         {
           "title": {
             "en": "Work-related stress support",
-            "de": "Unterstützung bei arbeitsbedingtem Stress"
+            "de": "Unterstützung bei arbeitsbedingtem Stress",
+            "pt-BR": "Apoio no estresse do trabalho"
           },
           "icon_name": null
         },
         {
           "title": {
             "en": "Impact of work on the relationship",
-            "de": "Auswirkungen der Arbeit auf die Beziehung"
+            "de": "Auswirkungen der Arbeit auf die Beziehung",
+            "pt-BR": "Impacto do trabalho na relação"
           },
           "icon_name": "talk"
         }
@@ -223,41 +254,47 @@
     {
       "title": {
         "en": "Technology",
-        "de": "Technologie"
+        "de": "Technologie",
+        "pt-BR": "Tecnologia"
       },
       "items": [
         {
           "title": {
             "en": "Sharing passwords to phones or computers",
-            "de": "Zugangsdaten zu Handys und Computern teilen"
+            "de": "Zugangsdaten zu Handys und Computern teilen",
+            "pt-BR": "Compartilhar senhas de celular ou computador"
           },
           "icon_name": null
         },
         {
           "title": {
             "en": "Accessing phones or computers without asking",
-            "de": "Ohne zu fragen auf Handys oder Computer zugreifen"
+            "de": "Ohne zu fragen auf Handys oder Computer zugreifen",
+            "pt-BR": "Acessar o celular ou o computador do outro sem pedir"
           },
           "icon_name": null
         },
         {
           "title": {
             "en": "Sharing internet accounts",
-            "de": "Online-Konten teilen"
+            "de": "Online-Konten teilen",
+            "pt-BR": "Compartilhar contas de serviços online"
           },
           "icon_name": null
         },
         {
           "title": {
             "en": "Real-time location sharing",
-            "de": "Standort in Echtzeit teilen"
+            "de": "Standort in Echtzeit teilen",
+            "pt-BR": "Compartilhar a localização em tempo real"
           },
           "icon_name": null
         },
         {
           "title": {
             "en": "Device-free time together",
-            "de": "Gemeinsame gerätefreie Zeit"
+            "de": "Gemeinsame gerätefreie Zeit",
+            "pt-BR": "Tempo juntos sem telas"
           },
           "icon_name": null
         }
@@ -266,48 +303,55 @@
     {
       "title": {
         "en": "Partnership",
-        "de": "Partnerschaft"
+        "de": "Partnerschaft",
+        "pt-BR": "Parceria"
       },
       "items": [
         {
           "title": {
             "en": "Shared goals in life",
-            "de": "Gemeinsame Ziele im Leben"
+            "de": "Gemeinsame Ziele im Leben",
+            "pt-BR": "Objetivos de vida em comum"
           },
           "icon_name": null
         },
         {
           "title": {
             "en": "Shared values",
-            "de": "Gemeinsame Wertvorstellungen"
+            "de": "Gemeinsame Wertvorstellungen",
+            "pt-BR": "Valores em comum"
           },
           "icon_name": null
         },
         {
           "title": {
             "en": "Having a routine together",
-            "de": "Eine gemeinsame Routine haben"
+            "de": "Eine gemeinsame Routine haben",
+            "pt-BR": "Ter uma rotina juntos"
           },
           "icon_name": null
         },
         {
           "title": {
             "en": "Embracing change in one another",
-            "de": "Offenheit für Veränderungen bei der anderen Person"
+            "de": "Offenheit für Veränderungen bei der anderen Person",
+            "pt-BR": "Acolher as mudanças um do outro"
           },
           "icon_name": null
         },
         {
           "title": {
             "en": "Consistency",
-            "de": "Konsistenz"
+            "de": "Konsistenz",
+            "pt-BR": "Constância"
           },
           "icon_name": null
         },
         {
           "title": {
             "en": "Reliability",
-            "de": "Zuverlässigkeit"
+            "de": "Zuverlässigkeit",
+            "pt-BR": "Ser alguém com quem se pode contar"
           },
           "icon_name": null
         }
@@ -316,20 +360,23 @@
     {
       "title": {
         "en": "Legal",
-        "de": "Rechtliche Angelegenheiten"
+        "de": "Rechtliche Angelegenheiten",
+        "pt-BR": "Jurídico"
       },
       "items": [
         {
           "title": {
             "en": "Power of attorney",
-            "de": "Vollmacht"
+            "de": "Vollmacht",
+            "pt-BR": "Procuração"
           },
           "icon_name": null
         },
         {
           "title": {
             "en": "Executor of will",
-            "de": "Testamentsvollstreckung"
+            "de": "Testamentsvollstreckung",
+            "pt-BR": "Inventariante do testamento"
           },
           "icon_name": null
         }
@@ -338,48 +385,55 @@
     {
       "title": {
         "en": "Financial",
-        "de": "Finanzen"
+        "de": "Finanzen",
+        "pt-BR": "Financeiro"
       },
       "items": [
         {
           "title": {
             "en": "Shared bank account(s)",
-            "de": "Gemeinsames Bankkonto"
+            "de": "Gemeinsames Bankkonto",
+            "pt-BR": "Conta bancária conjunta"
           },
           "icon_name": null
         },
         {
           "title": {
             "en": "Mutual contributions to vacation / activity funds",
-            "de": "Gemeinsame Beiträge zu Urlaubs- oder Freizeitfonds"
+            "de": "Gemeinsame Beiträge zu Urlaubs- oder Freizeitfonds",
+            "pt-BR": "Contribuir juntos para uma reserva de viagens ou passeios"
           },
           "icon_name": null
         },
         {
           "title": {
             "en": "Co-ownership of property",
-            "de": "Miteigentum an Immobilien"
+            "de": "Miteigentum an Immobilien",
+            "pt-BR": "Ter um imóvel em conjunto"
           },
           "icon_name": null
         },
         {
           "title": {
             "en": "Giving financial support to each other",
-            "de": "Gegenseitige finanzielle Unterstützung"
+            "de": "Gegenseitige finanzielle Unterstützung",
+            "pt-BR": "Dar apoio financeiro um ao outro"
           },
           "icon_name": null
         },
         {
           "title": {
             "en": "Large gifts",
-            "de": "Größere Geschenke"
+            "de": "Größere Geschenke",
+            "pt-BR": "Presentes caros"
           },
           "icon_name": null
         },
         {
           "title": {
             "en": "Complete financial integration",
-            "de": "Vollständige finanzielle Integration"
+            "de": "Vollständige finanzielle Integration",
+            "pt-BR": "Vida financeira totalmente integrada"
           },
           "icon_name": null
         }
@@ -388,55 +442,63 @@
     {
       "title": {
         "en": "Quality Time",
-        "de": "Gemeinsame Zeit"
+        "de": "Gemeinsame Zeit",
+        "pt-BR": "Tempo de qualidade"
       },
       "items": [
         {
           "title": {
             "en": "Regularly scheduled time together",
-            "de": "Regelmäßig eingeplante gemeinsame Zeit"
+            "de": "Regelmäßig eingeplante gemeinsame Zeit",
+            "pt-BR": "Tempo juntos marcado com regularidade"
           },
           "icon_name": null
         },
         {
           "title": {
             "en": "In-person visits",
-            "de": "Persönliche Besuche"
+            "de": "Persönliche Besuche",
+            "pt-BR": "Visitas presenciais"
           },
           "icon_name": null
         },
         {
           "title": {
             "en": "Date nights / outings",
-            "de": "Dates und Ausflüge"
+            "de": "Dates und Ausflüge",
+            "pt-BR": "Encontros e passeios"
           },
           "icon_name": null
         },
         {
           "title": {
             "en": "Shared activities",
-            "de": "Gemeinsame Aktivitäten"
+            "de": "Gemeinsame Aktivitäten",
+            "pt-BR": "Atividades em comum"
           },
           "icon_name": null
         },
         {
           "title": {
             "en": "Intellectual & philosophical discussions",
-            "de": "Intellektuelle und philosophische Diskussionen"
+            "de": "Intellektuelle und philosophische Diskussionen",
+            "pt-BR": "Conversas intelectuais e filosóficas"
           },
           "icon_name": null
         },
         {
           "title": {
             "en": "Parallel play",
-            "de": "Gemeinsam, aber unabhängig Zeit verbringen"
+            "de": "Gemeinsam, aber unabhängig Zeit verbringen",
+            "pt-BR": "Ficar junto cada um na sua (parallel play)"
           },
           "icon_name": null
         },
         {
           "title": {
             "en": "Vacations or excursions together",
-            "de": "Gemeinsame Urlaube oder Ausflüge"
+            "de": "Gemeinsame Urlaube oder Ausflüge",
+            "pt-BR": "Viagens ou excursões juntos"
           },
           "icon_name": null
         }
@@ -445,69 +507,79 @@
     {
       "title": {
         "en": "Domestic",
-        "de": "Alltag zu Hause"
+        "de": "Alltag zu Hause",
+        "pt-BR": "Vida doméstica"
       },
       "items": [
         {
           "title": {
             "en": "Sharing an apartment or a home",
-            "de": "Eine Wohnung oder ein Haus teilen"
+            "de": "Eine Wohnung oder ein Haus teilen",
+            "pt-BR": "Dividir apartamento ou casa"
           },
           "icon_name": null
         },
         {
           "title": {
             "en": "Having a key to each other's home",
-            "de": "Schlüssel zum Zuhause des anderen haben"
+            "de": "Schlüssel zum Zuhause des anderen haben",
+            "pt-BR": "Ter a chave da casa um do outro"
           },
           "icon_name": null
         },
         {
           "title": {
             "en": "Sharing a permanent sleeping space",
-            "de": "Einen gemeinsamen festen Schlafplatz haben"
+            "de": "Einen gemeinsamen festen Schlafplatz haben",
+            "pt-BR": "Dividir a cama todos os dias"
           },
           "icon_name": null
         },
         {
           "title": {
             "en": "Doing sleep overs",
-            "de": "Übernachtungen beieinander"
+            "de": "Übernachtungen beieinander",
+            "pt-BR": "Dormir na casa um do outro"
           },
           "icon_name": null
         },
         {
           "title": {
             "en": "Cooking together",
-            "de": "Zusammen kochen"
+            "de": "Zusammen kochen",
+            "pt-BR": "Cozinhar juntos"
           },
           "icon_name": null
         },
         {
           "title": {
             "en": "Sharing meals together",
-            "de": "Gemeinsame Mahlzeiten"
+            "de": "Gemeinsame Mahlzeiten",
+            "pt-BR": "Fazer as refeições juntos"
           },
           "icon_name": null
         },
         {
           "title": {
             "en": "Cleaning up shared messes",
-            "de": "Gemeinsam entstandene Unordnung aufräumen"
+            "de": "Gemeinsam entstandene Unordnung aufräumen",
+            "pt-BR": "Limpar a bagunça que os dois fizeram"
           },
           "icon_name": null
         },
         {
           "title": {
             "en": "Cleaning up after each other",
-            "de": "Hintereinander aufräumen"
+            "de": "Hintereinander aufräumen",
+            "pt-BR": "Limpar a bagunça do outro"
           },
           "icon_name": null
         },
         {
           "title": {
             "en": "Chores & Routines",
-            "de": "Haushaltsaufgaben und Alltagsroutinen"
+            "de": "Haushaltsaufgaben und Alltagsroutinen",
+            "pt-BR": "Tarefas de casa e rotinas"
           },
           "icon_name": "talk"
         }
@@ -516,41 +588,47 @@
     {
       "title": {
         "en": "Co-Caregivers",
-        "de": "Gemeinsame Betreuung"
+        "de": "Gemeinsame Betreuung",
+        "pt-BR": "Cuidar juntos de alguém"
       },
       "items": [
         {
           "title": {
             "en": "Family (sick / elderly)",
-            "de": "Kranke oder ältere Familienmitglieder"
+            "de": "Kranke oder ältere Familienmitglieder",
+            "pt-BR": "Família (pessoas doentes ou idosas)"
           },
           "icon_name": null
         },
         {
           "title": {
             "en": "Animals",
-            "de": "Tiere"
+            "de": "Tiere",
+            "pt-BR": "Animais"
           },
           "icon_name": null
         },
         {
           "title": {
             "en": "Plants",
-            "de": "Pflanzen"
+            "de": "Pflanzen",
+            "pt-BR": "Plantas"
           },
           "icon_name": null
         },
         {
           "title": {
             "en": "Children (own or from other partnerships)",
-            "de": "Kinder (eigene oder aus anderen Partnerschaften)"
+            "de": "Kinder (eigene oder aus anderen Partnerschaften)",
+            "pt-BR": "Crianças (próprias ou de outras relações)"
           },
           "icon_name": null
         },
         {
           "title": {
             "en": "Long-term commitment (for the above)",
-            "de": "Langfristige Verbindlichkeit (für die genannten Punkte)"
+            "de": "Langfristige Verbindlichkeit (für die genannten Punkte)",
+            "pt-BR": "Compromisso de longo prazo com esses cuidados"
           },
           "icon_name": null
         }
@@ -559,90 +637,103 @@
     {
       "title": {
         "en": "Emotional Intimacy",
-        "de": "Emotionale Intimität"
+        "de": "Emotionale Intimität",
+        "pt-BR": "Intimidade emocional"
       },
       "items": [
         {
           "title": {
             "en": "Active listening",
-            "de": "Aktives Zuhören"
+            "de": "Aktives Zuhören",
+            "pt-BR": "Escuta atenta"
           },
           "icon_name": null
         },
         {
           "title": {
             "en": "Expressing happiness and joy",
-            "de": "Glück und Freude ausdrücken"
+            "de": "Glück und Freude ausdrücken",
+            "pt-BR": "Expressar alegria e felicidade"
           },
           "icon_name": null
         },
         {
           "title": {
             "en": "Expressing sadness or grief",
-            "de": "Traurigkeit oder Kummer ausdrücken"
+            "de": "Traurigkeit oder Kummer ausdrücken",
+            "pt-BR": "Expressar tristeza ou luto"
           },
           "icon_name": null
         },
         {
           "title": {
             "en": "Expressing affection",
-            "de": "Zuneigung bekunden"
+            "de": "Zuneigung bekunden",
+            "pt-BR": "Expressar carinho"
           },
           "icon_name": null
         },
         {
           "title": {
             "en": "Expressing gratitude and appreciation",
-            "de": "Dankbarkeit und Wertschätzung zeigen"
+            "de": "Dankbarkeit und Wertschätzung zeigen",
+            "pt-BR": "Expressar gratidão e reconhecimento"
           },
           "icon_name": null
         },
         {
           "title": {
             "en": "Expressing disappointment or frustration",
-            "de": "Enttäuschung oder Frustration ausdrücken"
+            "de": "Enttäuschung oder Frustration ausdrücken",
+            "pt-BR": "Expressar decepção ou frustração"
           },
           "icon_name": null
         },
         {
           "title": {
             "en": "Sharing fears and insecurities",
-            "de": "Ängste und Unsicherheiten teilen"
+            "de": "Ängste und Unsicherheiten teilen",
+            "pt-BR": "Falar de medos e inseguranças"
           },
           "icon_name": null
         },
         {
           "title": {
             "en": "Sharing dreams and aspirations",
-            "de": "Träume und Hoffnungen teilen"
+            "de": "Träume und Hoffnungen teilen",
+            "pt-BR": "Falar de sonhos e planos"
           },
           "icon_name": null
         },
         {
           "title": {
             "en": "Having difficult conversations",
-            "de": "Schwierige Gespräche führen"
+            "de": "Schwierige Gespräche führen",
+            "pt-BR": "Ter conversas difíceis"
           },
           "icon_name": null
         },
         {
           "title": {
             "en": "Sharing stories about the past",
-            "de": "Geschichten aus der Vergangenheit erzählen"
+            "de": "Geschichten aus der Vergangenheit erzählen",
+            "pt-BR": "Contar histórias do passado"
           },
           "icon_name": null
         },
         {
           "title": {
             "en": "Knowing personal likes & dislikes",
-            "de": "Persönliche Vorlieben und Abneigungen kennen"
+            "de": "Persönliche Vorlieben und Abneigungen kennen",
+            "pt-BR": "Conhecer os gostos e as implicâncias do outro"
           },
           "icon_name": null
         },
         {
           "title": {
             "en": "Sharing about mental health challenges",
-            "de": "Über psychische Probleme offen sprechen"
+            "de": "Über psychische Probleme offen sprechen",
+            "pt-BR": "Falar sobre questões de saúde mental"
           },
           "icon_name": null
         }
@@ -651,97 +742,111 @@
     {
       "title": {
         "en": "Physical Intimacy",
-        "de": "Körperliche Intimität"
+        "de": "Körperliche Intimität",
+        "pt-BR": "Intimidade física"
       },
       "items": [
         {
           "title": {
             "en": "Body contact",
-            "de": "Körperkontakt"
+            "de": "Körperkontakt",
+            "pt-BR": "Contato físico"
           },
           "icon_name": null
         },
         {
           "title": {
             "en": "Hugging each other",
-            "de": "Einander umarmen"
+            "de": "Einander umarmen",
+            "pt-BR": "Abraçar"
           },
           "icon_name": null
         },
         {
           "title": {
             "en": "Giving each other massages",
-            "de": "Einander massieren"
+            "de": "Einander massieren",
+            "pt-BR": "Fazer massagem um no outro"
           },
           "icon_name": null
         },
         {
           "title": {
             "en": "Dancing together",
-            "de": "Zusammen tanzen"
+            "de": "Zusammen tanzen",
+            "pt-BR": "Dançar juntos"
           },
           "icon_name": null
         },
         {
           "title": {
             "en": "Cuddling with each other",
-            "de": "Miteinander kuscheln"
+            "de": "Miteinander kuscheln",
+            "pt-BR": "Ficar de conchinha"
           },
           "icon_name": null
         },
         {
           "title": {
             "en": "Holding hands",
-            "de": "Händchenhalten"
+            "de": "Händchenhalten",
+            "pt-BR": "Andar de mãos dadas"
           },
           "icon_name": null
         },
         {
           "title": {
             "en": "Kissing each other",
-            "de": "Einander küssen"
+            "de": "Einander küssen",
+            "pt-BR": "Beijar"
           },
           "icon_name": null
         },
         {
           "title": {
             "en": "Being naked around each other",
-            "de": "Nackt voreinander zu sein"
+            "de": "Nackt voreinander zu sein",
+            "pt-BR": "Ficar sem roupa perto do outro"
           },
           "icon_name": null
         },
         {
           "title": {
             "en": "Co-sleeping",
-            "de": "Gemeinsames Schlafen"
+            "de": "Gemeinsames Schlafen",
+            "pt-BR": "Dormir junto"
           },
           "icon_name": null
         },
         {
           "title": {
             "en": "Public displays of affection",
-            "de": "Öffentliches Zeigen von Zuneigung"
+            "de": "Öffentliches Zeigen von Zuneigung",
+            "pt-BR": "Demonstrar afeto em público"
           },
           "icon_name": null
         },
         {
           "title": {
             "en": "Playing with each other's hair",
-            "de": "Mit den Haaren des anderen spielen"
+            "de": "Mit den Haaren des anderen spielen",
+            "pt-BR": "Brincar com o cabelo do outro"
           },
           "icon_name": null
         },
         {
           "title": {
             "en": "Back scratches",
-            "de": "Rückenkratzen"
+            "de": "Rückenkratzen",
+            "pt-BR": "Fazer cafuné nas costas"
           },
           "icon_name": null
         },
         {
           "title": {
             "en": "Sitting close together",
-            "de": "Eng beieinander sitzen"
+            "de": "Eng beieinander sitzen",
+            "pt-BR": "Sentar bem perto"
           },
           "icon_name": null
         }
@@ -750,55 +855,63 @@
     {
       "title": {
         "en": "Emotional Support",
-        "de": "Emotionale Unterstützung"
+        "de": "Emotionale Unterstützung",
+        "pt-BR": "Apoio emocional"
       },
       "items": [
         {
           "title": {
             "en": "Offering support in hard times",
-            "de": "Unterstützung in schwierigen Zeiten"
+            "de": "Unterstützung in schwierigen Zeiten",
+            "pt-BR": "Dar apoio nos momentos difíceis"
           },
           "icon_name": null
         },
         {
           "title": {
             "en": "Being asked for advice",
-            "de": "Um Rat gefragt werden"
+            "de": "Um Rat gefragt werden",
+            "pt-BR": "Ser procurado para dar conselhos"
           },
           "icon_name": null
         },
         {
           "title": {
             "en": "Being a trusted confidant",
-            "de": "Eine Vertrauensperson sein"
+            "de": "Eine Vertrauensperson sein",
+            "pt-BR": "Ser uma pessoa de confiança para desabafar"
           },
           "icon_name": null
         },
         {
           "title": {
             "en": "Showing empathy and understanding",
-            "de": "Einfühlsamkeit und Verständnis zeigen"
+            "de": "Einfühlsamkeit und Verständnis zeigen",
+            "pt-BR": "Demonstrar empatia e compreensão"
           },
           "icon_name": null
         },
         {
           "title": {
             "en": "Giving each other reassurances",
-            "de": "Sich gegenseitig Rückversicherung geben"
+            "de": "Sich gegenseitig Rückversicherung geben",
+            "pt-BR": "Dar segurança um ao outro"
           },
           "icon_name": null
         },
         {
           "title": {
             "en": "Supporting mental health work",
-            "de": "Arbeit an der psychischen Gesundheit unterstützen"
+            "de": "Arbeit an der psychischen Gesundheit unterstützen",
+            "pt-BR": "Apoiar o trabalho de saúde mental do outro"
           },
           "icon_name": null
         },
         {
           "title": {
             "en": "Celebrating successes together",
-            "de": "Erfolge gemeinsam feiern"
+            "de": "Erfolge gemeinsam feiern",
+            "pt-BR": "Comemorar as conquistas juntos"
           },
           "icon_name": null
         }
@@ -807,34 +920,39 @@
     {
       "title": {
         "en": "Romantic",
-        "de": "Romantisches"
+        "de": "Romantisches",
+        "pt-BR": "Romance"
       },
       "items": [
         {
           "title": {
             "en": "Emotional attraction",
-            "de": "Emotionale Anziehung"
+            "de": "Emotionale Anziehung",
+            "pt-BR": "Atração emocional"
           },
           "icon_name": null
         },
         {
           "title": {
             "en": "Expressing love each other",
-            "de": "Liebe füreinander ausdrücken"
+            "de": "Liebe füreinander ausdrücken",
+            "pt-BR": "Dizer que ama"
           },
           "icon_name": null
         },
         {
           "title": {
             "en": "Unmotivated euphoria",
-            "de": "Grundlose Euphorie"
+            "de": "Grundlose Euphorie",
+            "pt-BR": "Aquela euforia sem motivo"
           },
           "icon_name": null
         },
         {
           "title": {
             "en": "Intense focus on each other",
-            "de": "Starke Fokussierung aufeinander"
+            "de": "Starke Fokussierung aufeinander",
+            "pt-BR": "Foco intenso um no outro"
           },
           "icon_name": null
         }
@@ -843,69 +961,79 @@
     {
       "title": {
         "en": "Caregiving",
-        "de": "Fürsorge & Unterstützung"
+        "de": "Fürsorge & Unterstützung",
+        "pt-BR": "Cuidado"
       },
       "items": [
         {
           "title": {
             "en": "Helping each other out with favours",
-            "de": "Einander mit Gefallen aushelfen"
+            "de": "Einander mit Gefallen aushelfen",
+            "pt-BR": "Fazer favores um para o outro"
           },
           "icon_name": null
         },
         {
           "title": {
             "en": "Emergency care and support",
-            "de": "Notfallversorgung und -unterstützung"
+            "de": "Notfallversorgung und -unterstützung",
+            "pt-BR": "Socorro e apoio em emergências"
           },
           "icon_name": null
         },
         {
           "title": {
             "en": "Care in case of illness or injury",
-            "de": "Versorgung bei Krankheit oder Verletzung"
+            "de": "Versorgung bei Krankheit oder Verletzung",
+            "pt-BR": "Cuidado em caso de doença ou lesão"
           },
           "icon_name": null
         },
         {
           "title": {
             "en": "Age-related care",
-            "de": "Altersbedingte Pflege"
+            "de": "Altersbedingte Pflege",
+            "pt-BR": "Cuidado relacionado à idade"
           },
           "icon_name": null
         },
         {
           "title": {
             "en": "End-of-life care",
-            "de": "Sterbebegleitung"
+            "de": "Sterbebegleitung",
+            "pt-BR": "Cuidado no fim da vida"
           },
           "icon_name": null
         },
         {
           "title": {
             "en": "Disability support",
-            "de": "Unterstützung bei Behinderungen"
+            "de": "Unterstützung bei Behinderungen",
+            "pt-BR": "Apoio em situação de deficiência"
           },
           "icon_name": null
         },
         {
           "title": {
             "en": "Recovery and rehabilitation support",
-            "de": "Unterstützung bei Genesung und Rehabilitation"
+            "de": "Unterstützung bei Genesung und Rehabilitation",
+            "pt-BR": "Apoio na recuperação e na reabilitação"
           },
           "icon_name": null
         },
         {
           "title": {
             "en": "Mental health support",
-            "de": "Unterstützung bei psychischen Problemen"
+            "de": "Unterstützung bei psychischen Problemen",
+            "pt-BR": "Apoio em saúde mental"
           },
           "icon_name": null
         },
         {
           "title": {
             "en": "Caregiving boundaries and limits",
-            "de": "Grenzen der Fürsorge"
+            "de": "Grenzen der Fürsorge",
+            "pt-BR": "Limites do cuidado que cada um pode oferecer"
           },
           "icon_name": "talk"
         }
@@ -914,62 +1042,71 @@
     {
       "title": {
         "en": "Social Integration",
-        "de": "Soziale Integration"
+        "de": "Soziale Integration",
+        "pt-BR": "Convívio social"
       },
       "items": [
         {
           "title": {
             "en": "Meeting / spending time with friends",
-            "de": "Freunde treffen und Zeit mit ihnen verbringen"
+            "de": "Freunde treffen und Zeit mit ihnen verbringen",
+            "pt-BR": "Conhecer e conviver com as amizades"
           },
           "icon_name": null
         },
         {
           "title": {
             "en": "Meeting parents/siblings/extended family",
-            "de": "Eltern, Geschwister und weitere Verwandte treffen"
+            "de": "Eltern, Geschwister und weitere Verwandte treffen",
+            "pt-BR": "Conhecer pais, irmãos e o resto da família"
           },
           "icon_name": null
         },
         {
           "title": {
             "en": "Meeting children (from other partnerships)",
-            "de": "Kinder kennenlernen (aus anderen Partnerschaften)"
+            "de": "Kinder kennenlernen (aus anderen Partnerschaften)",
+            "pt-BR": "Conhecer as crianças (de outras relações)"
           },
           "icon_name": null
         },
         {
           "title": {
             "en": "Serving as +1 for social events",
-            "de": "Begleitung (+1) bei sozialen Anlässen sein"
+            "de": "Begleitung (+1) bei sozialen Anlässen sein",
+            "pt-BR": "Ser o acompanhante em eventos sociais"
           },
           "icon_name": null
         },
         {
           "title": {
             "en": "Presenting as a couple in public settings",
-            "de": "Sich in der Öffentlichkeit als Paar präsentieren"
+            "de": "Sich in der Öffentlichkeit als Paar präsentieren",
+            "pt-BR": "Aparecer como casal em espaços públicos"
           },
           "icon_name": null
         },
         {
           "title": {
             "en": "Presenting as a couple on social media",
-            "de": "Sich in sozialen Medien als Paar präsentieren"
+            "de": "Sich in sozialen Medien als Paar präsentieren",
+            "pt-BR": "Aparecer como casal nas redes sociais"
           },
           "icon_name": null
         },
         {
           "title": {
             "en": "Presenting as a couple in professional settings",
-            "de": "Sich in beruflichen Kontexten als Paar präsentieren"
+            "de": "Sich in beruflichen Kontexten als Paar präsentieren",
+            "pt-BR": "Aparecer como casal em ambientes profissionais"
           },
           "icon_name": null
         },
         {
           "title": {
             "en": "Joint vacations with family or friends",
-            "de": "Gemeinsame Urlaube mit Familie oder Freunden"
+            "de": "Gemeinsame Urlaube mit Familie oder Freunden",
+            "pt-BR": "Viagens conjuntas com família ou amigos"
           },
           "icon_name": null
         }
@@ -978,153 +1115,175 @@
     {
       "title": {
         "en": "Sexual",
-        "de": "Sexuelles"
+        "de": "Sexuelles",
+        "pt-BR": "Sexo"
       },
       "items": [
         {
           "title": {
             "en": "Talking about sex and sexuality",
-            "de": "Gespräche über Sex und Sexualität führen"
+            "de": "Gespräche über Sex und Sexualität führen",
+            "pt-BR": "Falar sobre sexo e sexualidade"
           },
           "icon_name": null
         },
         {
           "title": {
             "en": "Being sexual with each other",
-            "de": "Sexualität miteinander leben"
+            "de": "Sexualität miteinander leben",
+            "pt-BR": "Transar"
           },
           "icon_name": null
         },
         {
           "title": {
             "en": "Mutual masturbation",
-            "de": "Gemeinsame Masturbation"
+            "de": "Gemeinsame Masturbation",
+            "pt-BR": "Masturbação mútua"
           },
           "icon_name": null
         },
         {
           "title": {
             "en": "Oral sex (cunnilingus & blowjobs)",
-            "de": "Oralverkehr (Lecken & Blasen)"
+            "de": "Oralverkehr (Lecken & Blasen)",
+            "pt-BR": "Sexo oral"
           },
           "icon_name": null
         },
         {
           "title": {
             "en": "Manual sex (fingering & hand jobs)",
-            "de": "Manueller Sex (Fingern und Handjobs)"
+            "de": "Manueller Sex (Fingern und Handjobs)",
+            "pt-BR": "Sexo manual (dedos e punheta)"
           },
           "icon_name": null
         },
         {
           "title": {
             "en": "Penetrative vaginal sex",
-            "de": "Vaginale Penetration"
+            "de": "Vaginale Penetration",
+            "pt-BR": "Penetração vaginal"
           },
           "icon_name": null
         },
         {
           "title": {
             "en": "Penetrative anal sex",
-            "de": "Anale Penetration"
+            "de": "Anale Penetration",
+            "pt-BR": "Penetração anal"
           },
           "icon_name": null
         },
         {
           "title": {
             "en": "Using sex toys",
-            "de": "Sexspielzeug benutzen"
+            "de": "Sexspielzeug benutzen",
+            "pt-BR": "Usar brinquedos sexuais"
           },
           "icon_name": null
         },
         {
           "title": {
             "en": "Role and power play",
-            "de": "Rollen- und Machtspiele"
+            "de": "Rollen- und Machtspiele",
+            "pt-BR": "Jogos de papéis e de poder"
           },
           "icon_name": null
         },
         {
           "title": {
             "en": "Bondage and restraint",
-            "de": "Bondage und Fesseln"
+            "de": "Bondage und Fesseln",
+            "pt-BR": "Amarras e imobilização"
           },
           "icon_name": null
         },
         {
           "title": {
             "en": "Impact play (spanking, etc.)",
-            "de": "Impact Play (z.B. Spanking etc.)"
+            "de": "Impact Play (z.B. Spanking etc.)",
+            "pt-BR": "Impacto (palmadas etc.)"
           },
           "icon_name": null
         },
         {
           "title": {
             "en": "Sensory play (blindfolds, ice, feathers, etc.)",
-            "de": "Sensorisches Spiel (z.B. Augenbinden, Eis, Federn)"
+            "de": "Sensorisches Spiel (z.B. Augenbinden, Eis, Federn)",
+            "pt-BR": "Jogos sensoriais (vendas, gelo, plumas etc.)"
           },
           "icon_name": null
         },
         {
           "title": {
             "en": "Threesomes or group sex",
-            "de": "Dreier oder Gruppensex"
+            "de": "Dreier oder Gruppensex",
+            "pt-BR": "Ménage ou sexo em grupo"
           },
           "icon_name": null
         },
         {
           "title": {
             "en": "Going to sexual events (play parties, workshops, etc.)",
-            "de": "Zu sexuellen Veranstaltungen gehen (Play Parties, Workshops, etc.)"
+            "de": "Zu sexuellen Veranstaltungen gehen (Play Parties, Workshops, etc.)",
+            "pt-BR": "Ir a eventos sexuais (play parties, oficinas etc.)"
           },
           "icon_name": null
         },
         {
           "title": {
             "en": "Importance of orgasms",
-            "de": "Wichtigkeit von Orgasmen"
+            "de": "Wichtigkeit von Orgasmen",
+            "pt-BR": "Importância do orgasmo"
           },
           "icon_name": "talk"
         },
         {
           "title": {
             "en": "Favourite positions and preferences",
-            "de": "Lieblingspositionen und Vorlieben"
+            "de": "Lieblingspositionen und Vorlieben",
+            "pt-BR": "Posições e preferências favoritas"
           },
           "icon_name": "talk"
         },
         {
           "title": {
             "en": "How frequent is sex wanted",
-            "de": "Gewünschte Häufigkeit von Sex"
+            "de": "Gewünschte Häufigkeit von Sex",
+            "pt-BR": "Com que frequência cada um quer transar"
           },
           "icon_name": "talk"
         },
         {
           "title": {
             "en": "Giving and receiving sexual feedback",
-            "de": "Sexuelles Feedback geben und erhalten"
+            "de": "Sexuelles Feedback geben und erhalten",
+            "pt-BR": "Dar e receber retorno sobre o sexo"
           },
           "icon_name": "talk"
         },
         {
           "title": {
             "en": "Safer sex practices and protection",
-            "de": "Sichere Sexualpraktiken und Schutzmaßnahmen"
+            "de": "Sichere Sexualpraktiken und Schutzmaßnahmen",
+            "pt-BR": "Práticas de sexo seguro e proteção"
           },
           "icon_name": "talk"
         },
         {
           "title": {
             "en": "STI testing and status",
-            "de": "STI-Tests und Status"
+            "de": "STI-Tests und Status",
+            "pt-BR": "Testagem e status de IST"
           },
           "icon_name": "talk"
         },
         {
           "title": {
             "en": "Sexual boundaries and consent",
-            "de": "Sexuelle Grenzen und Einvernehmlichkeit"
+            "de": "Sexuelle Grenzen und Einvernehmlichkeit",
+            "pt-BR": "Limites sexuais e consentimento"
           },
           "icon_name": "talk"
         }
@@ -1133,48 +1292,55 @@
     {
       "title": {
         "en": "Autonomy",
-        "de": "Autonomie"
+        "de": "Autonomie",
+        "pt-BR": "Autonomia"
       },
       "items": [
         {
           "title": {
             "en": "Alone time",
-            "de": "Zeit für sich selbst"
+            "de": "Zeit für sich selbst",
+            "pt-BR": "Tempo sozinho"
           },
           "icon_name": null
         },
         {
           "title": {
             "en": "Balance of time together and apart",
-            "de": "Balance zwischen gemeinsamer Zeit und Alleinzeit"
+            "de": "Balance zwischen gemeinsamer Zeit und Alleinzeit",
+            "pt-BR": "Equilíbrio entre tempo junto e tempo separado"
           },
           "icon_name": null
         },
         {
           "title": {
             "en": "Support to pursue independent interests",
-            "de": "Unterstützung, eigenen Interessen nachzugehen"
+            "de": "Unterstützung, eigenen Interessen nachzugehen",
+            "pt-BR": "Apoio para cada um seguir seus próprios interesses"
           },
           "icon_name": null
         },
         {
           "title": {
             "en": "Maintaining independent friendships",
-            "de": "Unabhängige Freundschaften aufrechterhalten"
+            "de": "Unabhängige Freundschaften aufrechterhalten",
+            "pt-BR": "Manter amizades próprias"
           },
           "icon_name": null
         },
         {
           "title": {
             "en": "Equal distribution of relationship power",
-            "de": "Gleichberechtigte Machtverteilung in der Beziehung"
+            "de": "Gleichberechtigte Machtverteilung in der Beziehung",
+            "pt-BR": "Poder dividido por igual na relação"
           },
           "icon_name": null
         },
         {
           "title": {
             "en": "Independent decision making",
-            "de": "Entscheidungen unabhängig treffen"
+            "de": "Entscheidungen unabhängig treffen",
+            "pt-BR": "Tomar decisões de forma independente"
           },
           "icon_name": null
         }
@@ -1183,97 +1349,111 @@
     {
       "title": {
         "en": "Open Relationships",
-        "de": "Offene Beziehungen"
+        "de": "Offene Beziehungen",
+        "pt-BR": "Relações abertas"
       },
       "items": [
         {
           "title": {
             "en": "Relationship style preferences",
-            "de": "Bevorzugte Beziehungsformen"
+            "de": "Bevorzugte Beziehungsformen",
+            "pt-BR": "Preferências de formato de relacionamento"
           },
           "icon_name": "talk"
         },
         {
           "title": {
             "en": "Meeting metamors (other partners)",
-            "de": "Treffen mit Metamoren (anderen Partner:innen)"
+            "de": "Treffen mit Metamoren (anderen Partner:innen)",
+            "pt-BR": "Conhecer os metamores (as outras parcerias)"
           },
           "icon_name": null
         },
         {
           "title": {
             "en": "Having positive relationships with metamors",
-            "de": "Positive Beziehungen zu Metamoren pflegen"
+            "de": "Positive Beziehungen zu Metamoren pflegen",
+            "pt-BR": "Ter uma boa relação com os metamores"
           },
           "icon_name": null
         },
         {
           "title": {
             "en": "Joint vacations with metamors",
-            "de": "Gemeinsame Urlaube mit Metamoren"
+            "de": "Gemeinsame Urlaube mit Metamoren",
+            "pt-BR": "Viagens conjuntas com metamores"
           },
           "icon_name": null
         },
         {
           "title": {
             "en": "Prioritisation over other partners",
-            "de": "Vorrang vor anderen Partner:innen"
+            "de": "Vorrang vor anderen Partner:innen",
+            "pt-BR": "Ter prioridade sobre as outras parcerias"
           },
           "icon_name": null
         },
         {
           "title": {
             "en": "Having veto power over other partners",
-            "de": "Vetorechte über andere Partner:innen haben"
+            "de": "Vetorechte über andere Partner:innen haben",
+            "pt-BR": "Ter poder de veto sobre as outras parcerias"
           },
           "icon_name": null
         },
         {
           "title": {
             "en": "Being subject to veto power from other partners",
-            "de": "Dem Vetorecht anderer Partner:innen unterliegen"
+            "de": "Dem Vetorecht anderer Partner:innen unterliegen",
+            "pt-BR": "Estar sujeito ao veto das outras parcerias"
           },
           "icon_name": null
         },
         {
           "title": {
             "en": "Expressing compersion",
-            "de": "Mitfreude (Compersion) ausdrücken"
+            "de": "Mitfreude (Compersion) ausdrücken",
+            "pt-BR": "Expressar compersão"
           },
           "icon_name": null
         },
         {
           "title": {
             "en": "Dealing with jealousy",
-            "de": "Umgang mit Eifersucht"
+            "de": "Umgang mit Eifersucht",
+            "pt-BR": "Lidar com ciúme"
           },
           "icon_name": "talk"
         },
         {
           "title": {
             "en": "Communication about other partners",
-            "de": "Kommunikation über andere Partner:innen"
+            "de": "Kommunikation über andere Partner:innen",
+            "pt-BR": "Falar sobre as outras parcerias"
           },
           "icon_name": "talk"
         },
         {
           "title": {
             "en": "Sexual health agreements",
-            "de": "Abmachungen zu sexueller Gesundheit"
+            "de": "Abmachungen zu sexueller Gesundheit",
+            "pt-BR": "Acordos de saúde sexual"
           },
           "icon_name": "talk"
         },
         {
           "title": {
             "en": "Relationship hierarchy",
-            "de": "Beziehungshierarchie"
+            "de": "Beziehungshierarchie",
+            "pt-BR": "Hierarquia entre as relações"
           },
           "icon_name": "talk"
         },
         {
           "title": {
             "en": "New partner protocols",
-            "de": "Umgang mit neuen Partner:innen"
+            "de": "Umgang mit neuen Partner:innen",
+            "pt-BR": "Combinados para quando surgir uma parceria nova"
           },
           "icon_name": "talk"
         }
@@ -1282,83 +1462,95 @@
     {
       "title": {
         "en": "Commitment",
-        "de": "Verbindlichkeit"
+        "de": "Verbindlichkeit",
+        "pt-BR": "Compromisso"
       },
       "items": [
         {
           "title": {
             "en": "Being sexually exclusive with each other",
-            "de": "Sexuelle Exklusivität miteinander"
+            "de": "Sexuelle Exklusivität miteinander",
+            "pt-BR": "Exclusividade sexual"
           },
           "icon_name": null
         },
         {
           "title": {
             "en": "Being romantically / emotionally exclusive",
-            "de": "Romantische und emotionale Exklusivität"
+            "de": "Romantische und emotionale Exklusivität",
+            "pt-BR": "Exclusividade romântica ou afetiva"
           },
           "icon_name": null
         },
         {
           "title": {
             "en": "Prioritisation over friendships",
-            "de": "Vorrang vor Freundschaften"
+            "de": "Vorrang vor Freundschaften",
+            "pt-BR": "Ter prioridade sobre as amizades"
           },
           "icon_name": null
         },
         {
           "title": {
             "en": "Relationship labels",
-            "de": "Beziehungsbezeichnungen"
+            "de": "Beziehungsbezeichnungen",
+            "pt-BR": "Rótulos para a relação"
           },
           "icon_name": null
         },
         {
           "title": {
             "en": "Planning for future",
-            "de": "Zukunftsplanung"
+            "de": "Zukunftsplanung",
+            "pt-BR": "Fazer planos para o futuro"
           },
           "icon_name": null
         },
         {
           "title": {
             "en": "Expectation of long term involvement",
-            "de": "Erwartung einer langfristigen Bindung"
+            "de": "Erwartung einer langfristigen Bindung",
+            "pt-BR": "Expectativa de uma relação de longo prazo"
           },
           "icon_name": null
         },
         {
           "title": {
             "en": "Commitment to working through challenges",
-            "de": "Verbindlichkeit, Krisen zusammen durchzustehen"
+            "de": "Verbindlichkeit, Krisen zusammen durchzustehen",
+            "pt-BR": "Compromisso de atravessar as dificuldades juntos"
           },
           "icon_name": null
         },
         {
           "title": {
             "en": "Commitment to relationship maintenance",
-            "de": "Verbindlichkeit zur kontinuierlichen Beziehungspflege"
+            "de": "Verbindlichkeit zur kontinuierlichen Beziehungspflege",
+            "pt-BR": "Compromisso de cuidar da relação"
           },
           "icon_name": null
         },
         {
           "title": {
             "en": "Pregnancy or adopting together",
-            "de": "Gemeinsame Schwangerschaft oder Adoption"
+            "de": "Gemeinsame Schwangerschaft oder Adoption",
+            "pt-BR": "Ter ou adotar uma criança juntos"
           },
           "icon_name": null
         },
         {
           "title": {
             "en": "Marriage or civil partnership",
-            "de": "Ehe oder eingetragene Partnerschaft"
+            "de": "Ehe oder eingetragene Partnerschaft",
+            "pt-BR": "Casamento ou união estável"
           },
           "icon_name": null
         },
         {
           "title": {
             "en": "Time and energy commitment",
-            "de": "Zeit- und Energieaufwand"
+            "de": "Zeit- und Energieaufwand",
+            "pt-BR": "Compromisso de tempo e energia"
           },
           "icon_name": "talk"
         }
@@ -1367,34 +1559,39 @@
     {
       "title": {
         "en": "Things to Discuss",
-        "de": "Wichtige Gesprächsthemen"
+        "de": "Wichtige Gesprächsthemen",
+        "pt-BR": "Assuntos para conversar"
       },
       "items": [
         {
           "title": {
             "en": "Love languages",
-            "de": "Liebessprachen"
+            "de": "Liebessprachen",
+            "pt-BR": "Linguagens do amor"
           },
           "icon_name": "talk"
         },
         {
           "title": {
             "en": "Accountability",
-            "de": "Verantwortungsübernahme"
+            "de": "Verantwortungsübernahme",
+            "pt-BR": "Responsabilização"
           },
           "icon_name": "talk"
         },
         {
           "title": {
             "en": "Privacy",
-            "de": "Privatsphäre"
+            "de": "Privatsphäre",
+            "pt-BR": "Privacidade"
           },
           "icon_name": "talk"
         },
         {
           "title": {
             "en": "Mental health & trauma",
-            "de": "Psychische Gesundheit & Trauma"
+            "de": "Psychische Gesundheit & Trauma",
+            "pt-BR": "Saúde mental e trauma"
           },
           "icon_name": "talk"
         }

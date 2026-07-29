@@ -1,4 +1,7 @@
+'use client';
+
 import { ConfirmModal } from '../ui/ConfirmModal';
+import { useTranslations } from '../LanguageProvider';
 
 interface DeleteMenuModalProps {
   isOpen: boolean;
@@ -7,15 +10,17 @@ interface DeleteMenuModalProps {
 }
 
 export function DeleteMenuModal({ isOpen, onConfirm, onCancel }: DeleteMenuModalProps) {
+  const t = useTranslations();
+
   return (
     <ConfirmModal
       isOpen={isOpen}
       onClose={onCancel}
       onConfirm={onConfirm}
-      title="Delete Menu"
-      message="Are you sure you want to delete this menu? This action cannot be undone."
-      confirmText="Delete"
-      cancelText="Cancel"
+      title={t.files.deleteTitle}
+      message={t.files.deleteMessage}
+      confirmText={t.common.delete}
+      cancelText={t.common.cancel}
     />
   );
 } 

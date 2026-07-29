@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useRef, useEffect, useLayoutEffect, useState } from 'react';
 import { 
   IconMust, 
@@ -9,22 +11,32 @@ import {
   IconTalk,
   IconChevron
 } from '../icons';
+import { useTranslations } from '../LanguageProvider';
+import { Dictionary } from '../../localization/dictionaries';
 
-// Available icon options for picker
-export const ICON_OPTIONS = [
-  { value: 'must', label: 'Must have', icon: IconMust, bgColor: 'bg-[var(--icon-must-tile)]' },
-  { value: 'like', label: 'Would like', icon: IconLike, bgColor: 'bg-[var(--icon-like-tile)]' },
-  { value: 'maybe', label: 'Maybe', icon: IconMaybe, bgColor: 'bg-[var(--icon-maybe-tile)]' },
-  { value: 'prefer-not', label: 'Prefer not', icon: IconPreferNot, bgColor: 'bg-[var(--icon-prefer-not-tile)]' },
-  { value: 'off-limit', label: 'Off limits', icon: IconOffLimit, bgColor: 'bg-[var(--icon-off-limit-tile)]' },
-  { value: 'talk', label: 'Conversation', icon: IconTalk, bgColor: 'bg-[var(--icon-talk-tile)]' },
-  { value: null, label: 'Not set', icon: IconNotSet, bgColor: 'bg-[var(--icon-not-set-tile)]' }
+// Available icon options for picker. Labels are looked up per render so they
+// follow the active language instead of being frozen at module load.
+type LevelKey = 'must' | 'like' | 'maybe' | 'preferNot' | 'offLimit' | 'talk' | 'notSet';
+
+export const ICON_OPTIONS: {
+  value: string | null;
+  labelKey: LevelKey;
+  icon: React.ComponentType;
+  bgColor: string;
+}[] = [
+  { value: 'must', labelKey: 'must', icon: IconMust, bgColor: 'bg-[var(--icon-must-tile)]' },
+  { value: 'like', labelKey: 'like', icon: IconLike, bgColor: 'bg-[var(--icon-like-tile)]' },
+  { value: 'maybe', labelKey: 'maybe', icon: IconMaybe, bgColor: 'bg-[var(--icon-maybe-tile)]' },
+  { value: 'prefer-not', labelKey: 'preferNot', icon: IconPreferNot, bgColor: 'bg-[var(--icon-prefer-not-tile)]' },
+  { value: 'off-limit', labelKey: 'offLimit', icon: IconOffLimit, bgColor: 'bg-[var(--icon-off-limit-tile)]' },
+  { value: 'talk', labelKey: 'talk', icon: IconTalk, bgColor: 'bg-[var(--icon-talk-tile)]' },
+  { value: null, labelKey: 'notSet', icon: IconNotSet, bgColor: 'bg-[var(--icon-not-set-tile)]' }
 ];
 
 // Utility function to get the icon label from icon type
-export function getIconLabel(iconType: string | null | undefined): string {
+export function getIconLabel(iconType: string | null | undefined, t: Dictionary['levels']): string {
   const option = ICON_OPTIONS.find(opt => opt.value === iconType);
-  return option ? option.label : 'Not set';
+  return t[option ? option.labelKey : 'notSet'];
 }
 
 export function renderIcon(iconType: string | null | undefined) {
@@ -58,6 +70,7 @@ interface IconPickerProps {
 }
 
 export function IconPicker({ selectedIcon, onSelectIcon, isOpen, onClose, mode = 'edit', parentRef }: IconPickerProps) {
+  const t = useTranslations().levels;
   const pickerRef = useRef<HTMLDivElement>(null);
   const firstOptionRef = useRef<HTMLButtonElement>(null);
   const [openDirection, setOpenDirection] = useState<'up' | 'down'>('down');
@@ -99,6 +112,7 @@ export function IconPicker({ selectedIcon, onSelectIcon, isOpen, onClose, mode =
   }, [isOpen, onClose]);
 
   if (!isOpen) return null;
+
   
   // In fill mode, filter out the talk icon
   const displayOptions = mode === 'fill' 
@@ -122,7 +136,7 @@ export function IconPicker({ selectedIcon, onSelectIcon, isOpen, onClose, mode =
       ref={pickerRef}
       className={`absolute z-10 left-0 sm:left-0 sm:right-auto right-0 bg-white dark:bg-gray-800 rounded-lg shadow-xl p-3 border border-gray-100 dark:border-gray-700 w-full max-w-xs sm:w-[360px] sm:max-w-none ${positionClass}`}
       role="dialog"
-      aria-label="Select icon"
+      aria-label={t.selectIcon}
     >
       <div 
         className="grid grid-cols-2 gap-3"
@@ -136,13 +150,13 @@ export function IconPicker({ selectedIcon, onSelectIcon, isOpen, onClose, mode =
             className={`hc-picker-item p-2.5 rounded-lg transition-all hover:brightness-95 active:scale-[0.98] ${option.bgColor} flex justify-start items-center`}
             role="menuitemradio"
             aria-checked={selectedIcon === option.value}
-            aria-label={`Select ${option.label} icon`}
+            aria-label={t.selectOption(t[option.labelKey])}
           >
             <div className="mr-2" aria-hidden="true">
               <option.icon />
             </div>
             <span className="text-sm font-medium px-1 py-1 sm:px-1.5 dark:text-white">
-              {option.label}
+              {t[option.labelKey]}
             </span>
           </button>
         ))}
@@ -157,8 +171,9 @@ interface IconButtonProps {
 }
 
 export function IconButton({ selectedIcon, onClick }: IconButtonProps) {
+  const t = useTranslations().levels;
   const selectedOption = ICON_OPTIONS.find(opt => opt.value === selectedIcon) || ICON_OPTIONS[ICON_OPTIONS.length - 1];
-  const label = `Select icon: currently ${selectedOption.label}`;
+  const label = t.currentSelection(t[selectedOption.labelKey]);
   
   return (
     <button 
@@ -173,7 +188,7 @@ export function IconButton({ selectedIcon, onClick }: IconButtonProps) {
     >
       {renderIcon(selectedIcon)}
       <span className="text-sm font-bold text-black dark:text-white truncate max-w-[180px]">
-        {selectedOption.label}
+        {t[selectedOption.labelKey]}
       </span>
       <IconChevron direction="down" className="h-4 w-4 ml-1.5" aria-hidden="true" />
     </button>

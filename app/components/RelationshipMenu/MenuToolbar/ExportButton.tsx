@@ -1,6 +1,10 @@
+'use client';
+
 import React, { useState, useRef, useEffect } from 'react';
 import { IconShare, IconChevron, IconFile, IconDownload } from '../../icons';
 import { ConfirmModal } from '../../ui/ConfirmModal';
+import { useTranslations } from '../../LanguageProvider';
+import { Dictionary } from '../../../localization/dictionaries';
 import { ShareLinkModal } from '../../ui/ShareLinkModal';
 import { MenuData } from '../../../types';
 import { ToastType } from '../../../components/ui/Toast/ToastContext';
@@ -15,12 +19,12 @@ interface ExportButtonProps {
 }
 
 const LINK_SHARE_PRIVACY_NOTICE_KEY = 'link_share_privacy_notice_accepted';
-const LINK_SHARE_PRIVACY_NOTICE_MESSAGE = [
-  "To let you share a menu via a link, your menu needs to be uploaded to the server. For each shared menu, your browser generates a unique, random encryption key, encrypts the menu using AES-256-GCM, and uploads only the encrypted data. The server responds with a token, which can later be used to retrieve the encrypted menu.",
-  "The link you receive includes both the token and the encryption key. The key is embedded in the URL fragment (the part after #), which is never sent to the server—ensuring that even if I wanted to, I couldn't decrypt your menu.",
-  "Sharing links are valid for 5 days and automatically expire 5 minutes after they are used to import the menu—this will also delete the encrypted menu data from the server.",
-  "For each menu, the server stores the time the data was uploaded and the encrypted menu content. No IP addresses or any other information that could link the encrypted data back to you are stored with the menu.",
-  "Please keep your link private and avoid sharing it through untrusted channels, as anyone with the full link can access your menu."
+const linkSharePrivacyNotice = (t: Dictionary['share']) => [
+  t.privacyNotice1,
+  t.privacyNotice2,
+  t.privacyNotice3,
+  t.privacyNotice4,
+  t.privacyNotice5,
 ];
 
 export function ExportButton({
@@ -29,6 +33,9 @@ export function ExportButton({
   menuData,
   showToast
 }: ExportButtonProps) {
+  const dictionary = useTranslations();
+  const t = dictionary.share;
+  const editor = dictionary.editor;
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [advancedOpen, setAdvancedOpen] = useState(false);
   const [dropdownPosition, setDropdownPosition] = useState<{left: string | number, right: string | number}>({ left: 'auto', right: 0 });
@@ -130,25 +137,25 @@ export function ExportButton({
       const link = `${baseUrl}?id=${encodeURIComponent(token)}#key=${encodeURIComponent(urlSafeKey)}`;
       setShareLink(link);
     } catch (err: unknown) {
-      let message = 'Failed to share menu: ';
+      let message = t.failedPrefix;
       if (err instanceof Error) {
         if (err.name === 'MenuRateLimitError' && err instanceof MenuRateLimitError) {
           // Handle rate limiting specifically
           if (err.waitTimeMinutes > 0) {
-            message = `Rate limit reached. Please wait ${err.waitTimeMinutes} minutes before sharing again.`;
+            message = t.rateLimitWait(err.waitTimeMinutes);
           } else {
-            message = 'Rate limit reached. You\'ve made too many sharing requests. Please try again later.';
+            message = t.rateLimit;
           }
         } else if (err.name === 'MenuEncryptionError') {
-          message += 'Encryption failed. Please try again.';
+          message += t.encryptionFailed;
         } else if (err.name === 'MenuNetworkError') {
-          message += 'Network error. Please check your connection and try again.';
+          message += t.networkFailed;
         } else {
           message += err.message;
         }
         console.error('ExportButton error:', err);
       } else {
-        message += 'Unknown error';
+        message += t.unknownError;
         console.error('ExportButton unknown error:', err);
       }
       showToast(message, 'error');
@@ -175,12 +182,12 @@ export function ExportButton({
         ref={buttonRef}
         onClick={toggleDropdown}
         className="w-full px-3 md:px-4 py-3 bg-[rgba(148,188,194,0.15)] dark:bg-[rgba(79,139,149,0.15)] text-[var(--main-text-color)] rounded-md hover:bg-[rgba(148,188,194,0.3)] dark:hover:bg-[rgba(79,139,149,0.3)] transition-colors shadow-md text-sm font-medium flex items-center justify-center border border-[var(--main-text-color)] whitespace-nowrap"
-        title="Share this menu"
+        title={t.shareMenu}
         data-onboarding="share-button"
         disabled={isUploading}
       >
         <IconShare className="h-4 w-4 mr-1" />
-        Export
+        {editor.exportMenu}
         <IconChevron direction={isDropdownOpen ? "up" : "down"} className="h-4 w-4 ml-1" />
       </button>
       
@@ -198,9 +205,9 @@ export function ExportButton({
             >
               <div className="flex items-center">
                 <IconShare className="h-4 w-4 mr-2 text-[var(--main-text-color)]" />
-                <span>{isUploading ? 'Uploading...' : 'Export Copy as Link'}</span>
+                <span>{isUploading ? t.uploading : t.exportLink}</span>
               </div>
-              <span className="text-xs text-gray-500 dark:text-gray-400 ml-6">End-to-end encrypted sharing.</span>
+              <span className="text-xs text-gray-500 dark:text-gray-400 ml-6">{t.exportLinkHint}</span>
             </button>
 
             <button
@@ -212,9 +219,9 @@ export function ExportButton({
             >
               <div className="flex items-center">
                 <IconDownload className="h-4 w-4 mr-2 text-[var(--main-text-color)]" />
-                <span>Download PDF</span>
+                <span>{t.downloadPdf}</span>
               </div>
-              <span className="text-xs text-gray-500 dark:text-gray-400 ml-6">Can be edited on the website.</span>
+              <span className="text-xs text-gray-500 dark:text-gray-400 ml-6">{t.downloadPdfHint}</span>
             </button>
             
             <div className="border-t border-gray-200 dark:border-gray-700 my-1"></div>
@@ -223,7 +230,7 @@ export function ExportButton({
               onClick={() => setAdvancedOpen(!advancedOpen)}
               className="flex items-center justify-between w-full px-4 py-3 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 text-left"
             >
-              <span className="font-medium">Advanced</span>
+              <span className="font-medium">{t.advanced}</span>
               <IconChevron
                 direction={advancedOpen ? "up" : "down"}
                 className="h-4 w-4 text-gray-500"
@@ -241,9 +248,9 @@ export function ExportButton({
                 >
                   <div className="flex items-center">
                     <IconFile className="h-4 w-4 mr-2 text-[var(--main-text-color)]" />
-                    <span>Download Menu File (.rmenu)</span>
+                    <span>{t.downloadFile}</span>
                   </div>
-                  <span className="text-xs text-gray-500 dark:text-gray-400 ml-6">JSON-encoded native format.</span>
+                  <span className="text-xs text-gray-500 dark:text-gray-400 ml-6">{t.downloadFileHint}</span>
                 </button>
               </div>
             )}
@@ -258,10 +265,10 @@ export function ExportButton({
           setIsDropdownOpen(false);
         }}
         onConfirm={handleAcceptNotice}
-        title="Privacy Notice"
-        message={LINK_SHARE_PRIVACY_NOTICE_MESSAGE}
-        confirmText="Accept and Continue"
-        cancelText="Don't Share"
+        title={t.privacyNotice}
+        message={linkSharePrivacyNotice(t)}
+        confirmText={t.privacyNoticeAccept}
+        cancelText={t.privacyNoticeDecline}
         initialFocus="cancel"
       />
       {/* Share Link Modal */}

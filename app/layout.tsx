@@ -4,7 +4,9 @@ import "./globals.css";
 import { ToastProvider } from "./components/ui/Toast";
 import LayoutWrapper from "./components/LayoutWrapper";
 import ThemeProvider from "./components/ThemeProvider";
+import LanguageProvider from "./components/LanguageProvider";
 import { THEME_STORAGE_KEY, DEFAULT_THEME } from "./utils/themeStorage";
+import { LANGUAGE_STORAGE_KEY } from "./utils/languageStorage";
 
 const nunito = Nunito({
   variable: "--font-nunito",
@@ -104,12 +106,38 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             `,
           }}
         />
+        {/* The static export is built in English, so the stored language is only
+            applied once React hydrates. Marking the document as pending keeps it
+            hidden until then (see globals.css), which trades a blank frame for a
+            flash of the wrong language. */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function() {
+                document.documentElement.setAttribute('data-i18n', 'pending');
+                try {
+                  var lang = localStorage.getItem('${LANGUAGE_STORAGE_KEY}');
+                  if (lang) {
+                    document.documentElement.setAttribute('lang', lang);
+                  }
+                } catch (e) {}
+              })();
+            `,
+          }}
+        />
+        {/* Without scripting nothing can hide or reveal the document, so the
+            English build must stay visible. */}
+        <noscript>
+          <style>{`html[data-i18n="pending"] body { visibility: visible; }`}</style>
+        </noscript>
       </head>
       <body className={`${nunito.variable} antialiased`}>
         <ThemeProvider>
-          <ToastProvider>
-            <LayoutWrapper>{children}</LayoutWrapper>
-          </ToastProvider>
+          <LanguageProvider>
+            <ToastProvider>
+              <LayoutWrapper>{children}</LayoutWrapper>
+            </ToastProvider>
+          </LanguageProvider>
         </ThemeProvider>
       </body>
     </html>

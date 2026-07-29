@@ -4,13 +4,32 @@ import { COLORS, PDF_CONFIG } from './constants';
 import { drawIcon, createItemMarker, drawRoundedRect } from './pdfUtils';
 import { drawTextWithEmojis, computeTextWidthWithEmojis } from './emojiText';
 import { formatPeopleNames } from '../formatUtils';
+import { Dictionary } from '../../localization/dictionaries';
 import { richTextToPlainText } from '../richTextUtils';
 import { drawFormattedLineWithEmojis, wrapRichTextToLines, computeLineWidthFromSegments } from './formattedText';
 
 /**
  * Adds the header section to the PDF for the first page
  */
-export function addHeader(pdf: jsPDF, menuData: MenuData, yPos: number, dryRun: boolean = false): number {    
+
+// Legend labels live in the dictionary, not in the colour table, so a PDF is
+// generated in whatever language the menu is being read in.
+const LEGEND_KEYS: Record<string, keyof Dictionary['pdf']> = {
+  must: 'legendMust',
+  like: 'legendLike',
+  maybe: 'legendMaybe',
+  'prefer-not': 'legendPreferNot',
+  'off-limit': 'legendOffLimit',
+  talk: 'legendTalk',
+  notSet: 'legendNotSet',
+};
+
+function legendLabel(iconType: string, t: Dictionary['pdf']): string {
+  const key = LEGEND_KEYS[iconType];
+  return key ? t[key] : '';
+}
+
+export function addHeader(pdf: jsPDF, menuData: MenuData, t: Dictionary['pdf'], locale: string, yPos: number, dryRun: boolean = false): number {    
     if (dryRun) {
       return PDF_CONFIG.headerHeight;
     }
@@ -25,7 +44,7 @@ export function addHeader(pdf: jsPDF, menuData: MenuData, yPos: number, dryRun: 
     // Main title
     pdf.setFontSize(PDF_CONFIG.titleFontSize + 3);
     pdf.setFont('Nunito', 'bold');
-    pdf.text('Relationship Menu', PDF_CONFIG.margin, yPos + 12, { baseline: 'middle' });
+    pdf.text(t.title, PDF_CONFIG.margin, yPos + 12, { baseline: 'middle' });
     
     // People names subtitle
     const peopleText = formatPeopleNames(menuData.people);
@@ -41,7 +60,7 @@ export function addHeader(pdf: jsPDF, menuData: MenuData, yPos: number, dryRun: 
 /**
  * Adds a compact header for subsequent pages
  */
-export function addCompactHeader(pdf: jsPDF, menuData: MenuData, pageNum: number, dryRun: boolean = false): number {
+export function addCompactHeader(pdf: jsPDF, menuData: MenuData, t: Dictionary['pdf'], pageNum: number, dryRun: boolean = false): number {
     if (dryRun) {
       return PDF_CONFIG.compactHeaderHeight;
     }
@@ -59,7 +78,7 @@ export function addCompactHeader(pdf: jsPDF, menuData: MenuData, pageNum: number
     // Main title on left
     pdf.setFontSize(PDF_CONFIG.subtitleFontSize + 3);
     pdf.setFont('Nunito', 'bold');
-    pdf.text('Relationship Menu', PDF_CONFIG.margin, textY, { baseline: 'middle' });
+    pdf.text(t.title, PDF_CONFIG.margin, textY, { baseline: 'middle' });
     
     const peopleText = formatPeopleNames(menuData.people);
     if (peopleText) {
@@ -76,7 +95,7 @@ export function addCompactHeader(pdf: jsPDF, menuData: MenuData, pageNum: number
 /**
  * Adds a legend explaining the icons (horizontal compact version)
  */
-export function addLegend(pdf: jsPDF, yPos: number, isCompact: boolean = false, dryRun: boolean = false): number {
+export function addLegend(pdf: jsPDF, t: Dictionary['pdf'], yPos: number, isCompact: boolean = false, dryRun: boolean = false): number {
     const iconTypes = ['must', 'like', 'maybe', 'prefer-not', 'off-limit', 'talk'];
     // Responsive padding and sizing based on compact mode
     const vertPadding = isCompact ? 3 : 4;
@@ -105,8 +124,7 @@ export function addLegend(pdf: jsPDF, yPos: number, isCompact: boolean = false, 
     // Compute widths for tight icon-label pairs
     const iconTextGap = 3; // Tighter gap between icon and text
     const computeItemWidths = () => iconTypes.map(iconType => {
-      const iconColor = COLORS[iconType];
-      const label = 'label' in iconColor ? iconColor.label : '';
+      const label = legendLabel(iconType, t);
       return iconSize + iconTextGap + pdf.getTextWidth(label);
     });
     let itemWidths = computeItemWidths();
@@ -138,8 +156,7 @@ export function addLegend(pdf: jsPDF, yPos: number, isCompact: boolean = false, 
     iconTypes.forEach((iconType, index) => {
       drawIcon(pdf, iconType, currentX, centerY, iconSize);
 
-      const iconColor = COLORS[iconType];
-      const label = 'label' in iconColor ? iconColor.label : '';
+      const label = legendLabel(iconType, t);
       // Darker legend text positioned close to icon
       pdf.setTextColor(COLORS.gray[0], COLORS.gray[1], COLORS.gray[2]);
       pdf.text(label, currentX + iconSize + iconTextGap, centerY, { baseline: 'middle' });
@@ -155,7 +172,7 @@ export function addLegend(pdf: jsPDF, yPos: number, isCompact: boolean = false, 
 /**
  * Adds the footer to the PDF
  */
-export function addFooter(pdf: jsPDF, menuData: MenuData): void {
+export function addFooter(pdf: jsPDF, menuData: MenuData, t: Dictionary['pdf'], locale: string): void {
   const pageCount = pdf.getNumberOfPages();
   
   // Format the date with month name
@@ -165,7 +182,7 @@ export function addFooter(pdf: jsPDF, menuData: MenuData): void {
     month: 'long', 
     day: 'numeric' 
   };
-  const updateDate = date.toLocaleDateString('en-US', options);
+  const updateDate = date.toLocaleDateString(locale, options);
   
   // Add footer to each page
   for (let i = 1; i <= pageCount; i++) {
@@ -200,7 +217,7 @@ export function addFooter(pdf: jsPDF, menuData: MenuData): void {
     pdf.setFontSize(8.5);
     pdf.setFont('Nunito', 'normal');
     pdf.setTextColor(200, 200, 200);
-    const editableText = "Edit this menu by importing the PDF into the app or website.";
+    const editableText = t.editableNote;
     pdf.text(editableText, PDF_CONFIG.margin, secondLineY, { baseline: 'middle' });
     
     // Calculate maximum width for the clickable area

@@ -1,3 +1,5 @@
+'use client';
+
 import { useMemo, useState } from 'react';
 import { TemplateSetupFormProps } from './types';
 import TemplateIcon from './TemplateIcon';
@@ -5,10 +7,18 @@ import MenuStats from '../ui/MenuStats';
 import { IconArrowLeft, IconWarning, IconPlusSolid, IconChevron } from '../icons';
 import { PersonNameInput } from '../ui/PersonNameInput';
 import { getLanguageName } from '../../localization/languages';
+import { localizedTemplateText, resolveTemplateLanguage } from '../../localization/templateText';
+import { useLanguage } from '../LanguageProvider';
 
 const TemplateSetupForm = ({ selectedTemplate, onSubmit, onCancel }: TemplateSetupFormProps) => {
+  const { language: uiLanguage, t } = useLanguage();
+  const tt = t.templates;
   const [people, setPeople] = useState<string[]>(['']);
-  const [language, setLanguage] = useState<string>('en');
+  // Start from the language the user already chose for the interface, so the
+  // picker only has to be touched when someone wants a different one.
+  const [language, setLanguage] = useState<string>(() =>
+    resolveTemplateLanguage(selectedTemplate.languages, uiLanguage)
+  );
   const [error] = useState<string | null>(null);
 
   const showLanguagePicker = useMemo(() => {
@@ -36,15 +46,15 @@ const TemplateSetupForm = ({ selectedTemplate, onSubmit, onCancel }: TemplateSet
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    let processedPeople = people.map(person => person.trim() === '' ? 'Anonymous' : person.trim());
+    let processedPeople = people.map(person => person.trim() === '' ? tt.anonymous : person.trim());
     if (processedPeople.length === 0) {
-      processedPeople = ['Anonymous'];
+      processedPeople = [tt.anonymous];
     }
     onSubmit(selectedTemplate.path, processedPeople, language);
   };
 
-  const localizedTitle = selectedTemplate.name?.[language] || selectedTemplate.name?.en || Object.values(selectedTemplate.name || {})[0] || '';
-  const localizedDescription = selectedTemplate.description?.[language] || selectedTemplate.description?.en || Object.values(selectedTemplate.description || {})[0] || '';
+  const localizedTitle = localizedTemplateText(selectedTemplate.name, language);
+  const localizedDescription = localizedTemplateText(selectedTemplate.description, language);
 
   return (
     <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 shadow p-6">
@@ -58,19 +68,19 @@ const TemplateSetupForm = ({ selectedTemplate, onSubmit, onCancel }: TemplateSet
               <h3 className="text-xl font-semibold text-[var(--main-text-color)] mb-1">
                 {localizedTitle}
               </h3>
-              <button 
+              <button
                 onClick={onCancel}
                 className="flex items-center text-[var(--main-text-color)] hover:text-[var(--main-text-color-hover)] px-3 py-1.5 rounded-lg border border-[rgba(158,198,204,0.2)] bg-[rgba(158,198,204,0.1)] hover:bg-[rgba(158,198,204,0.2)] transition-colors text-sm whitespace-nowrap ml-3 flex-shrink-0"
               >
                 <IconArrowLeft className="h-4 w-4 mr-1.5" />
-                Back to templates
+                {tt.backToTemplates}
               </button>
             </div>
             {selectedTemplate.stats && (
               <div className="hidden sm:block mt-2">
-                <MenuStats 
-                  sections={selectedTemplate.stats.sections} 
-                  items={selectedTemplate.stats.items} 
+                <MenuStats
+                  sections={selectedTemplate.stats.sections}
+                  items={selectedTemplate.stats.items}
                   compact={true}
                 />
               </div>
@@ -78,25 +88,27 @@ const TemplateSetupForm = ({ selectedTemplate, onSubmit, onCancel }: TemplateSet
           </div>
         </div>
       </div>
-      
+
       <p className="text-gray-600 dark:text-gray-300 mb-3 sm:mb-6 leading-relaxed">
         {localizedDescription}
       </p>
-      
+
       {showLanguagePicker && (
         <div className="mb-6">
-          <label className="block text-lg font-medium text-[var(--main-text-color)] mb-1">
-            Preferred language
+          <label htmlFor="template-language" className="block text-lg font-medium text-[var(--main-text-color)] mb-1">
+            {tt.languageLabel}
           </label>
           <div className="relative flex items-center group bg-[rgba(158,198,204,0.05)] dark:bg-[rgba(158,198,204,0.03)] rounded-lg p-1 pl-2 border border-[rgba(158,198,204,0.1)] hover:border-[rgba(158,198,204,0.3)] transition-colors">
             <div className="flex-grow flex items-center">
               <select
+                id="template-language"
                 value={language}
                 onChange={(e) => { setLanguage(e.target.value); e.currentTarget.blur(); }}
+                aria-describedby="template-language-hint"
                 className="w-full appearance-none p-3 bg-transparent border-none rounded-md focus:outline-none focus:ring-0 focus:shadow-none transition-colors text-base"
               >
                 {selectedTemplate.languages?.map((lang) => (
-                  <option key={lang} value={lang}>
+                  <option key={lang} value={lang} lang={lang}>
                     {getLanguageName(lang)}
                   </option>
                 ))}
@@ -106,29 +118,29 @@ const TemplateSetupForm = ({ selectedTemplate, onSubmit, onCancel }: TemplateSet
               <IconChevron />
             </div>
           </div>
-          <p className="text-sm text-gray-500 dark:text-gray-400 mt-2">This choice will be used to populate the menu and cannot be changed later.</p>
+          <p id="template-language-hint" className="text-sm text-gray-500 dark:text-gray-400 mt-2">{tt.languageHint}</p>
         </div>
       )}
 
       {selectedTemplate.stats && (
         <div className="sm:hidden mb-6">
-          <MenuStats 
-            sections={selectedTemplate.stats.sections} 
-            items={selectedTemplate.stats.items} 
+          <MenuStats
+            sections={selectedTemplate.stats.sections}
+            items={selectedTemplate.stats.items}
             compact={true}
           />
         </div>
       )}
-      
+
       <form onSubmit={handleSubmit}>
         <div className="mb-8">
           <label className="block text-lg font-medium text-[var(--main-text-color)] mb-4">
-            Who's in this relationship?
+            {tt.peopleLabel}
             <span className="block text-sm font-normal text-gray-500 dark:text-gray-400 mt-1">
-              Empty fields default to Anonymous
+              {tt.peopleHint}
             </span>
           </label>
-          
+
           <div className="space-y-4">
             {people.map((person, index) => (
               <PersonNameInput
@@ -141,30 +153,30 @@ const TemplateSetupForm = ({ selectedTemplate, onSubmit, onCancel }: TemplateSet
               />
             ))}
           </div>
-          
+
           <button
             type="button"
             onClick={handleAddPerson}
             className="mt-5 flex items-center text-[var(--main-text-color)] hover:text-[var(--main-text-color-hover)] transition-colors bg-[rgba(158,198,204,0.1)] dark:bg-[rgba(158,198,204,0.05)] hover:bg-[rgba(158,198,204,0.2)] dark:hover:bg-[rgba(158,198,204,0.1)] px-3 sm:px-4 py-2 rounded-lg shadow-sm border border-[rgba(158,198,204,0.2)] text-sm sm:text-base"
           >
             <IconPlusSolid className="h-4 w-4 sm:h-5 sm:w-5 mr-1.5 sm:mr-2" />
-            Add Another Person
+            {tt.addPerson}
           </button>
         </div>
-        
+
         {error && (
           <div className="mb-6 p-3 sm:p-4 bg-red-50 dark:bg-red-900/20 text-red-700 dark:text-red-300 rounded-lg border border-red-200 dark:border-red-800 flex items-center">
             <IconWarning className="h-4 w-4 sm:h-5 sm:w-5 mr-2 sm:mr-3 flex-shrink-0" />
             <span className="font-medium text-sm sm:text-base">{error}</span>
           </div>
         )}
-        
+
         <div className="flex justify-end pt-2">
           <button
             type="submit"
             className="px-4 sm:px-6 py-2.5 sm:py-3 text-white font-medium rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[var(--main-text-color)] shadow-sm text-sm sm:text-base bg-[var(--main-text-color)] hover:bg-[var(--main-bg-color)]"
           >
-            Create Menu
+            {tt.submit}
           </button>
         </div>
       </form>
@@ -173,5 +185,3 @@ const TemplateSetupForm = ({ selectedTemplate, onSubmit, onCancel }: TemplateSet
 };
 
 export default TemplateSetupForm;
-
-

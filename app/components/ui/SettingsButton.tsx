@@ -1,6 +1,9 @@
+'use client';
+
 import React, { useState } from 'react';
 import { IconSliders } from '../icons';
 import { SettingsModal } from './SettingsModal';
+import { useTranslations } from '../LanguageProvider';
 
 // Default (toolbar) presentation. Callers in other contexts (e.g. the Header)
 // pass their own className/iconClassName.
@@ -18,6 +21,7 @@ export function SettingsButton({
   className = TOOLBAR_BUTTON_CLASS,
   iconClassName = 'h-5 w-5',
 }: SettingsButtonProps) {
+  const t = useTranslations().common;
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
 
   return (
@@ -25,8 +29,8 @@ export function SettingsButton({
       <button
         onClick={() => setIsSettingsOpen(true)}
         className={className}
-        aria-label="Settings"
-        title="Settings"
+        aria-label={t.settings}
+        title={t.settings}
       >
         <IconSliders className={iconClassName} />
       </button>

@@ -1,7 +1,11 @@
+'use client';
+
 import { TemplateItem as TemplateItemType } from './types';
 import TemplateIcon from './TemplateIcon';
 import MenuStats from '../ui/MenuStats';
 import { IconChevron } from '../icons';
+import { localizedTemplateText } from '../../localization/templateText';
+import { useLanguage } from '../LanguageProvider';
 
 interface TemplateItemProps {
   template: TemplateItemType;
@@ -9,6 +13,10 @@ interface TemplateItemProps {
 }
 
 const TemplateItem = ({ template, onClick }: TemplateItemProps) => {
+  const { language } = useLanguage();
+  const name = localizedTemplateText(template.name, language);
+  const description = localizedTemplateText(template.description, language);
+
   return (
     <div 
       onClick={() => onClick(template)}
@@ -27,16 +35,16 @@ const TemplateItem = ({ template, onClick }: TemplateItemProps) => {
               <TemplateIcon icon={template.icon} />
             </div>
             <h3 className="text-lg sm:text-xl font-semibold text-[var(--main-text-color)] group-hover:text-[var(--main-text-color-hover)] transition-colors break-words">
-              {template.name.en || Object.values(template.name)[0]}
+              {name}
             </h3>
           </div>
           
           <h3 className="hidden sm:block text-xl font-semibold text-[var(--main-text-color)] group-hover:text-[var(--main-text-color-hover)] transition-colors mb-1 break-words">
-            {template.name.en || Object.values(template.name)[0]}
+            {name}
           </h3>
           
           <p className="text-gray-600 dark:text-gray-300 mt-1 sm:mt-2 mb-3 sm:mb-4 leading-relaxed break-words">
-            {template.description.en || Object.values(template.description)[0]}
+            {description}
           </p>
           
           {template.stats ? (

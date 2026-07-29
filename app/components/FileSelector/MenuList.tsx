@@ -1,4 +1,7 @@
+'use client';
+
 import { IconFile, IconTrash } from '../icons';
+import { useLanguage } from '../LanguageProvider';
 import { formatRelativeTime } from '../../utils/dateHelpers';
 import { MenuInfo } from '../../utils/menuStorage';
 
@@ -17,6 +20,9 @@ export function MenuList({
   onMenuDelete,
   compact = false 
 }: MenuListProps) {
+  const { language, t: dictionary } = useLanguage();
+  const t = dictionary.files;
+
   return (
     <div className={`space-y-3 ${!compact ? 'max-h-[300px] overflow-y-auto pr-1 mb-4' : ''}`}>
       {menus.map((menu) => (
@@ -33,16 +39,16 @@ export function MenuList({
               <h4 className="font-medium text-[var(--main-text-color)] truncate">
                 {menu.title}
               </h4>
-              {currentMenuId === menu.id && <span className="ml-2 text-xs flex-shrink-0 bg-[var(--main-text-color)] text-white px-2 py-0.5 rounded-full">Current</span>}
+              {currentMenuId === menu.id && <span className="ml-2 text-xs flex-shrink-0 bg-[var(--main-text-color)] text-white px-2 py-0.5 rounded-full">{t.current}</span>}
             </div>
             <p className="text-sm text-gray-500 dark:text-gray-400">
-              Last updated {formatRelativeTime(new Date(menu.lastUpdated))}
+              {t.lastUpdated(formatRelativeTime(new Date(menu.lastUpdated), language))}
             </p>
           </div>
           <button
             onClick={(e) => onMenuDelete(menu.id, e)}
             className="ml-2 p-2 text-gray-400 hover:text-red-500 dark:text-gray-500 dark:hover:text-red-400 rounded-full hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors"
-            aria-label="Delete menu"
+            aria-label={t.deleteMenu}
           >
             <IconTrash className="h-5 w-5" />
           </button>

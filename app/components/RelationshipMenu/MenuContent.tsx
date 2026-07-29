@@ -1,6 +1,9 @@
+'use client';
+
 import React from 'react';
 import { MenuCategory, MenuItem as MenuItemType, MenuMode, RichTextJSONPart } from '../../types';
 import { MenuItem } from './MenuItem';
+import { useTranslations } from '../LanguageProvider';
 import { CategoryHeader } from './CategoryHeader';
 import { IconPlus, IconPlusCircle } from '../icons';
 
@@ -39,6 +42,7 @@ export function MenuContent({
   onMoveItemDown,
   autoResizeTextarea
 }: MenuContentProps) {
+  const t = useTranslations().editor;
   const isEditing = mode === 'edit';
 
   return (
@@ -46,7 +50,7 @@ export function MenuContent({
       <div 
         className="content gap-4 sm:gap-5 md:gap-5 lg:gap-6 xl:gap-8"
         role="region" 
-        aria-label="Relationship Menu Content"
+        aria-label={t.contentLabel}
         data-onboarding="menu-content"
       >
         {menu.map((category, catIndex) => (
@@ -114,7 +118,7 @@ export function MenuContent({
             type="button"
             onClick={onAddSection}
             className="w-[80%] max-w-md py-4 px-3 border border-dashed border-[var(--main-text-color)] rounded-lg bg-[var(--main-bg-color)]/15 text-[var(--main-text-color)] hover:text-[var(--main-text-color-hover)] hover:border-[var(--main-text-color-hover)] hover:bg-[var(--main-bg-color)]/25 transition-colors flex items-center justify-center"
-            aria-label="Add new section to menu"
+            aria-label={t.addSection}
           >
             <IconPlusCircle className="h-6 w-6 mr-2" />
             Add New Section

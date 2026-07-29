@@ -5,6 +5,7 @@ import { useEditor, EditorContent } from '@tiptap/react';
 import type { Editor } from '@tiptap/react';
 import type { JSONContent } from '@tiptap/core';
 import StarterKit from '@tiptap/starter-kit';
+import { useTranslations } from '../LanguageProvider';
 import Underline from '@tiptap/extension-underline';
 import { TextStyle } from '@tiptap/extension-text-style';
 import Color from '@tiptap/extension-color';
@@ -27,7 +28,8 @@ export function RichTextEditor({
   autoFocus = false,
   disabled = false
 }: RichTextEditorProps) {
-  
+  const t = useTranslations().editor;
+
   const editor = useEditor({
     extensions: [
       StarterKit.configure({
@@ -138,7 +140,7 @@ export function RichTextEditor({
         
         <ToolbarButton
           onClick={() => editor.chain().focus().unsetColor().run()}
-          title="Remove Color"
+          title={t.removeColor}
         >
           <span className="text-gray-600 dark:text-gray-400">A</span>
         </ToolbarButton>

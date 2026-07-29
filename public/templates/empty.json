@@ -3,15 +3,18 @@
     "sorting_order": 100,
     "languages": [
       "en",
-      "de"
+      "de",
+      "pt-BR"
     ],
     "title": {
       "en": "Empty",
-      "de": "Leer"
+      "de": "Leer",
+      "pt-BR": "Em branco"
     },
     "description": {
       "en": "Start with a completely empty menu you can customise to your liking.",
-      "de": "Beginne mit einem völlig leeren Menü, das du nach Belieben anpassen kannst."
+      "de": "Beginne mit einem völlig leeren Menü, das du nach Belieben anpassen kannst.",
+      "pt-BR": "Comece com um menu totalmente vazio e monte do seu jeito."
     },
     "icon_svg": "M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8h-6V2zm0 0v6h6z",
     "icon_sf_symbol": "doc.fill",

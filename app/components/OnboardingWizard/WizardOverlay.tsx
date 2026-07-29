@@ -1,3 +1,6 @@
+'use client';
+
+import { useTranslations } from '../LanguageProvider';
 import React, { useRef } from 'react';
 import { Step, TransitionPhase } from './types';
 import { getModalPosition } from './utils';
@@ -32,6 +35,8 @@ export const WizardOverlay: React.FC<WizardOverlayProps> = ({
   calculateCurrentStepNumber,
   calculateTotalSteps
 }) => {
+  const t = useTranslations().wizard;
+
   const modalRef = useRef<HTMLDivElement>(null);
   const modalSize = useModalSize(modalRef, transitionPhase, currentStep, currentSubStep);
   const hasSubSteps = step?.subSteps && step.subSteps.length > 0;
@@ -158,7 +163,7 @@ export const WizardOverlay: React.FC<WizardOverlayProps> = ({
                   <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
                   </svg>
-                  Previous
+                  {t.previous}
                 </button>
               )}
             </div>
@@ -167,13 +172,13 @@ export const WizardOverlay: React.FC<WizardOverlayProps> = ({
                 className="px-4 py-2 rounded bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-100 hover:bg-gray-300 dark:hover:bg-gray-600"
                 onClick={onClose}
               >
-                Skip
+                {t.skip}
               </button>
               <button
                 className="px-4 py-2 rounded bg-[rgba(148,188,194,1)] text-white hover:bg-[rgba(79,139,149,1)]"
                 onClick={onNext}
               >
-                {currentStep === steps.length - 1 && (!hasSubSteps || (step.subSteps && currentSubStep === step.subSteps.length - 1)) ? 'Finish' : 'Next'}
+                {currentStep === steps.length - 1 && (!hasSubSteps || (step.subSteps && currentSubStep === step.subSteps.length - 1)) ? t.finish : t.next}
               </button>
             </div>
           </div>

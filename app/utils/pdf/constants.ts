@@ -19,44 +19,37 @@ export const COLORS: ColorTypes = {
   must: {
     bg: [94, 153, 224], // Blue
     border: [33, 150, 242],
-    marker: [236, 241, 247],
-    label: "Must"
+    marker: [236, 241, 247]
   },
   like: {
     bg: [114, 196, 98], // Green
     border: [77, 176, 79],
-    marker: [237, 244, 236],
-    label: "Like"
+    marker: [237, 244, 236]
   },
   maybe: {
     bg: [237, 181, 83], // Yellow
     border: [255, 194, 8],
-    marker: [247, 243, 234],
-    label: "Maybe"
+    marker: [247, 243, 234]
   },
   'prefer-not': {
     bg: [153, 153, 153], // Gray
     border: [158, 158, 158],
-    marker: [240, 240, 240],
-    label: "Prefer not"
+    marker: [240, 240, 240]
   },
   'off-limit': {
     bg: [219, 79, 77], // Red
     border: [232, 74, 61],
-    marker: [246, 234, 234],
-    label: "Off Limits"
+    marker: [246, 234, 234]
   },
   talk: {
     bg: [171, 110, 224], // Purple
     border: [156, 38, 176],
-    marker: [248, 245, 255],
-    label: "Conversation"
+    marker: [248, 245, 255]
   },
   notSet: {
     bg: [157, 176, 191], // Gray
     border: [158, 158, 158],
-    marker: [255, 255, 255, 0],
-    label: "Not set"
+    marker: [255, 255, 255, 0]
   }
 };
 

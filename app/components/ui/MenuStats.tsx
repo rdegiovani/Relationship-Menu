@@ -1,4 +1,7 @@
+'use client';
+
 import { IconDrawer, IconClipboard } from '../icons';
+import { useTranslations } from '../LanguageProvider';
 
 interface MenuStatsProps {
   sections: number;
@@ -8,6 +11,8 @@ interface MenuStatsProps {
 }
 
 const MenuStats = ({ sections, items, className = "", compact = false }: MenuStatsProps) => {
+  const t = useTranslations().common;
+
   // Define styling based on compact prop
   const itemClasses = compact 
     ? "flex items-center text-sm font-medium text-gray-600 dark:text-gray-300 bg-[rgba(158,198,204,0.1)] dark:bg-[rgba(158,198,204,0.05)] px-3 py-1.5 rounded-md border border-[rgba(158,198,204,0.2)]"
@@ -25,11 +30,11 @@ const MenuStats = ({ sections, items, className = "", compact = false }: MenuSta
     <div className={`flex items-center gap-2 ${className}`}>
       <div className={itemClasses}>
         <IconDrawer className={iconClasses} />
-        <span className={textClasses}>{sections} Topics</span>
+        <span className={textClasses}>{t.topics(sections)}</span>
       </div>
       <div className={itemClasses}>
         <IconClipboard className={iconClasses} />
-        <span className={textClasses}>{items} Items</span>
+        <span className={textClasses}>{t.items(items)}</span>
       </div>
     </div>
   );

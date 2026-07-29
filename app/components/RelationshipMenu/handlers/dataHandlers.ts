@@ -1,5 +1,6 @@
 import { MenuData, RichTextJSONPart } from '../../../types';
 import { ToastType } from '../../ui/Toast/ToastContext';
+import { Dictionary } from '../../../localization/dictionaries';
 
 export type DataHandlerProps = {
   editedData: MenuData;
@@ -7,6 +8,8 @@ export type DataHandlerProps = {
   onSave: (data: MenuData) => void;
   setActiveIconPicker?: (picker: { catIndex: number; itemIndex: number } | null) => void;
   showToast: (message: string, type?: ToastType, duration?: number) => void;
+  /** Default names and validation messages in the active language. */
+  t: Dictionary['templates'];
 };
 
 /**
@@ -17,7 +20,8 @@ export function createDataHandlers({
   setEditedData,
   onSave,
   setActiveIconPicker,
-  showToast
+  showToast,
+  t
 }: DataHandlerProps) {
   /**
    * Update a note for a menu item
@@ -83,7 +87,7 @@ export function createDataHandlers({
    */
   const handleAddPerson = () => {
     const updatedData = { ...editedData };
-    updatedData.people.push("New Person");
+    updatedData.people.push(t.newPerson);
     updatedData.last_update = new Date().toISOString();
     setEditedData(updatedData);
     onSave(updatedData);
@@ -96,7 +100,7 @@ export function createDataHandlers({
     const updatedData = { ...editedData };
     // Ensure we maintain at least 1 person
     if (updatedData.people.length <= 1) {
-      showToast("A relationship menu must have at least 1 person.", "error", 4000);
+      showToast(t.atLeastOnePerson, 'error', 4000);
       return;
     }
     updatedData.people.splice(personIndex, 1);

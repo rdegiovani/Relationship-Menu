@@ -1,6 +1,9 @@
+'use client';
+
 import React, { useRef } from 'react';
 import { IconWarning } from '../icons';
 import { useModalA11y } from './useModalA11y';
+import { useTranslations } from '../LanguageProvider';
 
 export interface ConfirmModalProps {
   isOpen: boolean;
@@ -20,11 +23,12 @@ export function ConfirmModal({
   onConfirm, 
   title, 
   message, 
-  confirmText = "Confirm", 
-  cancelText = "Cancel",
+  confirmText,
+  cancelText,
   showDownloadOption = false,
   initialFocus = 'confirm'
 }: ConfirmModalProps) {
+  const t = useTranslations().common;
   const confirmButtonRef = useRef<HTMLButtonElement>(null);
   const cancelButtonRef = useRef<HTMLButtonElement>(null);
   const { containerRef } = useModalA11y({
@@ -81,7 +85,7 @@ export function ConfirmModal({
                 onClick={() => onConfirm()}
                 className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-[var(--main-text-color)] text-base font-medium text-white hover:bg-[var(--main-text-color-hover)] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[var(--main-text-color)] sm:col-start-2 sm:text-sm"
               >
-                {confirmText}
+                {confirmText ?? t.confirm}
               </button>
               <button
                 type="button"
@@ -89,7 +93,7 @@ export function ConfirmModal({
                 onClick={onClose}
                 className="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 dark:border-gray-600 shadow-sm px-4 py-2 bg-white dark:bg-gray-700 text-base font-medium text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[var(--main-text-color)] sm:mt-0 sm:col-start-1 sm:text-sm"
               >
-                {cancelText}
+                {cancelText ?? t.cancel}
               </button>
             </div>
           </div>
@@ -143,7 +147,7 @@ export function ConfirmModal({
               onClick={() => onConfirm(true)}
               className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-[var(--main-text-color)] text-base font-medium text-white hover:bg-[var(--main-text-color-hover)] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[var(--main-text-color)] sm:col-start-2 sm:text-sm"
             >
-              Download and Create New
+              {t.downloadAndCreateNew}
             </button>
             <button
               type="button"
@@ -151,14 +155,14 @@ export function ConfirmModal({
               onClick={() => onConfirm(false)}
               className="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 dark:border-gray-600 shadow-sm px-4 py-2 bg-white dark:bg-gray-700 text-base font-medium text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[var(--main-text-color)] sm:mt-0 sm:col-start-1 sm:text-sm"
             >
-              Discard and Create New
+              {t.discardAndCreateNew}
             </button>
             <button
               type="button"
               onClick={onClose}
               className="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 dark:border-gray-600 shadow-sm px-4 py-2 bg-white dark:bg-gray-700 text-base font-medium text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[var(--main-text-color)] sm:mt-3 sm:col-span-2 sm:text-sm"
             >
-              Cancel
+              {t.cancel}
             </button>
           </div>
         </div>

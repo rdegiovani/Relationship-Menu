@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState, useEffect, useMemo } from 'react';
 import { MenuData, MenuMode } from '../../types';
 import { MenuHeader } from './MenuHeader';
@@ -5,6 +7,7 @@ import { MenuToolbar } from './MenuToolbar';
 import { MenuContent } from './MenuContent';
 import { FloatingModeSelector } from './MenuToolbar/FloatingModeSelector';
 import { useToast } from '../ui/Toast';
+import { useLanguage } from '../LanguageProvider';
 import {
   createDataHandlers,
   createItemHandlers,
@@ -26,6 +29,7 @@ export function RelationshipMenu({ menuData, onSave, initialMode = 'view' }: Rel
   
   // Get the toast utility from context
   const { showToast } = useToast();
+  const { language, t: dictionary } = useLanguage();
   
   // Derived state
   const isEditing = mode === 'edit' || mode === 'fill';
@@ -47,8 +51,12 @@ export function RelationshipMenu({ menuData, onSave, initialMode = 'view' }: Rel
     menuData,
     editedData,
     isEditing,
-    showToast: showToast
-  }), [menuData, editedData, isEditing, showToast]);
+    showToast: showToast,
+    t: dictionary.share,
+    anonymous: dictionary.templates.anonymous,
+    pdfStrings: dictionary.pdf,
+    locale: language
+  }), [menuData, editedData, isEditing, showToast, dictionary, language]);
 
   // Create UI handlers with the now-available handleExportPDF
   const {
@@ -75,8 +83,9 @@ export function RelationshipMenu({ menuData, onSave, initialMode = 'view' }: Rel
     setEditedData,
     onSave,
     setActiveIconPicker,
-    showToast
-  }), [editedData, onSave, showToast]);
+    showToast,
+    t: dictionary.templates
+  }), [editedData, onSave, showToast, dictionary]);
 
   // Create item handlers
   const {
@@ -92,8 +101,9 @@ export function RelationshipMenu({ menuData, onSave, initialMode = 'view' }: Rel
     editedData,
     setEditedData,
     onSave,
-    menu
-  }), [editedData, onSave, menu]);
+    menu,
+    t: dictionary.templates
+  }), [editedData, onSave, menu, dictionary]);
 
   // Effect to resize all textareas when entering edit mode
   useEffect(() => {

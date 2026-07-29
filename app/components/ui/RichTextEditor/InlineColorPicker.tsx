@@ -5,8 +5,10 @@ import type { Editor } from '@tiptap/react';
 import { HexColorPicker } from 'react-colorful';
 import type { Node as PMNode } from '@tiptap/pm/model';
 import { useTheme } from '../../ThemeProvider';
+import { useTranslations } from '../../LanguageProvider';
 
 export function InlineColorPicker({ editor }: { editor: Editor }) {
+  const t = useTranslations().editor;
   const [isOpen, setIsOpen] = useState(false);
   const { resolvedColorMode } = useTheme();
   const themeDefaultColor = resolvedColorMode === 'dark' ? '#ffffff' : '#000000';
@@ -92,7 +94,7 @@ export function InlineColorPicker({ editor }: { editor: Editor }) {
             return next;
           });
         }}
-        title="Text color"
+        title={t.textColor}
         className="min-w-10 w-8 h-8 rounded border border-gray-300 dark:border-gray-500 bg-white dark:bg-gray-600 flex items-center justify-center"
       >
         <span className="w-5 h-5 rounded" style={{ backgroundColor: currentColor }} />

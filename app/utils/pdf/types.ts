@@ -5,7 +5,6 @@ export interface ColorConfig {
   bg: number[];
   border: number[];
   marker: number[];
-  label: string;
 }
 
 // Define type for COLORS object

@@ -1,4 +1,7 @@
+'use client';
+
 import { ConfirmModal } from '../ui/ConfirmModal';
+import { useTranslations } from '../LanguageProvider';
 import { MenuData } from '../../types';
 
 interface ImportConflictProps {
@@ -13,6 +16,8 @@ interface ImportConflictProps {
 }
 
 export function ImportConflictModal({ conflict, onConfirm, onCancel }: ImportConflictProps) {
+  const t = useTranslations().files;
+
   if (!conflict) return null;
 
   return (
@@ -20,14 +25,14 @@ export function ImportConflictModal({ conflict, onConfirm, onCancel }: ImportCon
       isOpen={true}
       onClose={onCancel}
       onConfirm={onConfirm}
-      title={conflict.isNewer ? "Older version exists" : "Newer version exists"}
+      title={conflict.isNewer ? t.conflictOlderTitle : t.conflictNewerTitle}
       message={
         conflict.isNewer
-          ? "You're importing a newer version of a menu that already exists. Would you like to update the existing menu?"
-          : "You're importing an older version of a menu that already exists. The existing menu is newer than the one you're importing. Would you like to replace the existing newer version with this older version?"
+          ? t.conflictOlderMessage
+          : t.conflictNewerMessage
       }
-      confirmText={conflict.isNewer ? "Update Menu" : "Replace with Older Version"}
-      cancelText="Open Existing Menu"
+      confirmText={conflict.isNewer ? t.conflictUpdate : t.conflictReplace}
+      cancelText={t.conflictOpenExisting}
     />
   );
 } 

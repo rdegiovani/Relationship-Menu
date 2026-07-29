@@ -4,6 +4,7 @@ import { MenuData } from '../../types';
 import { getMenuById, saveMenu, updateMenuList } from '../../utils/menuStorage';
 import { ImportConflictModal } from './ImportConflictModal';
 import { migrateMenuData } from '../../utils/migrations';
+import { useTranslations } from '../LanguageProvider';
 
 interface UseMenuImportOptions {
   onComplete?: (menuId: string) => void;
@@ -19,6 +20,7 @@ export function useMenuImport({ onComplete, isModal, onClose }: UseMenuImportOpt
     id: string;
   } | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const t = useTranslations().files;
 
   // Initial import, detects conflicts
   const importMenu = useCallback((importedData: MenuData) => {
@@ -29,7 +31,7 @@ export function useMenuImport({ onComplete, isModal, onClose }: UseMenuImportOpt
       data = migrateMenuData(importedData);
     } catch (e) {
       const err = e as Error;
-      setError(err.message || 'Failed to import menu.');
+      setError(err.message || t.importFailed);
       return false;
     }
     // Ensure we have a UUID
@@ -65,7 +67,7 @@ export function useMenuImport({ onComplete, isModal, onClose }: UseMenuImportOpt
       onComplete?.(menuId);
       return false;
     }
-  }, [isModal, onClose, onComplete]);
+  }, [isModal, onClose, onComplete, t]);
 
   // Force import, always overwrites
   const forceImportMenu = useCallback((data: MenuData) => {
@@ -75,7 +77,7 @@ export function useMenuImport({ onComplete, isModal, onClose }: UseMenuImportOpt
       migrated = migrateMenuData(data);
     } catch (e) {
       const err = e as Error;
-      setError(err.message || 'Failed to import menu.');
+      setError(err.message || t.importFailed);
       return;
     }
     // Always ensure uuid
@@ -86,7 +88,7 @@ export function useMenuImport({ onComplete, isModal, onClose }: UseMenuImportOpt
     if (isModal && onClose) onClose();
     onComplete?.(menuId);
     setImportConflict(null);
-  }, [isModal, onClose, onComplete]);
+  }, [isModal, onClose, onComplete, t]);
 
   // Cancel import (open existing menu, clear conflict)
   const cancelImport = useCallback(() => {

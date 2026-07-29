@@ -3,6 +3,14 @@
 /* Tie the `dark:` variant to the data-color-mode attribute, not prefers-color-scheme. */
 @custom-variant dark (&:where([data-color-mode="dark"], [data-color-mode="dark"] *));
 
+/* Hide the document until LanguageProvider has resolved the stored language.
+   The inline script in layout.tsx sets data-i18n="pending" before first paint
+   and the provider clears it on mount, so the page never flashes in the wrong
+   language. A <noscript> override in layout.tsx keeps it visible without JS. */
+html[data-i18n="pending"] body {
+  visibility: hidden;
+}
+
 /* Rich Text Editor Styles */
 .ProseMirror {
   outline: none;

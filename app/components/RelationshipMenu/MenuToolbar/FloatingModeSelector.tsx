@@ -1,6 +1,9 @@
+'use client';
+
 import React from 'react';
 import { MenuMode } from '../../../types';
 import { IconEye, IconPencilPage, IconGear } from '../../../components/icons';
+import { useTranslations } from '../../LanguageProvider';
 
 interface FloatingModeSelectorProps {
   currentMode: MenuMode;
@@ -8,6 +11,7 @@ interface FloatingModeSelectorProps {
 }
 
 export function FloatingModeSelector({ currentMode, onModeChange }: FloatingModeSelectorProps) {
+  const t = useTranslations().editor;
   return (
     <div className="hc-mode-selector fixed bottom-4 right-4 z-50 md:block md:shadow-lg md:rounded-full md:border md:border-[var(--main-text-color)] md:bg-white md:dark:bg-gray-800">
       {/* Mobile Tab Bar (full width at bottom on small screens) */}
@@ -26,7 +30,7 @@ export function FloatingModeSelector({ currentMode, onModeChange }: FloatingMode
           aria-current={currentMode === 'view' ? 'page' : undefined}
         >
           <IconEye className="h-6 w-6" aria-hidden="true" />
-          <span className="text-xs mt-1">View</span>
+          <span className="text-xs mt-1">{t.modeView}</span>
         </button>
         
         <button
@@ -37,7 +41,7 @@ export function FloatingModeSelector({ currentMode, onModeChange }: FloatingMode
           aria-current={currentMode === 'fill' ? 'page' : undefined}
         >
           <IconPencilPage className="h-6 w-6" aria-hidden="true" />
-          <span className="text-xs mt-1">Fill</span>
+          <span className="text-xs mt-1">{t.modeFill}</span>
         </button>
         
         <button
@@ -48,7 +52,7 @@ export function FloatingModeSelector({ currentMode, onModeChange }: FloatingMode
           aria-current={currentMode === 'edit' ? 'page' : undefined}
         >
           <IconGear className="h-6 w-6" aria-hidden="true" />
-          <span className="text-xs mt-1">Edit</span>
+          <span className="text-xs mt-1">{t.modeEdit}</span>
         </button>
       </div>
 
@@ -64,8 +68,8 @@ export function FloatingModeSelector({ currentMode, onModeChange }: FloatingMode
               ? 'bg-[var(--main-text-color)] text-white' 
               : 'bg-[rgba(148,188,194,0.15)] dark:bg-[rgba(79,139,149,0.15)] text-[var(--main-text-color)] hover:bg-[rgba(148,188,194,0.3)] dark:hover:bg-[rgba(79,139,149,0.3)]'
           }`}
-          aria-label="View mode"
-          title="View mode"
+          aria-label={t.modeViewLabel}
+          title={t.modeViewLabel}
         >
           <IconEye className="h-5 w-5" aria-hidden="true" />
         </button>
@@ -77,8 +81,8 @@ export function FloatingModeSelector({ currentMode, onModeChange }: FloatingMode
               ? 'bg-[var(--main-text-color)] text-white' 
               : 'bg-[rgba(148,188,194,0.15)] dark:bg-[rgba(79,139,149,0.15)] text-[var(--main-text-color)] hover:bg-[rgba(148,188,194,0.3)] dark:hover:bg-[rgba(79,139,149,0.3)]'
           }`}
-          aria-label="Fill mode"
-          title="Fill mode"
+          aria-label={t.modeFillLabel}
+          title={t.modeFillLabel}
         >
           <IconPencilPage className="h-5 w-5" aria-hidden="true" />
         </button>
@@ -90,8 +94,8 @@ export function FloatingModeSelector({ currentMode, onModeChange }: FloatingMode
               ? 'bg-[var(--main-text-color)] text-white' 
               : 'bg-[rgba(148,188,194,0.15)] dark:bg-[rgba(79,139,149,0.15)] text-[var(--main-text-color)] hover:bg-[rgba(148,188,194,0.3)] dark:hover:bg-[rgba(79,139,149,0.3)]'
           }`}
-          aria-label="Edit mode"
-          title="Edit mode"
+          aria-label={t.modeEditLabel}
+          title={t.modeEditLabel}
         >
           <IconGear className="h-5 w-5" aria-hidden="true" />
         </button>

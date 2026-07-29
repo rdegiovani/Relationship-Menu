@@ -1,6 +1,9 @@
+'use client';
+
 import React, { useState, useEffect, useRef } from 'react';
 import { MenuItem, RichTextJSONPart } from '../../../types';
 import { IconPicker, renderIcon, ICON_OPTIONS } from '../../ui/IconPicker';
+import { useTranslations } from '../../LanguageProvider';
 import { IconChevron } from '../../icons';
 import { getItemSpanClasses } from './utils';
 import { renderRichText, isRichTextEmpty } from '../../../utils/richTextUtils';
@@ -22,6 +25,9 @@ export function FillMenuItem({
   onIconChange,
   onNoteChange,
 }: FillMenuItemProps) {
+  const dictionary = useTranslations();
+  const t = dictionary.levels;
+  const editor = dictionary.editor;
   const [isNoteExpanded, setIsNoteExpanded] = useState(false);
   const [isPickerOpen, setIsPickerOpen] = useState(false);
   const pickerWrapperRef = useRef<HTMLDivElement>(null);
@@ -75,7 +81,7 @@ export function FillMenuItem({
             selectedOption.bgColor
           }`}
           style={{ minWidth: '42px' }}  /* Match width of buttons with arrows */
-          aria-label="Icon"
+          aria-label={t.icon}
         >
           {renderIcon(iconType)}
           <div className="w-4"></div> {/* Spacer to compensate for missing arrow */}
@@ -91,7 +97,7 @@ export function FillMenuItem({
         className={`hc-field inline-flex items-center px-1.5 py-1.5 border border-gray-300 dark:border-gray-600 rounded-md hover:bg-gray-50 dark:hover:bg-gray-700 ${
           iconType ? selectedOption.bgColor : 'bg-white dark:bg-gray-800'
         }`}
-        aria-label="Select icon"
+        aria-label={t.selectIcon}
       >
         {renderIcon(iconType)}
         <IconChevron 
@@ -125,7 +131,7 @@ export function FillMenuItem({
       // Format the note text to preserve line breaks
       const formattedNote = !isRichTextEmpty(item.note) ? 
         renderRichText(item.note) : 
-        "Add a note...";
+        editor.addNote;
         
       // Note text that expands when clicked
       return (

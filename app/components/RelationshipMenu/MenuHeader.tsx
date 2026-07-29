@@ -1,6 +1,9 @@
+'use client';
+
 import React from 'react';
 import { MenuMode } from '../../types';
 import { IconPlus } from '../icons';
+import { useLanguage } from '../LanguageProvider';
 import { PersonNameInput } from '../ui/PersonNameInput';
 import { formatPeopleNames } from '../../utils/formatUtils';
 
@@ -21,10 +24,12 @@ export function MenuHeader({
   onAddPerson,
   onDeletePerson
 }: MenuHeaderProps) {
+  const { language, t: dictionary } = useLanguage();
+  const t = dictionary.editor;
   const formatDate = (dateString: string) => {
     try {
       const date = new Date(dateString);
-      return new Intl.DateTimeFormat('en-US', {
+      return new Intl.DateTimeFormat(language, {
         year: 'numeric',
         month: 'long',
         day: 'numeric',
@@ -40,7 +45,7 @@ export function MenuHeader({
     <div className="w-full md:w-auto transition-all duration-150" data-onboarding="menu-header">
       {mode === 'edit' ? (
         <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-5 border border-gray-200 dark:border-gray-700 transition-all">
-          <h2 className="text-xl font-bold mb-5 text-[var(--main-text-color)] dark:text-[var(--main-text-color)] transition-colors">Menu for:</h2>
+          <h2 className="text-xl font-bold mb-5 text-[var(--main-text-color)] dark:text-[var(--main-text-color)] transition-colors">{t.menuFor}</h2>
           <div className="space-y-4 w-full max-w-xl">
             {people.map((personName, index) => (
               <PersonNameInput
@@ -66,10 +71,10 @@ export function MenuHeader({
         <div className="transition-all duration-150">
           <div className="flex items-center">
             <h2 className="text-[var(--main-text-color)] dark:text-[var(--main-text-color)] font-bold text-2xl transition-colors">
-              {formatPeopleNames(people, 'and')}
+              {formatPeopleNames(people, dictionary.common.and)}
             </h2>
           </div>
-          <p className="text-sm text-gray-700 dark:text-gray-300 transition-colors">Last updated: {formatDate(lastUpdate)}</p>
+          <p className="text-sm text-gray-700 dark:text-gray-300 transition-colors">{t.lastUpdated(formatDate(lastUpdate))}</p>
         </div>
       )}
     </div>

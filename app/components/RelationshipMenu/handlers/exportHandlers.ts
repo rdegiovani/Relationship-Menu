@@ -1,12 +1,20 @@
 import { MenuData } from '../../../types';
 import { ToastType } from '../../../components/ui/Toast/ToastContext';
 import { formatPeopleNames } from '../../../utils/formatUtils';
+import { Dictionary } from '../../../localization/dictionaries';
 
 export type ExportHandlerProps = {
   menuData: MenuData;
   editedData: MenuData;
   isEditing: boolean;
   showToast: (message: string, type?: ToastType, duration?: number) => void;
+  /** Sharing copy and the generated file name follow the active language. */
+  t: Dictionary['share'];
+  anonymous: string;
+  /** Strings baked into the exported PDF itself. */
+  pdfStrings: Dictionary['pdf'];
+  /** Locale used to format dates inside the PDF. */
+  locale: string;
 };
 
 /**
@@ -28,24 +36,24 @@ const isShareApiSupported = () => {
 /**
  * Creates a consistent title or filename 
  */
-const getMenuName = (people: string[], options: { 
-  extension?: string; 
+const getMenuName = (people: string[], t: Dictionary['share'], anonymous: string, options: {
+  extension?: string;
   sanitizeForFilename?: boolean;
 } = {}): string => {
   // Default options
   const { extension = '', sanitizeForFilename = false } = options;
-  
+
   // Ensure there's at least one name, defaulting to "Anonymous" if empty
-  const validPeople = people.length > 0 ? people : ['Anonymous'];
-  
+  const validPeople = people.length > 0 ? people : [anonymous];
+
   // Format people names
   const peopleNames = formatPeopleNames(validPeople);
-  
+
   // Format the date (using parentheses)
   const date = new Date().toISOString().split('T')[0];
-  
+
   // Create the title/filename
-  let result = `Relationship Menu for ${peopleNames} (${date})${extension}`;
+  let result = t.fileName(peopleNames, date, extension);
   
   // Replace invalid filename characters if needed
   if (sanitizeForFilename) {
@@ -62,7 +70,11 @@ export function createExportHandlers({
   menuData,
   editedData,
   isEditing,
-  showToast
+  showToast,
+  t,
+  anonymous,
+  pdfStrings,
+  locale
 }: ExportHandlerProps) {
   /**
    * Download the menu as a JSON-encoded native file (.rmenu)
@@ -76,7 +88,7 @@ export function createExportHandlers({
     const blob = new Blob([jsonString], { type: 'application/json' });
 
     // Create filename with consistent format (native extension)
-    const fileName = getMenuName(people, { extension: '.rmenu', sanitizeForFilename: true });
+    const fileName = getMenuName(people, t, anonymous, { extension: '.rmenu', sanitizeForFilename: true });
 
     // Use Share API on mobile if available
     if (isMobile() && isShareApiSupported()) {
@@ -86,10 +98,10 @@ export function createExportHandlers({
         if (navigator.canShare({ files: [file] })) {
           await navigator.share({
             files: [file],
-            title: getMenuName(people),
-            text: 'The relationship menu file can be imported and edited on https://relationshipmenu.org or in the iOS app.'
+            title: getMenuName(people, t, anonymous),
+            text: t.shareFileText
           });
-          showToast('Menu file shared successfully!', 'success');
+          showToast(t.shareFileSuccess, 'success');
         } else {
           // Fallback to download if sharing files not supported
           downloadFile(blob,  fileName);
@@ -124,7 +136,7 @@ export function createExportHandlers({
     URL.revokeObjectURL(url);
     document.body.removeChild(a);
     
-    showToast('File downloaded successfully!', 'success');
+    showToast(t.downloadSuccess, 'success');
   };
 
   /**
@@ -140,10 +152,10 @@ export function createExportHandlers({
       const { generateMenuPDF } = await import('../../../utils/pdf');
       
       // Generate the PDF file
-      const pdfBlob = await generateMenuPDF(currentData);
+      const pdfBlob = await generateMenuPDF(currentData, pdfStrings, locale);
       
       // Create filename with consistent format
-      const fileName = getMenuName(people, { extension: '.pdf', sanitizeForFilename: true });
+      const fileName = getMenuName(people, t, anonymous, { extension: '.pdf', sanitizeForFilename: true });
       
       // Use Share API on mobile if available
       if (isMobile() && isShareApiSupported()) {
@@ -153,10 +165,10 @@ export function createExportHandlers({
           if (navigator.canShare({ files: [file] })) {
             await navigator.share({
               files: [file],
-              title: getMenuName(people),
-              text: 'The relationship menu PDF file can be imported and edited on https://relationshipmenu.org and the iOS app or be viewed directly.'
+              title: getMenuName(people, t, anonymous),
+              text: t.sharePdfText
             });
-            showToast('PDF shared successfully!', 'success');
+            showToast(t.sharePdfSuccess, 'success');
           } else {
             // Fallback to download if sharing files not supported
             downloadFile(pdfBlob, fileName);
@@ -176,7 +188,7 @@ export function createExportHandlers({
       }
     } catch (error) {
       console.error('Error exporting PDF:', error);
-      showToast('Failed to export PDF', 'error');
+      showToast(t.pdfFailed, 'error');
     }
   };
 

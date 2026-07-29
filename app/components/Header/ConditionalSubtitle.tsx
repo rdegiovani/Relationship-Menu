@@ -3,9 +3,11 @@
 import { useMemo } from 'react';
 import { usePathname } from 'next/navigation';
 import { useHasStoredMenu } from '../../hooks/useStoredMenu';
+import { useTranslations } from '../LanguageProvider';
 
 export default function ConditionalSubtitle() {
   const pathname = usePathname();
+  const t = useTranslations().landing;
 
   // Define paths where we should hide the subtitle
   const menuPaths = useMemo(() => ['/editor/'], []);
@@ -19,7 +21,7 @@ export default function ConditionalSubtitle() {
 
   return (
     <p className="hidden sm:block text-white/90 text-base font-normal m-0 pb-1.5 whitespace-nowrap sm:whitespace-normal sm:max-w-[90%] leading-normal">
-      Create unique relationship agreements, free from traditional expectations.
+      {t.tagline}
     </p>
   );
 }

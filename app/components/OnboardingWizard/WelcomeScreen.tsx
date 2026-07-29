@@ -1,3 +1,6 @@
+'use client';
+
+import { useTranslations } from '../LanguageProvider';
 import React from 'react';
 import { WelcomeScreen as WelcomeScreenType } from './types';
 
@@ -14,6 +17,8 @@ export const WelcomeScreen: React.FC<WelcomeScreenProps> = ({
   onSkip,
   transitionPhase
 }) => {
+  const t = useTranslations().wizard;
+
   return (
     <div className="fixed inset-0 z-[3000] pointer-events-auto flex items-center justify-center">
       <div 
@@ -46,13 +51,13 @@ export const WelcomeScreen: React.FC<WelcomeScreenProps> = ({
             className="w-full py-3 rounded-lg bg-[rgba(148,188,194,1)] text-white hover:bg-[rgba(79,139,149,1)] transition-colors font-medium"
             onClick={onStart}
           >
-            Start Tour
+            {t.startTour}
           </button>
           <button
             className="w-full py-2 rounded-lg text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
             onClick={onSkip}
           >
-            Skip
+            {t.skip}
           </button>
         </div>
       </div>

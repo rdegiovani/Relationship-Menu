@@ -32,3 +32,4 @@ export { default as IconError } from './IconError';
 export { default as IconX } from './IconX';
 export { default as IconEnvelope } from './IconEnvelope';
 export { default as IconSliders } from './IconSliders';
+export { default as IconGlobe } from './IconGlobe';

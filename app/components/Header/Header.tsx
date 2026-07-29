@@ -5,10 +5,12 @@ import { usePathname } from 'next/navigation';
 import ShowLegendWhenMenuActive from './ShowLegendWhenMenuActive';
 import ConditionalSubtitle from './ConditionalSubtitle';
 import { SettingsButton } from '../ui/SettingsButton';
+import { useTranslations } from '../LanguageProvider';
 
 export default function Header() {
   const [showLegendOverlay, setShowLegendOverlay] = useState(false);
   const pathname = usePathname();
+  const t = useTranslations().nav;
 
   // Check if we're on the editor page
   const isEditorPage = pathname?.includes('/editor/');
@@ -22,7 +24,7 @@ export default function Header() {
             <button
               className="sm:hidden flex items-center justify-center bg-white/20 hover:bg-white/30 rounded-full p-1.5"
               onClick={() => setShowLegendOverlay(prev => !prev)}
-              aria-label="Toggle legend"
+              aria-label={t.toggleLegend}
             >
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z" />

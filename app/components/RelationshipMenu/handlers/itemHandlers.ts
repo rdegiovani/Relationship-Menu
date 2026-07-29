@@ -1,10 +1,13 @@
 import { MenuData } from '../../../types';
+import { Dictionary } from '../../../localization/dictionaries';
 
 export type ItemHandlerProps = {
   editedData: MenuData;
   setEditedData: (data: MenuData) => void;
   onSave: (data: MenuData) => void;
   menu: MenuData['menu'];
+  /** Default names and confirm prompts in the active language. */
+  t: Dictionary['templates'];
 };
 
 /**
@@ -14,13 +17,14 @@ export function createItemHandlers({
   editedData,
   setEditedData,
   onSave,
-  menu
+  menu,
+  t
 }: ItemHandlerProps) {
   /**
    * Delete a menu item
    */
   const handleDeleteItem = (catIndex: number, itemIndex: number) => {
-    if (window.confirm("Are you sure you want to delete this item?")) {
+    if (window.confirm(t.confirmDeleteItem)) {
       const updatedData = { ...editedData };
       updatedData.menu[catIndex].items.splice(itemIndex, 1);
       updatedData.last_update = new Date().toISOString();
@@ -35,7 +39,7 @@ export function createItemHandlers({
   const handleAddItem = (catIndex: number) => {
     const updatedData = { ...editedData };
     updatedData.menu[catIndex].items.push({
-      name: "New Item",
+      name: t.newItem,
       icon: null,
       note: null
     });
@@ -50,7 +54,7 @@ export function createItemHandlers({
   const handleAddSection = () => {
     const updatedData = { ...editedData };
     updatedData.menu.push({
-      name: "New Section",
+      name: t.newSection,
       items: []
     });
     updatedData.last_update = new Date().toISOString();
@@ -62,7 +66,7 @@ export function createItemHandlers({
    * Delete a section from the menu
    */
   const handleDeleteSection = (catIndex: number) => {
-    if (window.confirm("Are you sure you want to delete this entire section and all items in it?")) {
+    if (window.confirm(t.confirmDeleteSection)) {
       const updatedData = { ...editedData };
       updatedData.menu.splice(catIndex, 1);
       updatedData.last_update = new Date().toISOString();

@@ -1,6 +1,9 @@
+'use client';
+
 import React from 'react';
 import { MenuMode } from '../../../types';
 import { IconEye, IconPencilPage, IconGear } from '../../../components/icons';
+import { useTranslations } from '../../LanguageProvider';
 
 interface ModeSelectorProps {
   currentMode: MenuMode;
@@ -8,12 +11,13 @@ interface ModeSelectorProps {
 }
 
 export function ModeSelector({ currentMode, onModeChange }: ModeSelectorProps) {
+  const t = useTranslations().editor;
   return (
     <div className="w-full">
       <div 
         className="flex rounded-lg border border-[var(--main-text-color)] bg-[rgba(148,188,194,0.15)] dark:bg-[rgba(79,139,149,0.15)] p-1 relative"
         role="group"
-        aria-label="Menu mode selection"
+        aria-label={t.modeLabel}
       >
         {/* Hidden radio inputs for accessibility */}
         <input 
@@ -50,7 +54,7 @@ export function ModeSelector({ currentMode, onModeChange }: ModeSelectorProps) {
         >
           <div className="flex items-center justify-center">
             <IconEye className="h-5 w-5" aria-hidden="true" />
-            <span className="ml-2 text-sm font-medium whitespace-nowrap">View</span>
+            <span className="ml-2 text-sm font-medium whitespace-nowrap">{t.modeView}</span>
           </div>
         </label>
         
@@ -62,7 +66,7 @@ export function ModeSelector({ currentMode, onModeChange }: ModeSelectorProps) {
         >
           <div className="flex items-center justify-center">
             <IconPencilPage className="h-5 w-5" aria-hidden="true" />
-            <span className="ml-2 text-sm font-medium whitespace-nowrap">Fill</span>
+            <span className="ml-2 text-sm font-medium whitespace-nowrap">{t.modeFill}</span>
           </div>
         </label>
         
@@ -74,7 +78,7 @@ export function ModeSelector({ currentMode, onModeChange }: ModeSelectorProps) {
         >
           <div className="flex items-center justify-center">
             <IconGear className="h-5 w-5" aria-hidden="true" />
-            <span className="ml-2 text-sm font-medium whitespace-nowrap">Edit</span>
+            <span className="ml-2 text-sm font-medium whitespace-nowrap">{t.modeEdit}</span>
           </div>
         </label>
       </div>

@@ -7,13 +7,16 @@ import { splitTextToSizeWithEmojis } from './emojiText';
 import { richTextToPlainText } from '../richTextUtils';
 import { DocumentContext } from './types';
 import { loadNunitoFonts } from './fontLoader';
+import { Dictionary } from '../../localization/dictionaries';
 
 /**
  * Generates a PDF for the given relationship menu data
  * @param menuData The relationship menu data to convert to PDF
+ * @param t PDF strings in the reader's language
+ * @param locale Locale used to format the date in the footer
  * @returns The generated PDF as a Blob
  */
-export async function generateMenuPDF(menuData: MenuData): Promise<Blob> {
+export async function generateMenuPDF(menuData: MenuData, t: Dictionary['pdf'], locale: string): Promise<Blob> {
   // Create PDF instance
   const pdf = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
   
@@ -39,14 +42,14 @@ export async function generateMenuPDF(menuData: MenuData): Promise<Blob> {
   };
   
   // Calculate header and legend heights (but don't use them now, just for documentation)
-  addHeader(pdf, menuData, 0, true);
-  addCompactHeader(pdf, menuData, 1, true);
+  addHeader(pdf, menuData, t, locale, 0, true);
+  addCompactHeader(pdf, menuData, t, 1, true);
   
   // Add header to first page
-  context.yPos = addHeader(pdf, menuData, 0);
+  context.yPos = addHeader(pdf, menuData, t, locale, 0);
   
   // Add legend to first page
-  context.yPos = addLegend(pdf, context.yPos, false);
+  context.yPos = addLegend(pdf, t, context.yPos, false);
   
   // Process each category
   let categoryIndex = 0;
@@ -61,7 +64,7 @@ export async function generateMenuPDF(menuData: MenuData): Promise<Blob> {
 
       // If header itself doesn't fit, start a new page first
       if (context.yPos + sectionHeaderHeight > context.contentMaxY) {
-        startNewPage(pdf, menuData, context);
+        startNewPage(pdf, menuData, t, context);
       }
 
       // Before drawing header, ensure at least one item can fit below it
@@ -164,7 +167,7 @@ export async function generateMenuPDF(menuData: MenuData): Promise<Blob> {
                 context.yPos = drawMenuItem(pdf, firstPageItem, context.yPos, true, false, false);
                 
                 // Start a new page
-                startNewPage(pdf, menuData, context);
+                startNewPage(pdf, menuData, t, context);
                 
                 // Check if we need to render section header on the new page
                 if (!context.renderedSectionsOnPage.has(category.name)) {
@@ -189,7 +192,7 @@ export async function generateMenuPDF(menuData: MenuData): Promise<Blob> {
       // If no item could fit on this page, move to a new page
       if (!itemProcessed) {
         // If we couldn't process any item, start a new page
-        startNewPage(pdf, menuData, context);
+        startNewPage(pdf, menuData, t, context);
         
         // Reset rendered sections for the new page
         context.renderedSectionsOnPage = new Set<string>();
@@ -215,7 +218,7 @@ export async function generateMenuPDF(menuData: MenuData): Promise<Blob> {
   }
   
   // Add footer to each page
-  addFooter(pdf, menuData);
+  addFooter(pdf, menuData, t, locale);
   
   // Get the PDF as ArrayBuffer from jsPDF
   const pdfBuffer = pdf.output('arraybuffer');
@@ -252,7 +255,7 @@ export async function generateMenuPDF(menuData: MenuData): Promise<Blob> {
 /**
  * Starts a new page in the PDF document
  */
-function startNewPage(pdf: jsPDF, menuData: MenuData, context: DocumentContext): void {
+function startNewPage(pdf: jsPDF, menuData: MenuData, t: Dictionary['pdf'], context: DocumentContext): void {
   pdf.addPage();
   context.currentPage++;
   // Page background
@@ -260,10 +263,10 @@ function startNewPage(pdf: jsPDF, menuData: MenuData, context: DocumentContext):
   pdf.rect(0, 0, 210, 297, 'F');
   
   // Add compact header to new page
-  context.yPos = addCompactHeader(pdf, menuData, context.currentPage);
+  context.yPos = addCompactHeader(pdf, menuData, t, context.currentPage);
   
   // Add legend to new page
-  context.yPos = addLegend(pdf, context.yPos, true);
+  context.yPos = addLegend(pdf, t, context.yPos, true);
   
   // Clear the rendered sections set for the new page
   context.renderedSectionsOnPage = new Set<string>();

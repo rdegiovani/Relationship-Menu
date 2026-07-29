@@ -14,6 +14,7 @@ import TemplateSelector from '../components/TemplateSelector/TemplateSelector';
 import { formatPeopleNames } from '../utils/formatUtils';
 import { OnboardingWizard } from '../components/OnboardingWizard/index';
 import { IconInfo } from '../components/icons';
+import { useTranslations } from '../components/LanguageProvider';
 
 function EditorContent() {
   const router = useRouter();
@@ -22,6 +23,9 @@ function EditorContent() {
   const [isLoading, setIsLoading] = useState(true);
   const [initialMode, setInitialMode] = useState<MenuMode>('view');
   const [showFileSelector, setShowFileSelector] = useState(false);
+  const dictionary = useTranslations();
+  const t = dictionary.editorPage;
+  const tour = dictionary.onboarding;
   const [showTemplateSelector, setShowTemplateSelector] = useState(false);
   const [error, setError] = useState<{
     show: boolean;
@@ -33,49 +37,49 @@ function EditorContent() {
   const onboardingSteps = [
     {
       selector: '[data-onboarding="menu-header"]',
-      title: 'People in the Menu',
-      description: 'This shows the people for whom this menu is created. In edit mode, you can add or remove people.'
+      title: tour.peopleTitle,
+      description: tour.peopleDescription
     },
     {
       selector: '[data-onboarding="file-button"]',
-      title: 'File Options',
-      description: 'Click here to create a new menu, open an existing one, or close the current menu.'
+      title: tour.fileTitle,
+      description: tour.fileDescription
     },
     {
       selector: '[data-onboarding="share-button"]',
-      title: 'Share & Export',
-      description: 'Here you can download your menu as a PDF or JSON file to share it with others.'
+      title: tour.shareTitle,
+      description: tour.shareDescription
     },
     {
       selector: '[data-onboarding="mode-selector"]',
-      title: 'Mode Selector',
-      description: 'You can interact with your menu in different ways:',
+      title: tour.modeTitle,
+      description: tour.modeDescription,
       subSteps: [
         {
-          title: 'View Mode',
-          description: 'Read your relationship menu.'
+          title: tour.modeViewTitle,
+          description: tour.modeViewDescription
         },
         {
-          title: 'Fill Mode',
-          description: 'Make choices and add notes to your menu.'
+          title: tour.modeFillTitle,
+          description: tour.modeFillDescription
         },
         {
-          title: 'Edit Mode',
-          description: 'Customize your menu by adding, removing, or changing items and categories as well as adding or removing names.'
+          title: tour.modeEditTitle,
+          description: tour.modeEditDescription
         }
       ]
     },
     {
       selector: '[data-onboarding="menu-content"]',
-      title: 'Relationship Menu',
-      description: 'This is where your menu lives. Depending on the mode you are in, you can interact with it in different ways.'
+      title: tour.menuTitle,
+      description: tour.menuDescription
     }
   ];
 
   // Welcome screen data for the onboarding wizard
   const welcomeScreen = {
-    title: 'Welcome to Your Menu',
-    description: 'Create a personalized relationship agreement that reflects your unique relationship. This brief tour will help you navigate the editor and its features.'
+    title: tour.welcomeTitle,
+    description: tour.welcomeDescription
   };
 
   // Update document title when menu data changes
@@ -86,18 +90,18 @@ function EditorContent() {
     // Function to update the title
     const updateTitle = () => {
       if (menuData?.uuid && menuData.uuid.toLowerCase() === 'example') {
-        document.title = 'Relationship Menu - Example';
+        document.title = t.documentTitleExample;
       } else if (menuData?.people && menuData.people.length > 0) {
         // Filter out empty names and join the remaining ones
         const validNames = menuData.people.filter(name => name && name.trim() !== '');
         
         if (validNames.length > 0) {
-          document.title = `Relationship Menu - ${formatPeopleNames(validNames)}`;
+          document.title = t.documentTitleFor(formatPeopleNames(validNames));
         } else {
-          document.title = 'Relationship Menu - Editor';
+          document.title = t.documentTitleEditor;
         }
       } else {
-        document.title = 'Relationship Menu - Editor';
+        document.title = t.documentTitleEditor;
       }
     };
 
@@ -108,7 +112,7 @@ function EditorContent() {
     const timeoutId = setTimeout(updateTitle, 500);
     
     return () => clearTimeout(timeoutId);
-  }, [menuData]);
+  }, [menuData, t]);
 
   // Load the menu from URL parameters
   useEffect(() => {
@@ -162,7 +166,7 @@ function EditorContent() {
           try {
             const response = await fetch('/example-menu.json');
             if (!response.ok) {
-              throw new Error('Failed to load example menu');
+              throw new Error(t.exampleLoadFailed);
             }
             const exampleMenu = await response.json();
             // Apply migration to ensure example menu is in the latest format
@@ -176,8 +180,8 @@ function EditorContent() {
             console.error('Error loading example menu:', error);
             setError({
               show: true,
-              title: 'Error Loading Example Menu',
-              message: 'Failed to load the example menu. Please try again later.'
+              title: t.errorLoadingExampleTitle,
+              message: t.errorLoadingExampleMessage
             });
             setIsLoading(false);
             return;
@@ -192,8 +196,8 @@ function EditorContent() {
           setIsLoading(false);
           setError({
             show: true,
-            title: 'Menu Not Found',
-            message: `The menu you're looking for (ID: ${menuId.substring(0, 6)}...) could not be found. It may have been deleted or might not exist.`
+            title: t.menuNotFoundTitle,
+            message: t.menuNotFoundMessage(menuId.substring(0, 6))
           });
           return;
         }
@@ -209,8 +213,8 @@ function EditorContent() {
         setIsLoading(false);
         setError({
           show: true,
-          title: 'Error Loading Menu',
-          message: 'An unexpected error occurred while trying to load the menu. Please try again or return to the home page.'
+          title: t.errorLoadingTitle,
+          message: t.errorLoadingMessage
         });
       }
     };
@@ -218,7 +222,7 @@ function EditorContent() {
     // Load menu whenever search params change
     loadMenuFromParams();
     
-  }, [searchParams, router]);
+  }, [searchParams, router, t]);
 
   // Handle menu data saving
   const handleSaveMenu = (updatedMenu: MenuData) => {
@@ -244,8 +248,8 @@ function EditorContent() {
       console.error('Error saving menu:', error);
       setError({
         show: true,
-        title: 'Error Saving Menu',
-        message: 'An unexpected error occurred while trying to save your menu. Your changes may not have been saved.'
+        title: t.errorSavingTitle,
+        message: t.errorSavingMessage
       });
     }
   };
@@ -266,7 +270,7 @@ function EditorContent() {
   if (isLoading) {
     return (
       <Container>
-        <LoadingIndicator message="Loading menu..." />
+        <LoadingIndicator message={t.loadingMenu} />
       </Container>
     );
   }
@@ -296,7 +300,7 @@ function EditorContent() {
   
   // Show error modal if there's an error
   if (error.show) {
-    return <ErrorModal title={error.title} message={error.message} buttonText="Return to Home" />;
+    return <ErrorModal title={error.title} message={error.message} buttonText={t.returnHome} />;
   }
   
   // Show the menu if loaded
@@ -309,7 +313,7 @@ function EditorContent() {
         {menuData.uuid && menuData.uuid.toLowerCase() === 'example' && (
           <div className="mb-4 p-4 bg-[rgba(148,188,194,0.2)] text-[rgba(79,139,149,1)] rounded-lg flex items-center">
             <IconInfo className="h-5 w-5 mr-2" />
-            <span>This is an example menu. Any changes you make will not be saved.</span>
+            <span>{t.exampleNotice}</span>
           </div>
         )}
         <RelationshipMenu 
@@ -326,13 +330,13 @@ function EditorContent() {
   return (
     <Container>
       <div className="text-center p-8">
-        <h2 className="text-xl mb-4">Something went wrong</h2>
-        <p className="mb-4">Unable to determine menu state.</p>
+        <h2 className="text-xl mb-4">{t.somethingWrong}</h2>
+        <p className="mb-4">{t.unknownState}</p>
         <button 
           onClick={() => router.replace('/')}
           className="px-4 py-2 bg-[rgba(148,188,194,0.2)] hover:bg-[rgba(148,188,194,0.3)] text-[rgba(79,139,149,1)] rounded-md transition-colors"
         >
-          Return to Home
+          {t.returnHome}
         </button>
       </div>
     </Container>
@@ -342,7 +346,7 @@ function EditorContent() {
 // Main page component with Suspense boundary
 export default function EditorPage() {
   return (
-    <Suspense fallback={<Container><LoadingIndicator message="Loading..." /></Container>}>
+    <Suspense fallback={<Container><LoadingIndicator /></Container>}>
       <EditorContent />
     </Suspense>
   );

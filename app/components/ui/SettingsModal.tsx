@@ -6,6 +6,9 @@ import { IconSliders, IconX } from '../icons';
 import { useTheme } from '../ThemeProvider';
 import { useModalA11y } from './useModalA11y';
 import { ColorMode, VisionTheme, ContrastLevel } from '../../types';
+import { useLanguage } from '../LanguageProvider';
+import { Dictionary } from '../../localization/dictionaries';
+import { SUPPORTED_LANGUAGES, LanguageCode, getLanguageName } from '../../localization/languages';
 
 interface SettingsModalProps {
   isOpen: boolean;
@@ -18,17 +21,26 @@ type RadioOption<T extends string> = {
   description: string;
 };
 
-const COLOR_MODE_OPTIONS: RadioOption<ColorMode>[] = [
-  { value: 'system', label: 'System', description: 'Follow your device settings' },
-  { value: 'light', label: 'Light', description: 'Always use light theme' },
-  { value: 'dark', label: 'Dark', description: 'Always use dark theme' },
+const colorModeOptions = (t: Dictionary['settings']): RadioOption<ColorMode>[] => [
+  { value: 'system', label: t.colorModeSystem, description: t.colorModeSystemDesc },
+  { value: 'light', label: t.colorModeLight, description: t.colorModeLightDesc },
+  { value: 'dark', label: t.colorModeDark, description: t.colorModeDarkDesc },
 ];
 
-const VISION_OPTIONS: RadioOption<VisionTheme>[] = [
-  { value: 'default', label: 'Default', description: 'Standard color palette' },
-  { value: 'pd', label: 'Protanopia & Deuteranopia', description: 'Optimized for red-green color vision' },
-  { value: 'tritan', label: 'Tritanopia', description: 'Optimized for blue-yellow color vision' },
+const visionOptions = (t: Dictionary['settings']): RadioOption<VisionTheme>[] => [
+  { value: 'default', label: t.visionDefault, description: t.visionDefaultDesc },
+  { value: 'pd', label: t.visionPd, description: t.visionPdDesc },
+  { value: 'tritan', label: t.visionTritan, description: t.visionTritanDesc },
 ];
+
+// Language options are always written in their own language, so the list stays
+// readable even for someone who cannot read the currently active one.
+const languageOptions = (description: string): RadioOption<LanguageCode>[] =>
+  SUPPORTED_LANGUAGES.map((code) => ({
+    value: code,
+    label: getLanguageName(code),
+    description,
+  }));
 
 // A single-select group of styled radio options (used for Color Mode and Color Vision).
 function RadioOptionGroup<T extends string>({
@@ -85,7 +97,7 @@ function RadioOptionGroup<T extends string>({
               </span>
               <div className="ml-3">
                 <span className="block text-sm font-medium text-gray-900 dark:text-gray-100">
-                  {option.label}
+                  <span lang={name === 'language' ? option.value : undefined}>{option.label}</span>
                 </span>
                 <span id={descId} className="block text-xs text-gray-500 dark:text-gray-400">
                   {option.description}
@@ -101,6 +113,8 @@ function RadioOptionGroup<T extends string>({
 
 export function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
   const { preferences, setPreferences } = useTheme();
+  const { language, setLanguage, t: dictionary } = useLanguage();
+  const t = dictionary.settings;
   const { containerRef } = useModalA11y({
     isOpen,
     onDismiss: onClose,
@@ -155,33 +169,42 @@ export function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
                 <IconSliders className="h-5 w-5 text-[var(--main-text-color)]" aria-hidden="true" />
               </div>
               <h2 id="settings-modal-title" className="text-xl font-semibold text-gray-900 dark:text-gray-100">
-                Theme Settings
+                {t.title}
               </h2>
             </div>
             <button
               onClick={onClose}
               className="flex-shrink-0 w-8 h-8 flex items-center justify-center rounded-full border border-gray-200 dark:border-gray-700 shadow-md bg-white dark:bg-gray-800 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 hover:bg-[var(--main-bg-color)]/20 transition-colors ring-2 ring-[var(--main-text-color)] focus:outline-none focus-visible:ring-4 focus-visible:ring-[var(--main-text-color)]"
-              aria-label="Close settings"
+              aria-label={t.close}
             >
               <IconX className="h-5 w-5" />
             </button>
           </div>
           <div className="border-b border-gray-200 dark:border-gray-700 -mx-4 sm:-mx-6 mb-6"></div>
 
+          {/* Language Section — first, because it governs every other label here */}
+          <RadioOptionGroup
+            legend={dictionary.language.settingsLegend}
+            name="language"
+            options={languageOptions(dictionary.language.settingsDescription)}
+            value={language}
+            onChange={setLanguage}
+          />
+
           {/* Color Mode Section */}
           <RadioOptionGroup
-            legend="Color Mode"
+            legend={t.colorModeLegend}
             name="colorMode"
-            options={COLOR_MODE_OPTIONS}
+            options={colorModeOptions(t)}
             value={preferences.colorMode}
             onChange={handleColorModeChange}
           />
 
           {/* Vision Theme Section */}
           <RadioOptionGroup
-            legend="Color Vision"
+            legend={t.visionLegend}
             name="vision"
-            options={VISION_OPTIONS}
+            options={visionOptions(t)}
             value={preferences.vision}
             onChange={handleVisionChange}
           />
@@ -189,7 +212,7 @@ export function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
           {/* High Contrast Toggle */}
           <fieldset>
             <legend className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">
-              Contrast
+              {t.contrastLegend}
             </legend>
             <label
               className={`hc-option flex items-center justify-between p-3 rounded-lg border cursor-pointer transition-colors ${
@@ -200,17 +223,17 @@ export function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
             >
               <div>
                 <span className="block text-sm font-medium text-gray-900 dark:text-gray-100">
-                  Increase contrast
+                  {t.contrastToggle}
                 </span>
                 <span id="contrast-desc" className="block text-xs text-gray-500 dark:text-gray-400">
-                  Enhanced visibility for text and UI elements
+                  {t.contrastToggleDesc}
                 </span>
               </div>
               <button
                 type="button"
                 role="switch"
                 aria-checked={preferences.contrast === 'high'}
-                aria-label="Increase contrast"
+                aria-label={t.contrastToggle}
                 aria-describedby="contrast-desc"
                 onClick={() => handleContrastChange(preferences.contrast === 'high' ? 'normal' : 'high')}
                 className={`settings-switch relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-[var(--main-text-color)] focus:ring-offset-2 ${
@@ -228,7 +251,7 @@ export function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
 
           {/* Info text */}
           <p className="mt-6 text-xs text-gray-500 dark:text-gray-400 text-center">
-            Your preferences are saved automatically and will persist across sessions.
+            {t.persistNote}
           </p>
         </div>
       </div>

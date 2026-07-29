@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { createPortal } from 'react-dom';
 import { IconShare, IconX, IconCheck } from '../icons';
 import { useModalA11y } from './useModalA11y';
+import { useTranslations } from '../LanguageProvider';
 
 interface ShareLinkModalProps {
   isOpen: boolean;
@@ -12,6 +13,8 @@ interface ShareLinkModalProps {
 }
 
 export function ShareLinkModal({ isOpen, onClose, shareLink }: ShareLinkModalProps) {
+  const dictionary = useTranslations();
+  const t = dictionary.share;
   const [copied, setCopied] = useState(false);
   const { containerRef } = useModalA11y({
     isOpen,
@@ -61,13 +64,13 @@ export function ShareLinkModal({ isOpen, onClose, shareLink }: ShareLinkModalPro
                 <IconShare className="h-5 w-5 text-[var(--main-text-color)]" aria-hidden="true" />
               </div>
               <h2 id="share-link-modal-title" className="text-xl font-semibold text-gray-900 dark:text-gray-100">
-                Shareable Link
+                {t.linkModalTitle}
               </h2>
             </div>
             <button
               onClick={onClose}
               className="flex-shrink-0 w-8 h-8 flex items-center justify-center rounded-full border border-gray-200 dark:border-gray-700 shadow-md bg-white dark:bg-gray-800 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 hover:bg-[var(--main-bg-color)]/20 transition-colors ring-2 ring-[var(--main-text-color)] focus:outline-none focus-visible:ring-4 focus-visible:ring-[var(--main-text-color)]"
-              aria-label="Close"
+              aria-label={dictionary.common.close}
             >
               <IconX className="h-5 w-5" />
             </button>
@@ -75,7 +78,7 @@ export function ShareLinkModal({ isOpen, onClose, shareLink }: ShareLinkModalPro
           <div className="border-b border-gray-200 dark:border-gray-700 -mx-4 sm:-mx-6 mb-6"></div>
 
           <p className="mb-4 text-sm text-gray-600 dark:text-gray-300">
-            Copy and share this link. Anyone with the link can access your menu. The link will expire after use or after 5 days.
+            {t.linkModalBody}
           </p>
 
           <div className="flex items-center gap-2 bg-gray-100 dark:bg-gray-700 rounded-md pl-3 pr-2 py-2 mb-4">
@@ -91,12 +94,12 @@ export function ShareLinkModal({ isOpen, onClose, shareLink }: ShareLinkModalPro
               onClick={handleCopy}
               disabled={copied}
             >
-              {copied ? <IconCheck className="w-5 h-5 text-white" /> : 'Copy'}
+              {copied ? <IconCheck className="w-5 h-5 text-white" /> : t.copy}
             </button>
           </div>
 
           <p className="text-xs text-gray-500 dark:text-gray-400">
-            Keep this link private. Anyone with the link can access your menu.
+            {t.linkModalWarning}
           </p>
         </div>
       </div>

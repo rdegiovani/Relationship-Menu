@@ -13,6 +13,7 @@ import { MenuList } from './MenuList';
 import { FileUploader } from './FileUploader';
 import { ErrorDisplay } from './ErrorDisplay';
 import { useMenuImport } from './useMenuImport';
+import { useTranslations } from '../LanguageProvider';
 
 interface FileSelectorProps {
   isModal?: boolean;
@@ -35,6 +36,8 @@ function isValidMenuData(data: unknown): data is MenuData {
 export function FileSelector({ isModal = false, onClose, onMenuPageWithNoMenu = false, onCreateNewMenu }: FileSelectorProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const dictionary = useTranslations();
+  const t = dictionary.files;
   const [isDragging, setIsDragging] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
   const savedMenus = useSavedMenus();
@@ -107,7 +110,7 @@ export function FileSelector({ isModal = false, onClose, onMenuPageWithNoMenu = 
     setError(null);
     setIsProcessing(true);
     if (!file) {
-      setError('No file selected');
+      setError(t.noFileSelected);
       setIsProcessing(false);
       return;
     }
@@ -121,17 +124,17 @@ export function FileSelector({ isModal = false, onClose, onMenuPageWithNoMenu = 
             setIsProcessing(false);
             return;
           }
-          setError('No relationship menu data found in this PDF');
+          setError(t.noDataInPdf);
           setIsProcessing(false);
         } catch (e) {
           const err = e as Error;
-          setError(err.message || 'Failed to extract data from PDF. Please select a JSON file instead.');
+          setError(err.message || t.pdfExtractFailed);
           setIsProcessing(false);
         }
         return;
       }
       if (file.type !== 'application/json' && !file.name.endsWith('.json') && !file.name.endsWith('.relationshipmenu') && !file.name.endsWith('.rmenu')) {
-        setError('Please select a .json, .rmenu, .relationshipmenu, or .pdf file');
+        setError(t.unsupportedType);
         setIsProcessing(false);
         return;
       }
@@ -141,23 +144,23 @@ export function FileSelector({ isModal = false, onClose, onMenuPageWithNoMenu = 
           const content = e.target?.result as string;
           const data = JSON.parse(content);
           if (!isValidMenuData(data)) {
-            throw new Error('Invalid JSON structure. The file must contain last_update, people, and menu fields.');
+            throw new Error(t.invalidStructure);
           }
           const migratedData = migrateMenuData(data);
           handleFileLoaded(migratedData);
           setIsProcessing(false);
         } catch (err) {
-          setError((err as Error).message || 'Failed to parse JSON file');
+          setError((err as Error).message || t.parseFailed);
           setIsProcessing(false);
         }
       };
       reader.onerror = () => {
-        setError('Error reading file');
+        setError(t.readFailed);
         setIsProcessing(false);
       };
       reader.readAsText(file);
     } catch (err) {
-      setError((err as Error).message || 'Failed to process file');
+      setError((err as Error).message || t.processFailed);
       setIsProcessing(false);
     }
   };
@@ -237,22 +240,22 @@ export function FileSelector({ isModal = false, onClose, onMenuPageWithNoMenu = 
                 <div className="flex items-center justify-center h-10 w-10 rounded-full bg-[var(--main-bg-color)]/20 mr-3">
                   <IconFile className="h-5 w-5 text-[var(--main-text-color)]" aria-hidden="true" />
                 </div>
-                <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100">Open Menu</h2>
+                <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100">{t.openMenuTitle}</h2>
               </div>
               {onMenuPageWithNoMenu ? (
                 <button
                   onClick={onCreateNewMenu}
                   className="flex-shrink-0 text-[var(--main-text-color)] hover:text-[var(--main-text-color-hover)] hover:bg-[var(--main-bg-color)]/20 transition-colors bg-white dark:bg-gray-800 rounded-md px-4 py-2 flex items-center justify-center shadow-md border border-[var(--main-bg-color)] dark:border-gray-700 modal-action-button"
-                  aria-label="Create new menu"
+                  aria-label={t.createNewMenu}
                 >
                   <IconPlus className="h-4 w-4 mr-1.5" />
-                  <span className="text-sm font-medium">New Menu</span>
+                  <span className="text-sm font-medium">{t.newMenu}</span>
                 </button>
               ) : (
                 <button
                   onClick={onClose}
                   className="flex-shrink-0 w-8 h-8 flex items-center justify-center rounded-full border border-gray-200 dark:border-gray-700 shadow-md bg-white dark:bg-gray-800 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 hover:bg-[var(--main-bg-color)]/20 transition-colors ring-2 ring-[var(--main-text-color)] focus:outline-none focus-visible:ring-4 focus-visible:ring-[var(--main-text-color)]"
-                  aria-label="Close"
+                  aria-label={dictionary.common.close}
                 >
                   <IconX className="h-5 w-5" />
                 </button>
@@ -314,13 +317,13 @@ export function FileSelector({ isModal = false, onClose, onMenuPageWithNoMenu = 
       <div className="bg-gradient-to-r from-[rgba(158,198,204,0.3)] to-[rgba(99,159,169,0.2)] dark:from-[rgba(158,198,204,0.15)] dark:to-[rgba(99,159,169,0.1)] px-8 py-6">
         {savedMenus.length > 0 ? (
           <>
-            <h2 className="text-2xl font-bold text-[var(--main-text-color)]">Open a Menu</h2>
-            <p className="text-gray-600 dark:text-gray-300 mt-1">Select a saved menu to continue or import a new one</p>
+            <h2 className="text-2xl font-bold text-[var(--main-text-color)]">{t.openATitle}</h2>
+            <p className="text-gray-600 dark:text-gray-300 mt-1">{t.openASubtitle}</p>
           </>
         ) : (
           <>
-            <h2 className="text-2xl font-bold text-[var(--main-text-color)]">Have an Existing Menu?</h2>
-            <p className="text-gray-600 dark:text-gray-300 mt-1">Open your menu file to continue working on it</p>
+            <h2 className="text-2xl font-bold text-[var(--main-text-color)]">{t.existingTitle}</h2>
+            <p className="text-gray-600 dark:text-gray-300 mt-1">{t.existingSubtitle}</p>
           </>
         )}
       </div>

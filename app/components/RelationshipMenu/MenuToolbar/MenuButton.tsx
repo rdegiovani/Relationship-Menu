@@ -1,10 +1,14 @@
+'use client';
+
 import React, { useState, useRef, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { IconPlus, IconFile, IconChevron, IconX } from '../../icons';
+import { useTranslations } from '../../LanguageProvider';
 import { TemplateSelector } from '../../TemplateSelector';
 import { FileSelector } from '../../FileSelector';
 
 export function MenuButton() {
+  const t = useTranslations().editor;
   const router = useRouter();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [showTemplateModal, setShowTemplateModal] = useState(false);
@@ -114,11 +118,11 @@ export function MenuButton() {
         ref={buttonRef}
         onClick={toggleDropdown}
         className="w-full px-3 md:px-4 py-3 bg-[rgba(148,188,194,0.15)] dark:bg-[rgba(79,139,149,0.15)] text-[var(--main-text-color)] rounded-md hover:bg-[rgba(148,188,194,0.3)] dark:hover:bg-[rgba(79,139,149,0.3)] transition-colors shadow-md text-sm font-medium flex items-center justify-center border border-[var(--main-text-color)] whitespace-nowrap"
-        title="File options"
+        title={t.fileOptions}
         data-onboarding="file-button"
       >
         <IconFile className="h-4 w-4 mr-1" />
-        File
+        {t.fileMenu}
         <IconChevron 
           direction={isDropdownOpen ? 'up' : 'down'} 
           className="h-4 w-4 ml-1" 
@@ -137,14 +141,14 @@ export function MenuButton() {
               onClick={handleNewMenu}
             >
               <IconPlus className="h-4 w-4 mr-2 text-[var(--main-text-color)]" />
-              New Menu
+              {t.newMenu}
             </button>
             <button
               className="flex items-center px-4 py-3 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 w-full text-left"
               onClick={handleOpenExisting}
             >
               <IconFile className="h-4 w-4 mr-2 text-[var(--main-text-color)]" />
-              Open Existing
+              {t.openExisting}
             </button>
             <div className="border-t border-gray-200 dark:border-gray-700 my-1"></div>
             <button
@@ -152,7 +156,7 @@ export function MenuButton() {
               onClick={handleCloseMenu}
             >
               <IconX className="h-4 w-4 mr-2 text-[var(--main-text-color)]" />
-              Close
+              {t.closeMenu}
             </button>
           </div>
         </div>

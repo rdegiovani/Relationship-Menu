@@ -1,6 +1,9 @@
+'use client';
+
 import React, { useEffect, useRef, useState } from 'react';
 import { MenuItem, RichTextJSONPart } from '../../../types';
 import { IconButton, IconPicker } from '../../ui/IconPicker';
+import { useTranslations } from '../../LanguageProvider';
 import { IconChevron } from '../../icons';
 import { RichTextEditor } from '../../ui/RichTextEditor';
 
@@ -30,6 +33,7 @@ export function EditMenuItem({
   onMoveItemDown,
   itemCount = 0
 }: EditMenuItemProps) {
+  const t = useTranslations().editor;
   // Convert item.icon to string | null to fix type issues
   const iconType = item.icon === undefined ? null : item.icon;
   const [isPickerOpen, setIsPickerOpen] = useState(false);
@@ -63,7 +67,7 @@ export function EditMenuItem({
               value={item.name}
               onChange={(e) => onItemNameChange(catIndex, itemIndex, e.target.value)}
               className="hc-field w-full p-2 rounded border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-50 order-first sm:order-last font-bold"
-              placeholder="Edit item title..."
+              placeholder={t.editItemPlaceholder}
             />
             <div className="relative w-full sm:w-auto" ref={pickerWrapperRef}>
               <IconButton 
@@ -104,12 +108,12 @@ export function EditMenuItem({
               type="button" 
               onClick={() => onDeleteItem(catIndex, itemIndex)}
               className="flex items-center px-3 py-1.5 bg-white dark:bg-gray-900 rounded-md border border-red-200 dark:border-red-800 text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/50 hover:text-red-800 dark:hover:text-red-300 transition-colors"
-              title="Delete this item"
+              title={t.deleteItem}
             >
               <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
               </svg>
-              <span className="ml-1.5 text-sm font-medium">Delete Item</span>
+              <span className="ml-1.5 text-sm font-medium">{t.deleteItemLabel}</span>
             </button>
           </div>
           
@@ -123,7 +127,7 @@ export function EditMenuItem({
                   ? 'bg-gray-100 dark:bg-gray-800 border-gray-200 dark:border-gray-700 text-gray-400 dark:text-gray-600 cursor-not-allowed'
                   : 'bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-white'
               }`}
-              title="Move item up"
+              title={t.moveItemUp}
             >
               <IconChevron direction="up" className="h-4 w-4" />
             </button>
@@ -137,7 +141,7 @@ export function EditMenuItem({
                   ? 'bg-gray-100 dark:bg-gray-800 border-gray-200 dark:border-gray-700 text-gray-400 dark:text-gray-600 cursor-not-allowed'
                   : 'bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-white'
               }`}
-              title="Move item down"
+              title={t.moveItemDown}
             >
               <IconChevron direction="down" className="h-4 w-4" />
             </button>
