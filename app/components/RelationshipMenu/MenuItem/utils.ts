@@ -4,7 +4,9 @@ export function getItemClassName(iconType: string | null | undefined) {
 }
 
 export function getItemSpanClasses(iconType: string | null | undefined) {
-  const baseClasses = 'rounded-[1em_0_1em_0] py-[2px] px-[5px]';
+  // Side padding proportional to the 1em corner radius, so the text never
+  // touches the curved corners and the box reads balanced against py.
+  const baseClasses = 'rounded-[1em_0_1em_0] py-[3px] px-[10px]';
 
   if (!iconType) return baseClasses;
 

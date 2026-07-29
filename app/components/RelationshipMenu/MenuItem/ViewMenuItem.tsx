@@ -54,7 +54,7 @@ export function ViewMenuItem({ item, people = [], showAllResponses = false, view
 
   return (
     <>
-      <div className="item-name font-bold flex items-center text-gray-900 dark:text-gray-50 max-sm:items-start flex-wrap gap-y-1">
+      <div className="item-name font-bold flex items-center text-gray-900 dark:text-gray-50 max-sm:items-start">
         {showLeadingIcon && renderIcon(effectiveIcon)}
         <span className={getItemSpanClasses(effectiveIcon)}>
           {item.name}
