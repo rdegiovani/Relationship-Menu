@@ -38,11 +38,6 @@ export function ViewMenuItem({ item, people = [], showAllResponses = false, view
     .filter((answer): answer is string => answer !== null);
   const isConversation = showAllResponses && givenAnswers.length > 0 && givenAnswers.every(answer => answer === 'talk');
 
-  // Each person's own written answer (site fork), shown attributed by avatar + name.
-  const personNotes = people
-    .map((name, personIndex) => ({ name, personIndex, note: item.response_notes?.[String(personIndex)] ?? null }))
-    .filter(entry => !isRichTextEmpty(entry.note));
-
   // Determine if icon is set and not "talk"
   const hasIcon = !!effectiveIcon && effectiveIcon !== "talk";
 
@@ -64,11 +59,6 @@ export function ViewMenuItem({ item, people = [], showAllResponses = false, view
         <span className={getItemSpanClasses(effectiveIcon)}>
           {item.name}
         </span>
-        {isConversation && (
-          <span className="ml-2">
-            <LevelPill icon="talk" levels={t} />
-          </span>
-        )}
         {showLeadingIcon && <span className="sr-only">, {iconLabel}</span>}
       </div>
       {showAllResponses && !isConversation && people.length > 0 && (
@@ -105,23 +95,26 @@ export function ViewMenuItem({ item, people = [], showAllResponses = false, view
           })}
         </div>
       )}
-      {showAllResponses && isConversation && personNotes.length > 0 && (
+      {showAllResponses && isConversation && people.length > 0 && (
         <div className={`mt-2 space-y-1.5 ${rowIndent}`}>
-          {personNotes.map(({ name, personIndex, note }) => (
-            <div key={personIndex} className="flex items-start gap-1.5 text-[0.9em] text-gray-700 dark:text-gray-50">
-              <span
-                aria-hidden="true"
-                title={name}
-                className={`mt-0.5 h-5 w-5 rounded-full ${personColor(personIndex)} text-white text-[10px] font-bold flex items-center justify-center flex-shrink-0`}
-              >
-                {personInitial(name)}
-              </span>
-              <span className="whitespace-pre-line break-words">
-                <span className="font-medium">{name}: </span>
-                {renderRichText(note)}
-              </span>
-            </div>
-          ))}
+          {people.map((name, personIndex) => {
+            const note = item.response_notes?.[String(personIndex)] ?? null;
+            return (
+              <div key={personIndex} className="flex items-start gap-1.5 text-[0.9em] text-gray-700 dark:text-gray-50">
+                <span
+                  aria-hidden="true"
+                  title={name}
+                  className={`mt-0.5 h-5 w-5 rounded-full ${personColor(personIndex)} text-white text-[10px] font-bold flex items-center justify-center flex-shrink-0`}
+                >
+                  {personInitial(name)}
+                </span>
+                <span className="whitespace-pre-line break-words">
+                  <span className="font-medium">{name}: </span>
+                  {isRichTextEmpty(note) ? '—' : renderRichText(note)}
+                </span>
+              </div>
+            );
+          })}
         </div>
       )}
       {viewPerson !== null && !isRichTextEmpty(personNote) && (
