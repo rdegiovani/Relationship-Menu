@@ -74,6 +74,7 @@ export function IconPicker({ selectedIcon, onSelectIcon, isOpen, onClose, mode =
   const pickerRef = useRef<HTMLDivElement>(null);
   const firstOptionRef = useRef<HTMLButtonElement>(null);
   const [openDirection, setOpenDirection] = useState<'up' | 'down'>('down');
+  const [alignRight, setAlignRight] = useState(false);
 
   // Measure available space and decide open direction before paint, so the picker
   // never appears in the wrong position. useLayoutEffect corrects the direction
@@ -89,6 +90,11 @@ export function IconPicker({ selectedIcon, onSelectIcon, isOpen, onClose, mode =
       } else {
         setOpenDirection('down');
       }
+      // Same idea on the horizontal axis: a trigger near the right edge would
+      // push the picker past the viewport and create horizontal scroll — in
+      // that case anchor it to the trigger's right side instead.
+      const pickerWidth = pickerRef.current.offsetWidth || 360;
+      setAlignRight(parentRect.left + pickerWidth > window.innerWidth - 8);
     }
   }, [isOpen, parentRef]);
 
@@ -131,10 +137,14 @@ export function IconPicker({ selectedIcon, onSelectIcon, isOpen, onClose, mode =
       : 'top-full mt-1 sm:top-10 sm:mt-3';
   }
 
+  const horizontalClass = alignRight
+    ? 'right-0 left-auto'
+    : 'left-0 sm:left-0 sm:right-auto right-0';
+
   return (
     <div
       ref={pickerRef}
-      className={`absolute z-10 left-0 sm:left-0 sm:right-auto right-0 bg-white dark:bg-gray-800 rounded-lg shadow-xl p-3 border border-gray-100 dark:border-gray-700 w-full max-w-xs sm:w-[360px] sm:max-w-none ${positionClass}`}
+      className={`absolute z-10 ${horizontalClass} bg-white dark:bg-gray-800 rounded-lg shadow-xl p-3 border border-gray-100 dark:border-gray-700 w-full max-w-xs sm:w-[360px] sm:max-w-none ${positionClass}`}
       role="dialog"
       aria-label={t.selectIcon}
     >
