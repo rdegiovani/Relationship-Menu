@@ -72,7 +72,10 @@ export function ViewMenuItem({ item, people = [], showAllResponses = false, view
         {showLeadingIcon && <span className="sr-only">, {iconLabel}</span>}
       </div>
       {showAllResponses && !isConversation && people.length > 0 && (
-        <div className={`mt-2 flex flex-wrap gap-x-4 gap-y-1.5 ${rowIndent}`}>
+        <div
+          className={`mt-2 grid gap-x-4 gap-y-1.5 ${rowIndent}`}
+          style={{ gridTemplateColumns: `repeat(${people.length}, minmax(0, 1fr))` }}
+        >
           {people.map((name, personIndex) => {
             const answer = item.responses?.[String(personIndex)] ?? null;
             return (
