@@ -64,7 +64,9 @@ export function RelationshipMenu({ menuData, onSave, initialMode = 'view' }: Rel
       ...category,
       items: category.items.map((item, itemIndex) => {
         const snapshot = lensRound.items[catIndex]?.[itemIndex];
-        return snapshot ? { ...item, responses: snapshot.responses, icon: snapshot.icon ?? null } : item;
+        return snapshot
+          ? { ...item, responses: snapshot.responses, response_notes: snapshot.response_notes, icon: snapshot.icon ?? null }
+          : item;
       })
     }));
   }, [mode, lensRound, menu]);
@@ -117,6 +119,7 @@ export function RelationshipMenu({ menuData, onSave, initialMode = 'view' }: Rel
     handleAddPerson,
     handleDeletePerson,
     handleResponseChange,
+    handleResponseNoteChange,
     handleToggleFinished,
     handleFeatureSettingsChange,
     handleRegisterRound
@@ -239,6 +242,7 @@ export function RelationshipMenu({ menuData, onSave, initialMode = 'view' }: Rel
           individualMode={individualMode && mode === 'fill'}
           personLocked={personLocked}
           onResponseChange={handleResponseChange}
+          onResponseNoteChange={handleResponseNoteChange}
           people={viewPeople}
           showAllResponses={showAllResponses}
           viewPerson={viewPerson}

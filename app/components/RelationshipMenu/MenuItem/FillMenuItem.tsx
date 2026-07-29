@@ -22,6 +22,7 @@ interface FillMenuItemProps {
   /** True when the active person marked themselves done (blind mode) — answers become read-only. */
   personLocked?: boolean;
   onResponseChange?: (catIndex: number, itemIndex: number, personIndex: number, newIcon: string | null) => void;
+  onResponseNoteChange?: (catIndex: number, itemIndex: number, personIndex: number, newNote: RichTextJSONPart[] | null) => void;
 }
 
 export function FillMenuItem({
@@ -34,6 +35,7 @@ export function FillMenuItem({
   individualMode = false,
   personLocked = false,
   onResponseChange,
+  onResponseNoteChange,
 }: FillMenuItemProps) {
   const dictionary = useTranslations();
   const t = dictionary.levels;
@@ -140,7 +142,23 @@ export function FillMenuItem({
 
   // Handle expanding the note editor
   const handleExpandNote = () => {
+    if (interactionDisabled) return;
     setIsNoteExpanded(true);
+  };
+
+  // In individual mode the note editor works on the active person's own written
+  // answer; otherwise on the shared item note (upstream behavior).
+  const noteValue = individualMode
+    ? (activePerson !== null ? (item.response_notes?.[String(activePerson)] ?? null) : null)
+    : (item.note ?? null);
+  const handleNoteEdit = (richText: RichTextJSONPart[] | null) => {
+    if (individualMode) {
+      if (activePerson !== null && onResponseNoteChange) {
+        onResponseNoteChange(catIndex, itemIndex, activePerson, richText);
+      }
+    } else {
+      onNoteChange(catIndex, itemIndex, richText);
+    }
   };
 
   // Render the note editor for fill mode
@@ -150,8 +168,8 @@ export function FillMenuItem({
       return (
         <div ref={noteEditorRef} className="border border-gray-300 dark:border-gray-600 rounded bg-white dark:bg-gray-700">
           <RichTextEditor
-            value={item.note || null}
-            onChange={(richText) => onNoteChange(catIndex, itemIndex, richText)}
+            value={noteValue}
+            onChange={handleNoteEdit}
             className="text-sm"
             autoFocus
           />
@@ -159,15 +177,15 @@ export function FillMenuItem({
       );
     } else {
       // Format the note text to preserve line breaks
-      const formattedNote = !isRichTextEmpty(item.note) ? 
-        renderRichText(item.note) : 
+      const formattedNote = !isRichTextEmpty(noteValue) ?
+        renderRichText(noteValue) :
         editor.addNote;
-        
+
       // Note text that expands when clicked
       return (
-        <div 
+        <div
           onClick={handleExpandNote}
-          className={`text-gray-800 dark:text-gray-50 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-white/5 cursor-text text-sm whitespace-pre-line transition-colors duration-200 rounded py-0.5 -my-0.5 ${isRichTextEmpty(item.note) ? 'text-gray-500 dark:text-gray-400' : ''}`}
+          className={`text-gray-800 dark:text-gray-50 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-white/5 cursor-text text-sm whitespace-pre-line transition-colors duration-200 rounded py-0.5 -my-0.5 ${isRichTextEmpty(noteValue) ? 'text-gray-500 dark:text-gray-400' : ''}`}
           style={{ 
             transform: hasIcon ? 'translateY(-0.3rem)' : 'translateY(-0.7rem)',
             marginBottom: hasIcon ? '-0.3rem' : '-0.7rem', 

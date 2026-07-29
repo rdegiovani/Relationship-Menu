@@ -28,6 +28,7 @@ interface MenuContentProps {
   individualMode?: boolean;
   personLocked?: boolean;
   onResponseChange?: (catIndex: number, itemIndex: number, personIndex: number, newIcon: string | null) => void;
+  onResponseNoteChange?: (catIndex: number, itemIndex: number, personIndex: number, newNote: RichTextJSONPart[] | null) => void;
   /** View lens (site fork, view mode) — see ViewMenuItem. */
   people?: string[];
   showAllResponses?: boolean;
@@ -54,6 +55,7 @@ export function MenuContent({
   individualMode = false,
   personLocked = false,
   onResponseChange,
+  onResponseNoteChange,
   people = [],
   showAllResponses = false,
   viewPerson = null
@@ -109,6 +111,7 @@ export function MenuContent({
                   individualMode={individualMode}
                   personLocked={personLocked}
                   onResponseChange={onResponseChange}
+                  onResponseNoteChange={onResponseNoteChange}
                   people={people}
                   showAllResponses={showAllResponses}
                   viewPerson={viewPerson}

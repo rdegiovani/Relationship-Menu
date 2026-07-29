@@ -164,6 +164,31 @@ export function createDataHandlers({
   };
 
   /**
+   * Record one person's own written answer to an item (null clears it)
+   */
+  const handleResponseNoteChange = (catIndex: number, itemIndex: number, personIndex: number, newNote: RichTextJSONPart[] | null) => {
+    const updatedData = { ...editedData };
+    updatedData.menu = editedData.menu.map((category, ci) =>
+      ci !== catIndex ? category : {
+        ...category,
+        items: category.items.map((item, ii) => {
+          if (ii !== itemIndex) return item;
+          const notes = { ...(item.response_notes ?? {}) };
+          if (newNote === null || newNote.length === 0) {
+            delete notes[String(personIndex)];
+          } else {
+            notes[String(personIndex)] = newNote;
+          }
+          return { ...item, response_notes: Object.keys(notes).length > 0 ? notes : undefined };
+        })
+      }
+    );
+    updatedData.last_update = new Date().toISOString();
+    setEditedData(updatedData);
+    onSave(updatedData);
+  };
+
+  /**
    * Save the current answers as a round snapshot (history for the evolution view)
    */
   const handleRegisterRound = () => {
@@ -183,6 +208,7 @@ export function createDataHandlers({
     handleAddPerson,
     handleDeletePerson,
     handleResponseChange,
+    handleResponseNoteChange,
     handleToggleFinished,
     handleFeatureSettingsChange,
     handleRegisterRound

@@ -17,6 +17,9 @@ export type MenuItem = {
   // index in MenuData.people (as a string, since JSON object keys are strings).
   // Absent key = that person has not answered this item yet.
   responses?: { [personIndex: string]: string };
+  // Site fork: each person's own written answer (used mostly on "conversation"
+  // items, where the level is always "talk" and the text carries the substance).
+  response_notes?: { [personIndex: string]: RichTextJSONPart[] };
 };
 
 // Define menu category type
@@ -46,6 +49,7 @@ export type MenuData = {
 // answers at a moment in time. Mirrors the menu shape: items[catIndex][itemIndex].
 export type MenuRoundItem = {
   responses?: { [personIndex: string]: string };
+  response_notes?: { [personIndex: string]: RichTextJSONPart[] };
   icon?: string | null;
 };
 

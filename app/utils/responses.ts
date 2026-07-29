@@ -181,6 +181,7 @@ export function captureRound(data: MenuData): MenuRound {
     people: [...data.people],
     items: data.menu.map(category => category.items.map(item => ({
       responses: item.responses ? { ...item.responses } : undefined,
+      response_notes: item.response_notes ? { ...item.response_notes } : undefined,
       icon: item.icon ?? null,
     }))),
   };
