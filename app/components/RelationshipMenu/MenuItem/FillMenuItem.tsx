@@ -16,6 +16,12 @@ interface FillMenuItemProps {
   onIconChange: (catIndex: number, itemIndex: number, newIcon: string | null) => void;
   onNoteChange: (catIndex: number, itemIndex: number, newNote: RichTextJSONPart[] | null) => void;
   autoResizeTextarea: (element: HTMLTextAreaElement) => void;
+  /** Individual answers (site fork): when set, the icon shown/edited is this person's answer. */
+  activePerson?: number | null;
+  individualMode?: boolean;
+  /** True when the active person marked themselves done (blind mode) — answers become read-only. */
+  personLocked?: boolean;
+  onResponseChange?: (catIndex: number, itemIndex: number, personIndex: number, newIcon: string | null) => void;
 }
 
 export function FillMenuItem({
@@ -24,6 +30,10 @@ export function FillMenuItem({
   item,
   onIconChange,
   onNoteChange,
+  activePerson = null,
+  individualMode = false,
+  personLocked = false,
+  onResponseChange,
 }: FillMenuItemProps) {
   const dictionary = useTranslations();
   const t = dictionary.levels;
@@ -62,18 +72,34 @@ export function FillMenuItem({
     };
   }, [isNoteExpanded]);
 
-  // Convert item.icon to string | null to fix type issues
-  const iconType = item.icon === undefined ? null : item.icon;
-  
+  // Individual answers: the icon shown/edited is the active person's answer,
+  // not the shared one. Without an active person there is nothing to edit yet.
+  const iconType = individualMode
+    ? (activePerson !== null ? (item.responses?.[String(activePerson)] ?? null) : null)
+    : (item.icon === undefined ? null : item.icon);
+
+  const interactionDisabled = individualMode && (activePerson === null || personLocked);
+
   // Determine if icon is set
-  const hasIcon = !!item.icon && item.icon !== "talk";
+  const hasIcon = !!iconType && iconType !== "talk";
+
+  const handleSelectIcon = (icon: string | null) => {
+    if (individualMode) {
+      if (activePerson !== null && onResponseChange) {
+        onResponseChange(catIndex, itemIndex, activePerson, icon);
+      }
+    } else {
+      onIconChange(catIndex, itemIndex, icon);
+    }
+  };
 
   // Render icon button for fill mode
   const renderIconButton = () => {
     const selectedOption = ICON_OPTIONS.find(opt => opt.value === iconType) || ICON_OPTIONS[ICON_OPTIONS.length - 1];
-    
+
     // Don't allow changing icons for "talk" items in fill mode
-    if (iconType === 'talk') {
+    // (individual answers are always the person's own — the shared "talk" flag doesn't lock them)
+    if (!individualMode && iconType === 'talk') {
       // Render the icon in a button-like container but without arrow and interaction
       return (
         <div 
@@ -91,18 +117,22 @@ export function FillMenuItem({
     
     // Compact version for fill mode - icon only with dropdown arrow
     return (
-      <button 
+      <button
         type="button"
         onClick={() => setIsPickerOpen((open) => !open)}
-        className={`hc-field inline-flex items-center px-1.5 py-1.5 border border-gray-300 dark:border-gray-600 rounded-md hover:bg-gray-50 dark:hover:bg-gray-700 ${
+        disabled={interactionDisabled}
+        className={`hc-field inline-flex items-center px-1.5 py-1.5 border border-gray-300 dark:border-gray-600 rounded-md ${
+          interactionDisabled ? 'opacity-50 cursor-not-allowed' : 'hover:bg-gray-50 dark:hover:bg-gray-700'
+        } ${
           iconType ? selectedOption.bgColor : 'bg-white dark:bg-gray-800'
         }`}
         aria-label={t.selectIcon}
+        aria-disabled={interactionDisabled}
       >
         {renderIcon(iconType)}
-        <IconChevron 
-          direction="down" 
-          className="h-3.5 w-3.5 ml-0.5" 
+        <IconChevron
+          direction="down"
+          className="h-3.5 w-3.5 ml-0.5"
         />
       </button>
     );
@@ -161,14 +191,14 @@ export function FillMenuItem({
           <div className="flex flex-row items-center w-full mb-2 gap-2">
             {renderIconButton()}
             <div className="flex-grow flex items-center pl-3">
-              <span className={`font-bold ${getItemSpanClasses(item.icon)}`}>{item.name}</span>
+              <span className={`font-bold ${getItemSpanClasses(individualMode ? iconType : item.icon)}`}>{item.name}</span>
             </div>
           </div>
-          
+
           <IconPicker
             selectedIcon={iconType}
             onSelectIcon={(icon) => {
-              onIconChange(catIndex, itemIndex, icon);
+              handleSelectIcon(icon);
               setIsPickerOpen(false);
             }}
             isOpen={isPickerOpen}

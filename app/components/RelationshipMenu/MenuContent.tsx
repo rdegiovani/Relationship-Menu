@@ -23,6 +23,11 @@ interface MenuContentProps {
   onMoveItemUp: (catIndex: number, itemIndex: number) => void;
   onMoveItemDown: (catIndex: number, itemIndex: number) => void;
   autoResizeTextarea: (element: HTMLTextAreaElement) => void;
+  /** Individual answers (site fork) — see FillMenuItem. */
+  activePerson?: number | null;
+  individualMode?: boolean;
+  personLocked?: boolean;
+  onResponseChange?: (catIndex: number, itemIndex: number, personIndex: number, newIcon: string | null) => void;
 }
 
 export function MenuContent({
@@ -40,7 +45,11 @@ export function MenuContent({
   onMoveSectionDown,
   onMoveItemUp,
   onMoveItemDown,
-  autoResizeTextarea
+  autoResizeTextarea,
+  activePerson = null,
+  individualMode = false,
+  personLocked = false,
+  onResponseChange
 }: MenuContentProps) {
   const t = useTranslations().editor;
   const isEditing = mode === 'edit';
@@ -89,6 +98,10 @@ export function MenuContent({
                   onMoveItemDown={onMoveItemDown}
                   autoResizeTextarea={autoResizeTextarea}
                   itemCount={category.items.length}
+                  activePerson={activePerson}
+                  individualMode={individualMode}
+                  personLocked={personLocked}
+                  onResponseChange={onResponseChange}
                 />
               ))}
               

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { TemplateItem as TemplateItemType, TemplateSelectorProps, TemplateLocalizedText, TemplateCategoryJSON, TemplateItemJSON, TemplateJSON } from './types';
+import { TemplateItem as TemplateItemType, TemplateSelectorProps, TemplateLocalizedText, TemplateCategoryJSON, TemplateItemJSON, TemplateJSON, MenuFeatureOptions } from './types';
 import { MenuData } from '../../types';
 import TemplateSetupForm from './TemplateSetupForm';
 import TemplateItem from './TemplateItem';
@@ -28,7 +28,7 @@ function TemplateSelectorContent({
   templates: TemplateItemType[];
   selectedTemplate: TemplateItemType | null;
   handleTemplateClick: (template: TemplateItemType) => void;
-  handlePeopleSubmit: (templatePath: string, people: string[], language?: string) => Promise<void>;
+  handlePeopleSubmit: (templatePath: string, people: string[], language?: string, features?: MenuFeatureOptions) => Promise<void>;
   setSelectedTemplate: (template: TemplateItemType | null) => void;
 }) {
   if (isLoading) {
@@ -216,7 +216,7 @@ export default function TemplateSelector({
     setSelectedTemplate(template);
   };
 
-  const handlePeopleSubmit = async (templatePath: string, people: string[], menuLanguage: string = language) => {
+  const handlePeopleSubmit = async (templatePath: string, people: string[], menuLanguage: string = language, features?: MenuFeatureOptions) => {
     try {
       // Fetch the new-style template JSON
       const response = await fetch(templatePath);
@@ -246,6 +246,15 @@ export default function TemplateSelector({
         language: menuLanguage,
         template_uuid: (templateJson.uuid ?? null) as string | null,
       };
+
+      // Individual answers (site fork): only stored when enabled, so menus
+      // created without the feature keep the upstream shape untouched.
+      if (features?.individualResponses) {
+        menuData.individual_responses = true;
+        if (features.blindMode) {
+          menuData.blind_mode = true;
+        }
+      }
 
       // Count total items to determine initial mode
       const totalItems = menuData.menu.reduce((total, section) => {
