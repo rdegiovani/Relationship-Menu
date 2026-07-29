@@ -13,6 +13,10 @@ export type MenuItem = {
   name: string;
   note?: RichTextJSONPart[] | null;
   icon?: string | null;
+  // Site fork (individual answers): one answer per person, keyed by the person's
+  // index in MenuData.people (as a string, since JSON object keys are strings).
+  // Absent key = that person has not answered this item yet.
+  responses?: { [personIndex: string]: string };
 };
 
 // Define menu category type
@@ -30,10 +34,15 @@ export type MenuData = {
   uuid: string; // Required UUID field (version 1.1+)
   language: string; // Required language for v1.2+
   template_uuid?: string | null; // Optional: UUID of template used to create the menu (v1.2+)
+  // Site fork (individual answers). All optional and additive so menus created
+  // upstream keep working unchanged and exported files stay compatible.
+  individual_responses?: boolean; // Feature toggle: each person answers on their own
+  blind_mode?: boolean; // Answers stay hidden until everyone marks themselves done
+  finished_people?: number[]; // Person indexes that marked themselves done (blind mode)
 };
 
 // Define available menu modes
-export type MenuMode = 'view' | 'fill' | 'edit'; 
+export type MenuMode = 'view' | 'fill' | 'edit' | 'compare';
 
 // Legacy schema types for migrations
 export type LegacyMenuItem_1_2 = {

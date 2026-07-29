@@ -5,9 +5,12 @@ import { MenuData, MenuMode } from '../../types';
 import { MenuHeader } from './MenuHeader';
 import { MenuToolbar } from './MenuToolbar';
 import { MenuContent } from './MenuContent';
+import { PersonBar } from './PersonBar';
+import { CompareView } from './CompareView';
 import { FloatingModeSelector } from './MenuToolbar/FloatingModeSelector';
 import { useToast } from '../ui/Toast';
 import { useLanguage } from '../LanguageProvider';
+import { isPersonFinished } from '../../utils/responses';
 import {
   createDataHandlers,
   createItemHandlers,
@@ -26,14 +29,23 @@ export function RelationshipMenu({ menuData, onSave, initialMode = 'view' }: Rel
   const [mode, setMode] = useState<MenuMode>(initialMode);
   const [editedData, setEditedData] = useState<MenuData>({ ...menuData });
   const [activeIconPicker, setActiveIconPicker] = useState<{catIndex: number, itemIndex: number} | null>(null);
-  
+  // Individual answers (site fork): index of the person currently answering
+  const [selectedPerson, setSelectedPerson] = useState<number | null>(null);
+
   // Get the toast utility from context
   const { showToast } = useToast();
   const { language, t: dictionary } = useLanguage();
-  
+
   // Derived state
-  const isEditing = mode === 'edit' || mode === 'fill';
-  const { last_update, people, menu } = isEditing ? editedData : menuData;
+  const isEditing = mode === 'edit' || mode === 'fill' || mode === 'compare';
+  const currentData = isEditing ? editedData : menuData;
+  const { last_update, people, menu } = currentData;
+  const individualMode = !!currentData.individual_responses;
+  // Clamp instead of resetting state: if the people list shrinks, the stale
+  // selection simply stops being active.
+  const activePerson = selectedPerson !== null && selectedPerson < people.length ? selectedPerson : null;
+  const personLocked = activePerson !== null &&
+    !!currentData.blind_mode && isPersonFinished(currentData, activePerson);
 
   // Auto-resize textarea utility function
   const autoResizeTextarea = (element: HTMLTextAreaElement) => {
@@ -77,7 +89,10 @@ export function RelationshipMenu({ menuData, onSave, initialMode = 'view' }: Rel
     handlePersonNameChange,
     handleItemNameChange,
     handleAddPerson,
-    handleDeletePerson
+    handleDeletePerson,
+    handleResponseChange,
+    handleToggleFinished,
+    handleFeatureSettingsChange
   } = useMemo(() => createDataHandlers({
     editedData,
     setEditedData,
@@ -123,13 +138,16 @@ export function RelationshipMenu({ menuData, onSave, initialMode = 'view' }: Rel
       <div className="bg-[rgba(148,188,194,0.07)] dark:bg-[rgba(79,139,149,0.07)] rounded-xl shadow-sm border border-[rgba(148,188,194,0.2)] dark:border-[rgba(79,139,149,0.2)] p-4 md:p-5 mb-6">
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center">
           {/* Menu Header Component */}
-          <MenuHeader 
+          <MenuHeader
             mode={mode}
             people={people}
             lastUpdate={last_update}
             onPersonNameChange={handlePersonNameChange}
             onAddPerson={handleAddPerson}
             onDeletePerson={handleDeletePerson}
+            individualResponses={!!currentData.individual_responses}
+            blindMode={!!currentData.blind_mode}
+            onFeatureSettingsChange={handleFeatureSettingsChange}
           />
           
           {/* Menu Toolbar Component */}
@@ -144,29 +162,51 @@ export function RelationshipMenu({ menuData, onSave, initialMode = 'view' }: Rel
         </div>
       </div>
 
-      {/* Menu Content Component */}
-      <MenuContent 
-        menu={menu}
-        mode={mode}
-        onIconChange={handleIconChange}
-        onCategoryNameChange={handleCategoryNameChange}
-        onItemNameChange={handleItemNameChange}
-        onNoteChange={handleNoteChange}
-        onDeleteItem={handleDeleteItem}
-        onAddItem={handleAddItem}
-        onAddSection={handleAddSection}
-        onDeleteSection={handleDeleteSection}
-        onMoveSectionUp={handleMoveSectionUp}
-        onMoveSectionDown={handleMoveSectionDown}
-        onMoveItemUp={handleMoveItemUp}
-        onMoveItemDown={handleMoveItemDown}
-        autoResizeTextarea={autoResizeTextarea}
-      />
+      {/* Person selector for individual answers (site fork) */}
+      {individualMode && mode === 'fill' && (
+        <PersonBar
+          menuData={currentData}
+          activePerson={activePerson}
+          onSelectPerson={setSelectedPerson}
+          onToggleFinished={handleToggleFinished}
+        />
+      )}
+
+      {/* Menu Content Component (or the comparison, in compare mode) */}
+      {mode === 'compare' ? (
+        <CompareView
+          menuData={currentData}
+          onConsensusChange={handleIconChange}
+        />
+      ) : (
+        <MenuContent
+          menu={menu}
+          mode={mode}
+          onIconChange={handleIconChange}
+          onCategoryNameChange={handleCategoryNameChange}
+          onItemNameChange={handleItemNameChange}
+          onNoteChange={handleNoteChange}
+          onDeleteItem={handleDeleteItem}
+          onAddItem={handleAddItem}
+          onAddSection={handleAddSection}
+          onDeleteSection={handleDeleteSection}
+          onMoveSectionUp={handleMoveSectionUp}
+          onMoveSectionDown={handleMoveSectionDown}
+          onMoveItemUp={handleMoveItemUp}
+          onMoveItemDown={handleMoveItemDown}
+          autoResizeTextarea={autoResizeTextarea}
+          activePerson={activePerson}
+          individualMode={individualMode && mode === 'fill'}
+          personLocked={personLocked}
+          onResponseChange={handleResponseChange}
+        />
+      )}
 
       {/* Floating Mode Selector */}
-      <FloatingModeSelector 
+      <FloatingModeSelector
         currentMode={mode}
         onModeChange={handleModeChange}
+        showCompare={individualMode}
       />
     </div>
   );

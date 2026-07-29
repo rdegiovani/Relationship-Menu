@@ -14,6 +14,8 @@ const TemplateSetupForm = ({ selectedTemplate, onSubmit, onCancel }: TemplateSet
   const { language: uiLanguage, t } = useLanguage();
   const tt = t.templates;
   const [people, setPeople] = useState<string[]>(['']);
+  const [individualResponses, setIndividualResponses] = useState(false);
+  const [blindMode, setBlindMode] = useState(false);
   // Start from the language the user already chose for the interface, so the
   // picker only has to be touched when someone wants a different one.
   const [language, setLanguage] = useState<string>(() =>
@@ -50,7 +52,10 @@ const TemplateSetupForm = ({ selectedTemplate, onSubmit, onCancel }: TemplateSet
     if (processedPeople.length === 0) {
       processedPeople = [tt.anonymous];
     }
-    onSubmit(selectedTemplate.path, processedPeople, language);
+    onSubmit(selectedTemplate.path, processedPeople, language, {
+      individualResponses,
+      blindMode: individualResponses && blindMode,
+    });
   };
 
   const localizedTitle = localizedTemplateText(selectedTemplate.name, language);
@@ -162,6 +167,35 @@ const TemplateSetupForm = ({ selectedTemplate, onSubmit, onCancel }: TemplateSet
             <IconPlusSolid className="h-4 w-4 sm:h-5 sm:w-5 mr-1.5 sm:mr-2" />
             {tt.addPerson}
           </button>
+        </div>
+
+        <div className="mb-8 space-y-3">
+          <label className="flex items-start gap-3 cursor-pointer">
+            <input
+              type="checkbox"
+              checked={individualResponses}
+              onChange={(e) => setIndividualResponses(e.target.checked)}
+              className="mt-1 h-5 w-5 accent-[var(--main-text-color)]"
+            />
+            <span>
+              <span className="block font-medium">{tt.individualLabel}</span>
+              <span className="block text-sm text-gray-500 dark:text-gray-400">{tt.individualHint}</span>
+            </span>
+          </label>
+          {individualResponses && (
+            <label className="flex items-start gap-3 cursor-pointer">
+              <input
+                type="checkbox"
+                checked={blindMode}
+                onChange={(e) => setBlindMode(e.target.checked)}
+                className="mt-1 h-5 w-5 accent-[var(--main-text-color)]"
+              />
+              <span>
+                <span className="block font-medium">{tt.blindLabel}</span>
+                <span className="block text-sm text-gray-500 dark:text-gray-400">{tt.blindHint}</span>
+              </span>
+            </label>
+          )}
         </div>
 
         {error && (

@@ -128,7 +128,7 @@ function EditorContent() {
         const modeParam = searchParams.get('mode') as MenuMode | null;
         
         // Set the initial mode from URL parameter if it exists
-        if (modeParam && ['view', 'fill', 'edit'].includes(modeParam)) {
+        if (modeParam && ['view', 'fill', 'edit', 'compare'].includes(modeParam)) {
           setInitialMode(modeParam);
           
           // Remove the mode parameter from the URL after using it, without triggering a re-render

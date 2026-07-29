@@ -41,9 +41,14 @@ export type TemplateItem = {
   sorting_order?: number;
 };
 
+export type MenuFeatureOptions = {
+  individualResponses: boolean;
+  blindMode: boolean;
+};
+
 export type TemplateSetupFormProps = {
   selectedTemplate: TemplateItem;
-  onSubmit: (templatePath: string, people: string[], language?: string) => void;
+  onSubmit: (templatePath: string, people: string[], language?: string, features?: MenuFeatureOptions) => void;
   onCancel: () => void;
 };
 

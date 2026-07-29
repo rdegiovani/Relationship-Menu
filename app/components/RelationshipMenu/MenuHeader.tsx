@@ -14,6 +14,10 @@ interface MenuHeaderProps {
   onPersonNameChange: (personIndex: number, newName: string) => void;
   onAddPerson: () => void;
   onDeletePerson: (personIndex: number) => void;
+  /** Individual answers (site fork): current settings + change handler. */
+  individualResponses?: boolean;
+  blindMode?: boolean;
+  onFeatureSettingsChange?: (settings: { individual_responses?: boolean; blind_mode?: boolean }) => void;
 }
 
 export function MenuHeader({
@@ -22,7 +26,10 @@ export function MenuHeader({
   lastUpdate,
   onPersonNameChange,
   onAddPerson,
-  onDeletePerson
+  onDeletePerson,
+  individualResponses = false,
+  blindMode = false,
+  onFeatureSettingsChange
 }: MenuHeaderProps) {
   const { language, t: dictionary } = useLanguage();
   const t = dictionary.editor;
@@ -65,6 +72,37 @@ export function MenuHeader({
               <IconPlus className="h-5 w-5 mr-2 transition-transform group-hover:scale-110" />
               Add Person
             </button>
+
+            {onFeatureSettingsChange && (
+              <div className="pt-4 mt-4 border-t border-gray-200 dark:border-gray-700 space-y-3">
+                <label className="flex items-start gap-3 cursor-pointer">
+                  <input
+                    type="checkbox"
+                    checked={individualResponses}
+                    onChange={(e) => onFeatureSettingsChange({ individual_responses: e.target.checked })}
+                    className="mt-1 h-5 w-5 accent-[var(--main-text-color)]"
+                  />
+                  <span>
+                    <span className="block font-medium">{dictionary.templates.individualLabel}</span>
+                    <span className="block text-sm text-gray-500 dark:text-gray-400">{dictionary.templates.individualHint}</span>
+                  </span>
+                </label>
+                {individualResponses && (
+                  <label className="flex items-start gap-3 cursor-pointer">
+                    <input
+                      type="checkbox"
+                      checked={blindMode}
+                      onChange={(e) => onFeatureSettingsChange({ blind_mode: e.target.checked })}
+                      className="mt-1 h-5 w-5 accent-[var(--main-text-color)]"
+                    />
+                    <span>
+                      <span className="block font-medium">{dictionary.templates.blindLabel}</span>
+                      <span className="block text-sm text-gray-500 dark:text-gray-400">{dictionary.templates.blindHint}</span>
+                    </span>
+                  </label>
+                )}
+              </div>
+            )}
           </div>
         </div>
       ) : (
